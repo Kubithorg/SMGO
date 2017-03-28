@@ -7,6 +7,7 @@ import fr.ironcraft.mcshow.table.BlockShowTable;
 import fr.ironcraft.mcshow.table.TileEntityShowTable;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -30,6 +31,7 @@ public class SmgoMod {
     public static SmgoCommon proxy;
 
     public static Block showTable;
+    public static Item showTableItem;
     public static ShowsManager showsManager;
 
     @EventHandler
@@ -50,9 +52,12 @@ public class SmgoMod {
                                         .setCreativeTab(CreativeTabs.MISC);
 
         GameRegistry.register(showTable);
-        GameRegistry.register(new ItemBlock(showTable).setRegistryName("show_table")
-                                                      .setCreativeTab(CreativeTabs.MISC));
-
+        
+        showTableItem = new ItemBlock(showTable).setRegistryName("show_table").setCreativeTab(CreativeTabs.MISC);
+        GameRegistry.register(showTableItem);
+        proxy.registerItemTexture(showTableItem, "show_table");
+            
+        
         GameRegistry.registerTileEntity(TileEntityShowTable.class, "tileEntityShowTable");
     }
 
