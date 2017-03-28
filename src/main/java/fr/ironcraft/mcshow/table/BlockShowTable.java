@@ -42,7 +42,7 @@ public class BlockShowTable extends BlockContainer {
 
     @SideOnly(Side.CLIENT)
     public boolean isTranslucent() {
-        return true;
+        return false;
     }
 
     /**
@@ -50,20 +50,20 @@ public class BlockShowTable extends BlockContainer {
      * for render
      */
     public boolean isOpaqueCube(IBlockState state) {
-        return false;
+        return true;
     }
 
     public boolean isFullCube(IBlockState state) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isVisuallyOpaque() {
-        return false;
+        return true;
     }
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
+        return EnumBlockRenderType.MODEL;
     }
 }

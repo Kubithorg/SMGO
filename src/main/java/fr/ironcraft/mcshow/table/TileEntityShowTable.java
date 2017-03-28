@@ -2,10 +2,8 @@ package fr.ironcraft.mcshow.table;
 
 import fr.ironcraft.mcshow.Show;
 import fr.ironcraft.mcshow.ShowInfos;
-import fr.ironcraft.mcshow.ShowsManager;
 import fr.ironcraft.mcshow.mod.SmgoMod;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ITickable;
 
 
 public class TileEntityShowTable extends TileEntity {

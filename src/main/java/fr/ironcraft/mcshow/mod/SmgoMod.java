@@ -5,12 +5,10 @@ import org.apache.logging.log4j.Logger;
 import fr.ironcraft.mcshow.ShowsManager;
 import fr.ironcraft.mcshow.table.BlockShowTable;
 import fr.ironcraft.mcshow.table.TileEntityShowTable;
-import fr.ironcraft.mcshow.table.TileEntityShowTableRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -55,7 +53,6 @@ public class SmgoMod {
         GameRegistry.register(new ItemBlock(showTable).setRegistryName("show_table")
                                                       .setCreativeTab(CreativeTabs.MISC));
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityShowTable.class, new TileEntityShowTableRenderer());
         GameRegistry.registerTileEntity(TileEntityShowTable.class, "tileEntityShowTable");
     }
 

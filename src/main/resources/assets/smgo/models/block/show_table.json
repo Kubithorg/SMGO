@@ -2,6 +2,6 @@
     "parent": "minecraft:block/cube_all",
     "textures": 
     {
-        "all": "minecraft:blocks/debug"
+        "all": "smgo:blocks/show_table"
     }
 }
