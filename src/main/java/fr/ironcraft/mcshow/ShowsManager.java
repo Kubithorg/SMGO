@@ -1,6 +1,7 @@
 package fr.ironcraft.mcshow;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,19 +13,20 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 
 public class ShowsManager {
-    private List<Show> shows = new ArrayList<Show>();
-    private List<Show> showsToAdd = new ArrayList<Show>();
+    private List<Show> shows = Collections.synchronizedList(new ArrayList<Show>());
 
     public void startShow(Show show) {
-        showsToAdd.add(show);
+        shows.add(show);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void render(RenderWorldLastEvent event) {
-        for (Iterator<Show> iterator = shows.iterator(); iterator.hasNext();) {
-            Show show = iterator.next();
+        synchronized (shows) {
+            for (Iterator<Show> iterator = shows.iterator(); iterator.hasNext();) {
+                Show show = iterator.next();
 
-            show.render(event.getPartialTicks());
+                show.render(event.getPartialTicks());
+            }
         }
     }
 
@@ -33,20 +35,15 @@ public class ShowsManager {
         if (event.phase == Phase.START) {
             return;
         }
-        
-        for (Iterator<Show> iterator = shows.iterator(); iterator.hasNext();) {
-            Show show = iterator.next();
-            show.tick();
+        synchronized (shows) {
+            for (Iterator<Show> iterator = shows.iterator(); iterator.hasNext();) {
+                Show show = iterator.next();
+                show.tick();
 
-            if (show.isDone()) {
-                iterator.remove();
+                if (show.isDone()) {
+                    iterator.remove();
+                }
             }
         }
-
-        for (Iterator<Show> iterator = showsToAdd.iterator(); iterator.hasNext();) {
-            shows.add(iterator.next());
-        }
-
-        showsToAdd.clear();
     }
 }
