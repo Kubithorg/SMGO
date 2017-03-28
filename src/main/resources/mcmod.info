@@ -1,0 +1,16 @@
+[
+{
+  "modid": "smgo",
+  "name": "Show must go on",
+  "description": "Visual effects mod in Minecraft.",
+  "version": "0.1",
+  "mcversion": "1.10.2",
+  "url": "http://ironcraft.fr",
+  "updateUrl": "",
+  "authorList": ["Wytrem"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
