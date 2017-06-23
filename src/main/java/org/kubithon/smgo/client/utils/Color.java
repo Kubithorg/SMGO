@@ -10,7 +10,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-
 /**
  * A color
  *
@@ -1360,16 +1359,19 @@ public class Color {
     /**
      * A color (opaque)
      *
-     * @param red The red of the color
-     * @param green The green of the color
-     * @param blue The blue of the color
+     * @param red
+     *            The red of the color
+     * @param green
+     *            The green of the color
+     * @param blue
+     *            The blue of the color
      */
     public Color(float red, float green, float blue) {
         this(red, green, blue, 1.0f);
     }
 
     public Color(int argb) {
-        this((argb >> 16) & MASK, (argb >> 8) & MASK, (argb) & MASK, (argb >> 24) & MASK);
+        this(argb >> 16 & MASK, argb >> 8 & MASK, argb & MASK, argb >> 24 & MASK);
     }
 
     public Color(int r, int g, int b) {
@@ -1383,10 +1385,14 @@ public class Color {
     /**
      * A color
      *
-     * @param red The red of the color
-     * @param green The green of the color
-     * @param blue The blue of the color
-     * @param alpha The transparency of the color
+     * @param red
+     *            The red of the color
+     * @param green
+     *            The green of the color
+     * @param blue
+     *            The blue of the color
+     * @param alpha
+     *            The transparency of the color
      */
     public Color(float red, float green, float blue, float alpha) {
         this((byte) (red * 255.0f), (byte) (green * 255.0f), (byte) (blue * 255.0f), (byte) (alpha * 255.0f));
@@ -1395,9 +1401,12 @@ public class Color {
     /**
      * A color (opaque)
      *
-     * @param red The red of the color
-     * @param green The green of the color
-     * @param blue The blue of the color
+     * @param red
+     *            The red of the color
+     * @param green
+     *            The green of the color
+     * @param blue
+     *            The blue of the color
      */
     public Color(byte red, byte green, byte blue) {
         this(red, green, blue, Byte.MAX_VALUE);
@@ -1406,10 +1415,14 @@ public class Color {
     /**
      * A color
      *
-     * @param red The red of the color
-     * @param green The green of the color
-     * @param blue The blue of the color
-     * @param alpha The transparency of the color
+     * @param red
+     *            The red of the color
+     * @param green
+     *            The green of the color
+     * @param blue
+     *            The blue of the color
+     * @param alpha
+     *            The transparency of the color
      */
     public Color(byte red, byte green, byte blue, byte alpha) {
         this.red = red;
@@ -1424,7 +1437,7 @@ public class Color {
      * @return the red.
      */
     public byte getRed() {
-        return (byte) (red & MASK);
+        return (byte) (this.red & MASK);
     }
 
     /**
@@ -1433,7 +1446,7 @@ public class Color {
      * @return the green.
      */
     public byte getGreen() {
-        return (byte) (green & MASK);
+        return (byte) (this.green & MASK);
     }
 
     /**
@@ -1442,7 +1455,7 @@ public class Color {
      * @return the blue.
      */
     public byte getBlue() {
-        return (byte) (blue & MASK);
+        return (byte) (this.blue & MASK);
     }
 
     /**
@@ -1451,7 +1464,7 @@ public class Color {
      * @return the alpha.
      */
     public byte getAlpha() {
-        return (byte) (alpha & MASK);
+        return (byte) (this.alpha & MASK);
     }
 
     /**
@@ -1460,7 +1473,7 @@ public class Color {
      * @return The red
      */
     public float getRedFloat() {
-        return (red & MASK) / 255.0f;
+        return (this.red & MASK) / 255.0f;
     }
 
     /**
@@ -1469,7 +1482,7 @@ public class Color {
      * @return The green
      */
     public float getGreenFloat() {
-        return (green & MASK) / 255.0f;
+        return (this.green & MASK) / 255.0f;
     }
 
     /**
@@ -1478,7 +1491,7 @@ public class Color {
      * @return The blue
      */
     public float getBlueFloat() {
-        return (blue & MASK) / 255.0f;
+        return (this.blue & MASK) / 255.0f;
     }
 
     /**
@@ -1487,55 +1500,66 @@ public class Color {
      * @return The alpha
      */
     public float getAlphaFloat() {
-        return (alpha & MASK) / 255.0f;
+        return (this.alpha & MASK) / 255.0f;
     }
 
     @Override
     public String toString() {
-        return "Color [red=" + red + ", green=" + green + ", blue=" + blue + ", alpha=" + alpha + ", getRed()=" + getRed() + ", getGreen()=" + getGreen() + ", getBlue()=" + getBlue() + ", getAlpha()=" + getAlpha() + ", getRedFloat()=" + getRedFloat() + ", getGreenFloat()=" + getGreenFloat() + ", getBlueFloat()=" + getBlueFloat() + ", getAlphaFloat()=" + getAlphaFloat() + "]";
+        return "Color [red=" + this.red + ", green=" + this.green + ", blue=" + this.blue + ", alpha=" + this.alpha
+                + ", getRed()=" + this.getRed() + ", getGreen()=" + this.getGreen() + ", getBlue()=" + this.getBlue()
+                + ", getAlpha()=" + this.getAlpha() + ", getRedFloat()=" + this.getRedFloat() + ", getGreenFloat()="
+                + this.getGreenFloat() + ", getBlueFloat()=" + this.getBlueFloat() + ", getAlphaFloat()="
+                + this.getAlphaFloat() + "]";
     }
 
-    private static final Color[] MINECRAFT_CODES = {new Color(0xff000000), new Color(0xff0000aa), new Color(0xff00aa00), new Color(0xff00aaaa), new Color(0xffaa0000), new Color(0xffaa00aa), new Color(0xffffaa00), new Color(0xffaaaaaa), new Color(0xff555555), new Color(0xff5555ff), new Color(0xff55ff55), new Color(0xff55ffff), new Color(0xffff5555), new Color(0xffff55ff), new Color(0xffffff55), new Color(0xffffffff), new Color(0xff000000), new Color(0xff00002a), new Color(0xff002a00), new Color(0xff002a2a), new Color(0xff2a0000), new Color(0xff2a002a), new Color(0xff2a2a00), new Color(0xff2a2a2a), new Color(0xff151515), new Color(0xff15153f), new Color(0xff153f15), new Color(0xff153f3f), new Color(0xff3f1515), new Color(0xff3f153f), new Color(0xff3f3f15), new Color(0xff3f3f3f), new Color(0xff000000), new Color(0xff0000aa), new Color(0xff00aa00), new Color(0xff00aaaa), new Color(0xffaa0000), new Color(0xffaa00aa), new Color(0xffffaa00), new Color(0xffaaaaaa), new Color(0xff555555), new Color(0xff5555ff), new Color(0xff55ff55), new Color(0xff55ffff), new Color(0xffff5555), new Color(0xffff55ff), new Color(0xffffff55), new Color(0xffffffff), new Color(0xff000000), new Color(0xff00002a), new Color(0xff002a00), new Color(0xff002a2a), new Color(0xff2a0000), new Color(0xff2a002a), new Color(0xff2a2a00), new Color(0xff2a2a2a), new Color(0xff151515), new Color(0xff15153f), new Color(0xff153f15), new Color(0xff153f3f), new Color(0xff3f1515), new Color(0xff3f153f), new Color(0xff3f3f15), new Color(0xff3f3f3f)};
+    private static final Color[] MINECRAFT_CODES = { new Color(0xff000000), new Color(0xff0000aa),
+            new Color(0xff00aa00), new Color(0xff00aaaa), new Color(0xffaa0000), new Color(0xffaa00aa),
+            new Color(0xffffaa00), new Color(0xffaaaaaa), new Color(0xff555555), new Color(0xff5555ff),
+            new Color(0xff55ff55), new Color(0xff55ffff), new Color(0xffff5555), new Color(0xffff55ff),
+            new Color(0xffffff55), new Color(0xffffffff), new Color(0xff000000), new Color(0xff00002a),
+            new Color(0xff002a00), new Color(0xff002a2a), new Color(0xff2a0000), new Color(0xff2a002a),
+            new Color(0xff2a2a00), new Color(0xff2a2a2a), new Color(0xff151515), new Color(0xff15153f),
+            new Color(0xff153f15), new Color(0xff153f3f), new Color(0xff3f1515), new Color(0xff3f153f),
+            new Color(0xff3f3f15), new Color(0xff3f3f3f), new Color(0xff000000), new Color(0xff0000aa),
+            new Color(0xff00aa00), new Color(0xff00aaaa), new Color(0xffaa0000), new Color(0xffaa00aa),
+            new Color(0xffffaa00), new Color(0xffaaaaaa), new Color(0xff555555), new Color(0xff5555ff),
+            new Color(0xff55ff55), new Color(0xff55ffff), new Color(0xffff5555), new Color(0xffff55ff),
+            new Color(0xffffff55), new Color(0xffffffff), new Color(0xff000000), new Color(0xff00002a),
+            new Color(0xff002a00), new Color(0xff002a2a), new Color(0xff2a0000), new Color(0xff2a002a),
+            new Color(0xff2a2a00), new Color(0xff2a2a2a), new Color(0xff151515), new Color(0xff15153f),
+            new Color(0xff153f15), new Color(0xff153f3f), new Color(0xff3f1515), new Color(0xff3f153f),
+            new Color(0xff3f3f15), new Color(0xff3f3f3f) };
 
     public static Color valueOf(String str) {
-        if (str == null || str.length() == 0) {
+        if (str == null || str.length() == 0)
             return null;
-        }
         else if (str.length() == 1) {
             int index = "0123456789abcdefklmnor".indexOf(str.toLowerCase());
             return MINECRAFT_CODES[index];
-        }
-        else {
+        } else
             try {
                 int color = (int) Long.parseLong(str, 16);
                 return new Color(color);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
-        }
     }
 
-    public static class JsonAdapter
-                    implements JsonSerializer<Color>, JsonDeserializer<Color> {
+    public static class JsonAdapter implements JsonSerializer<Color>, JsonDeserializer<Color> {
 
         @Override
-        public Color deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public Color deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                throws JsonParseException {
             if (json.isJsonObject()) {
 
                 JsonObject jsonObject = json.getAsJsonObject();
 
-                return new Color(jsonObject.get("red")
-                                           .getAsFloat(), jsonObject.get("green")
-                                                                    .getAsFloat(), jsonObject.get("blue")
-                                                                                             .getAsFloat(), jsonObject.get("alpha")
-                                                                                                                      .getAsFloat());
+                return new Color(jsonObject.get("red").getAsFloat(), jsonObject.get("green").getAsFloat(),
+                        jsonObject.get("blue").getAsFloat(), jsonObject.get("alpha").getAsFloat());
 
-            }
-            else if (json.isJsonPrimitive()) {
+            } else if (json.isJsonPrimitive())
                 return valueOf(json.getAsString());
-            }
             return null;
         }
 

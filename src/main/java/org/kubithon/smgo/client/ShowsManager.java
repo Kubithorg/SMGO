@@ -11,18 +11,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
-
 public class ShowsManager {
     private List<Show> shows = Collections.synchronizedList(new ArrayList<Show>());
 
     public void startShow(Show show) {
-        shows.add(show);
+        this.shows.add(show);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void render(RenderWorldLastEvent event) {
-        synchronized (shows) {
-            for (Iterator<Show> iterator = shows.iterator(); iterator.hasNext();) {
+        synchronized (this.shows) {
+            for (Iterator<Show> iterator = this.shows.iterator(); iterator.hasNext();) {
                 Show show = iterator.next();
 
                 show.render(event.getPartialTicks());
@@ -32,17 +31,15 @@ public class ShowsManager {
 
     @SubscribeEvent
     public void tick(WorldTickEvent event) {
-        if (event.phase == Phase.START) {
+        if (event.phase == Phase.START)
             return;
-        }
-        synchronized (shows) {
-            for (Iterator<Show> iterator = shows.iterator(); iterator.hasNext();) {
+        synchronized (this.shows) {
+            for (Iterator<Show> iterator = this.shows.iterator(); iterator.hasNext();) {
                 Show show = iterator.next();
                 show.tick();
 
-                if (show.isDone()) {
+                if (show.isDone())
                     iterator.remove();
-                }
             }
         }
     }

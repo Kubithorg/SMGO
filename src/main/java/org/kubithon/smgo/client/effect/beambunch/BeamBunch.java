@@ -8,16 +8,11 @@ import static org.kubithon.smgo.client.utils.Maths.toRadians;
 import static org.lwjgl.opengl.GL11.GL_LINES;
 
 import org.kubithon.smgo.client.effect.Effect;
-import org.kubithon.smgo.client.utils.Maths;
 import org.kubithon.smgo.client.utils.RenderUtils;
-import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.MathHelper;
-
 
 public class BeamBunch extends Effect<BeamBunchParameters> {
     public BeamBunch(BeamBunchParameters parameters) {
@@ -28,19 +23,19 @@ public class BeamBunch extends Effect<BeamBunchParameters> {
     public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
         GlStateManager.pushAttrib();
         GlStateManager.disableTexture2D();
-        GlStateManager.glLineWidth(parameters.getLineWidth());
-        RenderUtils.color(parameters.getColor());
+        GlStateManager.glLineWidth(this.parameters.getLineWidth());
+        RenderUtils.color(this.parameters.getColor());
         vertexbuffer.begin(GL_LINES, POSITION);
 
         float angle, endX, endY, endZ;
 
-        for (int i = 0; i < parameters.getAmount(); i++) {
-            angle = i * (PI / parameters.getAmount()) + toRadians(parameters.getSpeed() * age);
-            endX = x + cos(angle) * parameters.getBeamsLength();
-            endY = y + sin(parameters.getAngle()) * parameters.getBeamsLength();
-            endZ = z + sin(angle) * parameters.getBeamsLength();
+        for (int i = 0; i < this.parameters.getAmount(); i++) {
+            angle = i * (PI / this.parameters.getAmount()) + toRadians(this.parameters.getSpeed() * this.age);
+            endX = this.x + cos(angle) * this.parameters.getBeamsLength();
+            endY = this.y + sin(this.parameters.getAngle()) * this.parameters.getBeamsLength();
+            endZ = this.z + sin(angle) * this.parameters.getBeamsLength();
 
-            vertexbuffer.pos(x, y, z).endVertex();
+            vertexbuffer.pos(this.x, this.y, this.z).endVertex();
             vertexbuffer.pos(endX, endY, endZ).endVertex();
         }
 

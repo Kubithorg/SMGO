@@ -5,7 +5,6 @@ import org.kubithon.smgo.client.utils.Color;
 
 import com.google.gson.annotations.SerializedName;
 
-
 public class BeamBunchParameters extends EffectParameters {
     /**
      * Amount of beams in this bunch.
@@ -44,26 +43,26 @@ public class BeamBunchParameters extends EffectParameters {
     private float lineWidth;
 
     public float getSpeed() {
-        return speed;
+        return this.speed;
     }
 
     public int getAmount() {
-        return amount;
+        return this.amount;
     }
 
     public float getAngle() {
-        return angle;
+        return this.angle;
     }
 
     public Color getColor() {
-        return color;
+        return this.color;
     }
 
     public float getBeamsLength() {
-        return beamsLength;
+        return this.beamsLength;
     }
 
     public float getLineWidth() {
-        return lineWidth;
+        return this.lineWidth;
     }
 }

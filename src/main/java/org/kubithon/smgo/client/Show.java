@@ -1,7 +1,10 @@
 package org.kubithon.smgo.client;
 
+import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerX;
+import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerY;
+import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerZ;
+
 import java.util.ArrayList;
-import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,62 +18,56 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 
-
 public class Show {
     private List<Effect<?>> effects;
-    private ShowInfos showInfos;
-    private int time;
-    private boolean isPaused;
-    private double x, y, z;
+    private ShowInfos       showInfos;
+    private int             time;
+    private boolean         isPaused;
+    private double          x, y, z;
 
     public Show(ShowInfos infos, double x, double y, double z) {
         this.showInfos = infos;
-        effects = new ArrayList<Effect<?>>();
-        isPaused = false;
-        time = 0;
+        this.effects = new ArrayList<>();
+        this.isPaused = false;
+        this.time = 0;
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
     public void reset() {
-        effects.clear();
+        this.effects.clear();
     }
 
     private Map<Integer, List<EffectInfos>> timeline() {
-        return showInfos.getTimeline();
+        return this.showInfos.getTimeline();
     }
 
     public void tick() {
-        if (!isPaused) {
-            for (Iterator<Effect<?>> iterator = effects.iterator(); iterator.hasNext();) {
+        if (!this.isPaused) {
+            for (Iterator<Effect<?>> iterator = this.effects.iterator(); iterator.hasNext();) {
                 Effect<?> effect = iterator.next();
 
-                if (effect.shouldBeRemoved()) {
+                if (effect.shouldBeRemoved())
                     iterator.remove();
-                }
-                else {
+                else
                     effect.tick(this);
-                }
             }
 
-            if (timeline().containsKey(time)) {
-                for (Iterator<EffectInfos> iterator = timeline().get(time)
-                                                                .iterator(); iterator.hasNext();) {
+            if (this.timeline().containsKey(this.time))
+                for (Iterator<EffectInfos> iterator = this.timeline().get(this.time).iterator(); iterator.hasNext();) {
                     EffectInfos effectInfos = iterator.next();
 
-                    addEffect(effectInfos.buildEffect());
+                    this.addEffect(effectInfos.buildEffect());
                 }
-            }
 
-            time++;
+            this.time++;
         }
     }
 
     public void addEffect(Effect<?> effect) {
-        if (effect != null) {
-            effects.add(effect);
-        }
+        if (effect != null)
+            this.effects.add(effect);
     }
 
     public void render(float partialTicks) {
@@ -78,14 +75,14 @@ public class Show {
         VertexBuffer vertexbuffer = tessellator.getBuffer();
 
         GlStateManager.pushMatrix();
-        GlStateManager.translate(x - staticPlayerX, y - staticPlayerY, z - staticPlayerZ);
+        GlStateManager.translate(this.x - staticPlayerX, this.y - staticPlayerY, this.z - staticPlayerZ);
 
         RenderHelper.disableStandardItemLighting();
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.enableBlend();
         GlStateManager.disableCull();
 
-        for (Iterator<Effect<?>> iterator = effects.iterator(); iterator.hasNext();) {
+        for (Iterator<Effect<?>> iterator = this.effects.iterator(); iterator.hasNext();) {
             Effect<?> effect = iterator.next();
 
             effect.render(tessellator, vertexbuffer, partialTicks);

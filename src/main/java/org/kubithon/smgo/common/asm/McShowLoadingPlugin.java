@@ -4,12 +4,11 @@ import java.util.Map;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
-
 public class McShowLoadingPlugin implements IFMLLoadingPlugin {
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[] {McShowClassTransformer.class.getName()};
+        return new String[] { McShowClassTransformer.class.getName() };
     }
 
     @Override

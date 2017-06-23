@@ -10,7 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-
 public class ClientProxy extends CommonProxy {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
@@ -24,24 +23,22 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void registerItemTexture(Item item, int metadata, String name) {
-        ItemModelMesher mesher = Minecraft.getMinecraft()
-                                          .getRenderItem()
-                                          .getItemModelMesher();
+        ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
         mesher.register(item, metadata, new ModelResourceLocation(Smgo.MODID + ":" + name, "inventory"));
     }
 
     @Override
     public void registerItemTexture(Item item, String name) {
-        registerItemTexture(item, 0, name);
+        this.registerItemTexture(item, 0, name);
     }
 
     @Override
     public void registerBlockTexture(Block block, int metadata, String name) {
-        registerItemTexture(Item.getItemFromBlock(block), metadata, name);
+        this.registerItemTexture(Item.getItemFromBlock(block), metadata, name);
     }
 
     @Override
     public void registerBlockTexture(Block block, String name) {
-        registerBlockTexture(block, 0, name);
+        this.registerBlockTexture(block, 0, name);
     }
 }

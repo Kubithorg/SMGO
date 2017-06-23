@@ -6,7 +6,6 @@ import org.kubithon.smgo.client.utils.Expression;
 
 import com.google.gson.annotations.SerializedName;
 
-
 public class TorusParameters extends EffectParameters {
     /**
      * The radius "R" of the torus. Represents the biggest circle.
@@ -19,7 +18,7 @@ public class TorusParameters extends EffectParameters {
      */
     @SerializedName("smallCircleRadius")
     private Expression smallCircleRadius;
-    
+
     private int amountOfRings;
     private int amountOfSides;
 
@@ -30,22 +29,22 @@ public class TorusParameters extends EffectParameters {
     private Color color;
 
     public float getBigCircleRadius() {
-        return bigCircleRadius;
+        return this.bigCircleRadius;
     }
 
     public Expression getSmallCircleRadius() {
-        return smallCircleRadius;
+        return this.smallCircleRadius;
     }
 
     public Color getColor() {
-        return color;
+        return this.color;
     }
 
     public int getAmountOfRings() {
-        return amountOfRings;
+        return this.amountOfRings;
     }
 
     public int getAmountOfSides() {
-        return amountOfSides;
+        return this.amountOfSides;
     }
 }

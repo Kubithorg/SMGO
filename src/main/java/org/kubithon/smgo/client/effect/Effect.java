@@ -8,11 +8,11 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-
 /**
  * Represents an actual effect in the world.
  *
- * @param <P> The parameters type.
+ * @param <P>
+ *            The parameters type.
  */
 public abstract class Effect<P extends EffectParameters> {
     /**
@@ -56,48 +56,48 @@ public abstract class Effect<P extends EffectParameters> {
      * @return The parameters of this effect
      */
     public P getParameters() {
-        return parameters;
+        return this.parameters;
     }
 
     /**
      * Updates this effect.
      */
     public void tick(Show show) {
-        if (age++ == parameters.getMaxAge()) {
-            setShouldBeRemoved(true);
-        }
+        if (this.age++ == this.parameters.getMaxAge())
+            this.setShouldBeRemoved(true);
 
-        x = eval(parameters.getX());
-        y = eval(parameters.getY());
-        z = eval(parameters.getZ());
+        this.x = this.eval(this.parameters.getX());
+        this.y = this.eval(this.parameters.getY());
+        this.z = this.eval(this.parameters.getZ());
     }
 
     /**
      * Passes this effect usual parameters to the given {@link Expression}, and
      * evaluates it.
-     * 
-     * @param expr The expression to be evaluated in this {@link Effect} context
+     *
+     * @param expr
+     *            The expression to be evaluated in this {@link Effect} context
      * @return The {@link Expression} value
      * @see Effect#passParams(Expression)
      * @see Expression#eval()
      */
     protected float eval(Expression expr) {
-        return passParams(expr).eval();
+        return this.passParams(expr).eval();
     }
 
     /**
      * Passes the usual parameters to the given {@link Expression}. You can
      * override this, but don't forget to call {@code super.passParams(expr)} or
      * you shall get unpredictable results.
-     * 
-     * @param expr The {@link Expression} to pass parameters to
+     *
+     * @param expr
+     *            The {@link Expression} to pass parameters to
      * @return The {@link Expression} with newly set parameters
      * @see Expression#with(String, float)
      */
     protected Expression passParams(Expression expr) {
-        return expr.with("age", age)
-                   .with("maxAge", getParameters().getMaxAge())
-                   .with("ageRatio", age / (float) getParameters().getMaxAge());
+        return expr.with("age", this.age).with("maxAge", this.getParameters().getMaxAge()).with("ageRatio",
+                this.age / (float) this.getParameters().getMaxAge());
     }
 
     /**
@@ -105,15 +105,16 @@ public abstract class Effect<P extends EffectParameters> {
      *         world.
      */
     public boolean shouldBeRemoved() {
-        return shouldBeRemoved;
+        return this.shouldBeRemoved;
     }
 
     /**
      * Set to {@code true} whenever this effect should be removed from the
      * world.
-     * 
-     * @param shouldBeRemoved {@code true} if this effect should be removed,
-     *        {@code false} otherwise
+     *
+     * @param shouldBeRemoved
+     *            {@code true} if this effect should be removed, {@code false}
+     *            otherwise
      */
     public void setShouldBeRemoved(boolean shouldBeRemoved) {
         this.shouldBeRemoved = shouldBeRemoved;

@@ -18,20 +18,19 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-
 @Mod(modid = Smgo.MODID)
 public class Smgo {
     public static final String MODID = "smgo";
 
     @Instance(MODID)
-    public static Smgo instance;
+    public static Smgo   instance;
     public static Logger logger;
 
     @SidedProxy(clientSide = "org.kubithon.smgo.proxy.ClientProxy", serverSide = "org.kubithon.smgo.proxy.ServerProxy")
     public static CommonProxy proxy;
 
-    public static Block showTable;
-    public static Item showTableItem;
+    public static Block        showTable;
+    public static Item         showTableItem;
     public static ShowsManager showsManager;
 
     @EventHandler
@@ -47,12 +46,11 @@ public class Smgo {
         showsManager = new ShowsManager();
         MinecraftForge.EVENT_BUS.register(showsManager);
 
-        showTable = new BlockShowTable().setUnlocalizedName("show_table")
-                                        .setRegistryName("show_table")
-                                        .setCreativeTab(CreativeTabs.MISC);
+        showTable = new BlockShowTable().setUnlocalizedName("show_table").setRegistryName("show_table")
+                .setCreativeTab(CreativeTabs.MISC);
 
         GameRegistry.register(showTable);
-        
+
         showTableItem = new ItemBlock(showTable).setRegistryName("show_table").setCreativeTab(CreativeTabs.MISC);
         GameRegistry.register(showTableItem);
         proxy.registerItemTexture(showTableItem, "show_table");

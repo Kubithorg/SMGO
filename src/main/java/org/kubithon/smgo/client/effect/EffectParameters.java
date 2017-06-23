@@ -4,7 +4,6 @@ import org.kubithon.smgo.client.utils.Expression;
 
 import com.google.gson.annotations.SerializedName;
 
-
 public class EffectParameters {
     /**
      * The expression of the function: age -> X position.
@@ -34,16 +33,19 @@ public class EffectParameters {
     /**
      * Instantiates a new effect parameters.
      */
-    public EffectParameters() {
-    }
+    public EffectParameters() {}
 
     /**
      * Instantiates a new effect parameters.
      *
-     * @param x The expression of the function: age -> X position
-     * @param y The expression of the function: age -> Y position
-     * @param z The expression of the function: age -> Z position
-     * @param maxAge The max age of this effect
+     * @param x
+     *            The expression of the function: age -> X position
+     * @param y
+     *            The expression of the function: age -> Y position
+     * @param z
+     *            The expression of the function: age -> Z position
+     * @param maxAge
+     *            The max age of this effect
      */
     public EffectParameters(Expression x, Expression y, Expression z, int maxAge) {
         this.x = x;
@@ -58,7 +60,7 @@ public class EffectParameters {
      * @return The expression of the function: age -> X position
      */
     public Expression getX() {
-        return x;
+        return this.x;
     }
 
     /**
@@ -67,7 +69,7 @@ public class EffectParameters {
      * @return The expression of the function: age -> Y position
      */
     public Expression getY() {
-        return y;
+        return this.y;
     }
 
     /**
@@ -76,7 +78,7 @@ public class EffectParameters {
      * @return The expression of the function: age -> Z position
      */
     public Expression getZ() {
-        return z;
+        return this.z;
     }
 
     /**
@@ -87,6 +89,6 @@ public class EffectParameters {
      *         from the world) in ticks
      */
     public int getMaxAge() {
-        return maxAge;
+        return this.maxAge;
     }
 }

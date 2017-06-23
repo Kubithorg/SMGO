@@ -18,16 +18,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-
-public class BlockShowTable extends Block{
+public class BlockShowTable extends Block {
     public BlockShowTable() {
         super(Material.GLASS);
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-    	
-    	ShowInfos showInfos = ShowInfos.read(new ResourceLocation(Smgo.MODID, "show/show_test.json"));
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+            EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+
+        ShowInfos showInfos = ShowInfos.read(new ResourceLocation(Smgo.MODID, "show/show_test.json"));
         Show currentShow = new Show(showInfos, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 
         Smgo.showsManager.startShow(currentShow);
@@ -44,10 +44,12 @@ public class BlockShowTable extends Block{
      * Used to determine ambient occlusion and culling when rebuilding chunks
      * for render
      */
+    @Override
     public boolean isOpaqueCube(IBlockState state) {
         return true;
     }
 
+    @Override
     public boolean isFullCube(IBlockState state) {
         return true;
     }

@@ -9,11 +9,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
-
 /**
  * Contains enough information to build an {@link Effect} object : effect type
  * identifier and parameters. This class is not to be overridden.
- * 
+ *
  * @author Wytrem
  */
 public final class EffectInfos {
@@ -39,29 +38,29 @@ public final class EffectInfos {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public EffectParameters getParameters() {
-        return parameters;
+        return this.parameters;
     }
 
     /**
      * @return A new {@link Effect} built on these infos.
      */
     public Effect<?> buildEffect() {
-        EffectType<?> effectType = EffectType.getTypeByIdentifier(type);
+        EffectType<?> effectType = EffectType.getTypeByIdentifier(this.type);
 
-        if (effectType == null) {
-            throw new IllegalArgumentException("Effect type '" + type + "' not found.");
-        }
+        if (effectType == null)
+            throw new IllegalArgumentException("Effect type '" + this.type + "' not found.");
 
-        return effectType.buildEffect(parameters);
+        return effectType.buildEffect(this.parameters);
     }
 
     public static class Deserializer implements JsonDeserializer<EffectInfos> {
         @Override
-        public EffectInfos deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public EffectInfos deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
             EffectInfos infos = new EffectInfos();
 
@@ -69,9 +68,8 @@ public final class EffectInfos {
 
             EffectType<? extends EffectParameters> effectType = EffectType.getTypeByIdentifier(infos.type);
 
-            if (effectType == null) {
+            if (effectType == null)
                 throw new IllegalArgumentException("Effect type '" + infos.type + "' not found.");
-            }
 
             infos.parameters = context.deserialize(jsonObject.get("parameters"), effectType.getParametersClass());
 
@@ -81,6 +79,6 @@ public final class EffectInfos {
 
     @Override
     public String toString() {
-        return "EffectInfos [type=" + type + ", parameters=" + parameters + "]";
+        return "EffectInfos [type=" + this.type + ", parameters=" + this.parameters + "]";
     }
 }

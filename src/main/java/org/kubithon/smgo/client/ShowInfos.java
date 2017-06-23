@@ -18,7 +18,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.util.ResourceLocation;
 
-
 public class ShowInfos {
     /**
      * This show's name.
@@ -38,30 +37,28 @@ public class ShowInfos {
     }
 
     public Map<Integer, List<EffectInfos>> getTimeline() {
-        return timeline;
+        return this.timeline;
     }
 
     @Override
     public String toString() {
-        return "ShowInfos [name=" + name + ", timeline=" + timeline + "]";
+        return "ShowInfos [name=" + this.name + ", timeline=" + this.timeline + "]";
     }
 
     public static ShowInfos read(ResourceLocation resourceIn) {
-    	IResource iResource = null;
-    	InputStream stream = null;
+        IResource iResource = null;
+        InputStream stream = null;
         try {
-        	iResource = Minecraft.getMinecraft().getResourceManager().getResource(resourceIn);
-        	stream = new BufferedInputStream(iResource.getInputStream());
+            iResource = Minecraft.getMinecraft().getResourceManager().getResource(resourceIn);
+            stream = new BufferedInputStream(iResource.getInputStream());
             StringWriter writer = new StringWriter();
             IOUtils.copy(stream, writer, "UTF-8");
             String theString = writer.toString();
 
             return Json.GSON.fromJson(theString, ShowInfos.class);
-        }
-        catch (JsonSyntaxException e) {
+        } catch (JsonSyntaxException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

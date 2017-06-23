@@ -6,7 +6,6 @@ import org.kubithon.smgo.client.utils.Expression;
 
 import com.google.gson.annotations.SerializedName;
 
-
 public class BeamParameters extends EffectParameters {
     @SerializedName("color")
     private Color color;
@@ -21,18 +20,18 @@ public class BeamParameters extends EffectParameters {
     private Expression endZ;
 
     public Color getColor() {
-        return color;
+        return this.color;
     }
 
     public Expression getEndX() {
-        return endX;
+        return this.endX;
     }
 
     public Expression getEndY() {
-        return endY;
+        return this.endY;
     }
 
     public Expression getEndZ() {
-        return endZ;
+        return this.endZ;
     }
 }
