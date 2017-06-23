@@ -1,5 +1,6 @@
 package org.kubithon.smgo.client;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -12,6 +13,10 @@ import org.kubithon.smgo.client.utils.Json;
 
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.SerializedName;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IResource;
+import net.minecraft.util.ResourceLocation;
 
 
 public class ShowInfos {
@@ -41,8 +46,12 @@ public class ShowInfos {
         return "ShowInfos [name=" + name + ", timeline=" + timeline + "]";
     }
 
-    public static ShowInfos read(InputStream stream) {
+    public static ShowInfos read(ResourceLocation resourceIn) {
+    	IResource iResource = null;
+    	InputStream stream = null;
         try {
+        	iResource = Minecraft.getMinecraft().getResourceManager().getResource(resourceIn);
+        	stream = new BufferedInputStream(iResource.getInputStream());
             StringWriter writer = new StringWriter();
             IOUtils.copy(stream, writer, "UTF-8");
             String theString = writer.toString();

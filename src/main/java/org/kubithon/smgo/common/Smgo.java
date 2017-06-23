@@ -3,7 +3,6 @@ package org.kubithon.smgo.common;
 import org.apache.logging.log4j.Logger;
 import org.kubithon.smgo.client.ShowsManager;
 import org.kubithon.smgo.common.block.BlockShowTable;
-import org.kubithon.smgo.common.tileEntity.TileEntityShowTable;
 import org.kubithon.smgo.proxy.CommonProxy;
 
 import net.minecraft.block.Block;
@@ -57,9 +56,6 @@ public class Smgo {
         showTableItem = new ItemBlock(showTable).setRegistryName("show_table").setCreativeTab(CreativeTabs.MISC);
         GameRegistry.register(showTableItem);
         proxy.registerItemTexture(showTableItem, "show_table");
-            
-        
-        GameRegistry.registerTileEntity(TileEntityShowTable.class, "tileEntityShowTable");
     }
 
 }
