@@ -3,6 +3,7 @@ package org.kubithon.smgo.common;
 import org.apache.logging.log4j.Logger;
 import org.kubithon.smgo.client.ShowsManager;
 import org.kubithon.smgo.common.block.BlockShowTable;
+import org.kubithon.smgo.common.command.CommandStartShow;
 import org.kubithon.smgo.proxy.CommonProxy;
 
 import net.minecraft.block.Block;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = Smgo.MODID)
@@ -54,6 +56,11 @@ public class Smgo {
         showTableItem = new ItemBlock(showTable).setRegistryName("show_table").setCreativeTab(CreativeTabs.MISC);
         GameRegistry.register(showTableItem);
         proxy.registerItemTexture(showTableItem, "show_table");
+    }
+
+    @EventHandler
+    public void serverStart(FMLServerStartingEvent e) {
+        e.registerServerCommand(new CommandStartShow());
     }
 
 }
