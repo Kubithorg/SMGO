@@ -9,6 +9,8 @@ import org.kubithon.smgo.client.Show;
 import org.kubithon.smgo.client.ShowInfos;
 import org.kubithon.smgo.common.Smgo;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -53,6 +55,18 @@ public class CommandStartShow extends CommandBase {
     @Override
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
             @Nullable BlockPos pos) {
+        List<String> list = Lists.<String>newArrayList();
+        switch (args.length) {
+        case 1:
+            list.add(String.valueOf((int) sender.getPositionVector().xCoord));
+            return list;
+        case 2:
+            list.add(String.valueOf((int) sender.getPositionVector().yCoord));
+            return list;
+        case 3:
+            list.add(String.valueOf((int) sender.getPositionVector().zCoord));
+            return list;
+        }
         return Collections.<String>emptyList();
     }
 
