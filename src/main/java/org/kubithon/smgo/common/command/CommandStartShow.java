@@ -18,6 +18,7 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommandStartShow extends CommandBase {
     private static final String NAME  = "startshow";
@@ -44,9 +45,7 @@ public class CommandStartShow extends CommandBase {
             } catch (NumberFormatException e) {
                 throw new WrongUsageException(USAGE + "\nx, y or z is not a number.");
             }
-            ResourceLocation resource = new ResourceLocation(args[3]);
-
-            ShowInfos showInfos = ShowInfos.read(resource);
+            ShowInfos showInfos = GameRegistry.findRegistry(ShowInfos.class).getValue(new ResourceLocation(args[3]));
             Smgo.showsManager.startShow(new Show(showInfos, x + 0.5, y + 0.5, z + 0.5));
         } else
             throw new WrongUsageException(USAGE + "\nWrong number of arguments.");
@@ -66,6 +65,8 @@ public class CommandStartShow extends CommandBase {
         case 3:
             list.add(String.valueOf((int) sender.getPositionVector().zCoord));
             return list;
+        case 4:
+            return getListOfStringsMatchingLastWord(args, GameRegistry.findRegistry(ShowInfos.class).getKeys());
         }
         return Collections.<String>emptyList();
     }
