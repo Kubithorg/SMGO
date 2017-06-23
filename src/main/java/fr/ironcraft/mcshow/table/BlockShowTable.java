@@ -58,11 +58,6 @@ public class BlockShowTable extends BlockContainer {
     }
 
     @Override
-    public boolean isVisuallyOpaque() {
-        return true;
-    }
-
-    @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
