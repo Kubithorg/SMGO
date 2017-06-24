@@ -1,13 +1,6 @@
 package org.kubithon.smgo.client.effect;
 
-import java.lang.reflect.Type;
-
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Contains enough information to build an {@link Effect} object : effect type
@@ -19,22 +12,27 @@ public final class EffectInfos {
     /**
      * The identifier for the type of an {@link Effect} built from these infos.
      */
-    @SerializedName("type")
     private String type;
 
     /**
      * The parameters to be applied on an {@link Effect} built from these infos.
      */
-    @SerializedName("parameters")
     private EffectParameters parameters;
 
-    private EffectInfos() {
+    protected EffectInfos(JsonObject jsonObject) {
+        this.type = jsonObject.get("type").getAsString();
 
-    }
+        EffectType<? extends EffectParameters> effectType = EffectType.getTypeByIdentifier(this.type);
 
-    public EffectInfos(String type, EffectParameters parameters) {
-        this.type = type;
-        this.parameters = parameters;
+        if (effectType == null)
+            throw new IllegalArgumentException("Effect type '" + this.type + "' not found.");
+
+        try {
+            this.parameters = (EffectParameters) effectType.getParametersClass().getMethod("read", JsonObject.class)
+                    .invoke(null, jsonObject.get("parameters").getAsJsonObject());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getType() {
@@ -57,24 +55,8 @@ public final class EffectInfos {
         return effectType.buildEffect(this.parameters);
     }
 
-    public static class Deserializer implements JsonDeserializer<EffectInfos> {
-        @Override
-        public EffectInfos deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-                throws JsonParseException {
-            JsonObject jsonObject = json.getAsJsonObject();
-            EffectInfos infos = new EffectInfos();
-
-            infos.type = jsonObject.get("type").getAsString();
-
-            EffectType<? extends EffectParameters> effectType = EffectType.getTypeByIdentifier(infos.type);
-
-            if (effectType == null)
-                throw new IllegalArgumentException("Effect type '" + infos.type + "' not found.");
-
-            infos.parameters = context.deserialize(jsonObject.get("parameters"), effectType.getParametersClass());
-
-            return infos;
-        }
+    public static EffectInfos read(JsonObject jsonObject) {
+        return new EffectInfos(jsonObject);
     }
 
     @Override
