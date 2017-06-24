@@ -1413,19 +1413,4 @@ public class Expression {
         }
         return result;
     }
-
-    public static class JsonAdapter implements JsonDeserializer<Expression>,
-                    JsonSerializer<Expression> {
-        @Override
-        public Expression deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            Expression expr = new Expression(json.getAsString());
-
-            return expr;
-        }
-
-        @Override
-        public JsonElement serialize(Expression src, Type typeOfSrc, JsonSerializationContext context) {
-            return new JsonPrimitive(src.expression);
-        }
-    }
 }

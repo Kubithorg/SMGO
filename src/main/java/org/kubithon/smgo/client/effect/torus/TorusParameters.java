@@ -4,19 +4,17 @@ import org.kubithon.smgo.client.effect.EffectParameters;
 import org.kubithon.smgo.client.utils.Color;
 import org.kubithon.smgo.client.utils.Expression;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.JsonObject;
 
 public class TorusParameters extends EffectParameters {
     /**
      * The radius "R" of the torus. Represents the biggest circle.
      */
-    @SerializedName("bigCircleRadius")
     private float bigCircleRadius;
 
     /**
      * The radius "r" of the torus. Represents the smallest circle.
      */
-    @SerializedName("smallCircleRadius")
     private Expression smallCircleRadius;
 
     private int amountOfRings;
@@ -25,8 +23,16 @@ public class TorusParameters extends EffectParameters {
     /**
      * The color of the torus.
      */
-    @SerializedName("color")
     private Color color;
+
+    protected TorusParameters(JsonObject jsonObject) {
+        super(jsonObject);
+        this.bigCircleRadius = jsonObject.get("bigCircleRadius").getAsFloat();
+        this.smallCircleRadius = readExpression(jsonObject.get("smallCircleRadius"));
+        this.amountOfRings = jsonObject.get("amountOfRings").getAsInt();
+        this.amountOfSides = jsonObject.get("amountOfSides").getAsInt();
+        this.color = new Color(Integer.parseUnsignedInt(jsonObject.get("color").getAsString(), 16));
+    }
 
     public float getBigCircleRadius() {
         return this.bigCircleRadius;
@@ -46,5 +52,9 @@ public class TorusParameters extends EffectParameters {
 
     public int getAmountOfSides() {
         return this.amountOfSides;
+    }
+
+    public static TorusParameters read(JsonObject jsonObject) {
+        return new TorusParameters(jsonObject);
     }
 }

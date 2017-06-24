@@ -2,38 +2,40 @@ package org.kubithon.smgo.client.effect;
 
 import org.kubithon.smgo.client.utils.Expression;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class EffectParameters {
     /**
      * The expression of the function: age -> X position.
      */
-    @SerializedName("x")
     private Expression x;
 
     /**
      * The expression of the function: age -> Y position.
      */
-    @SerializedName("y")
     private Expression y;
 
     /**
      * The expression of the function: age -> Z position.
      */
-    @SerializedName("z")
     private Expression z;
 
     /**
      * The max age of this effect (its lifetime before it gets removed from the
      * world) in ticks.
      */
-    @SerializedName("maxAge")
     private int maxAge;
 
     /**
      * Instantiates a new effect parameters.
      */
-    public EffectParameters() {}
+    protected EffectParameters(JsonObject jsonObject) {
+        this.x = readExpression(jsonObject.get("x"));
+        this.y = readExpression(jsonObject.get("y"));
+        this.z = readExpression(jsonObject.get("z"));
+        this.maxAge = jsonObject.get("maxAge").getAsInt();
+    }
 
     /**
      * Instantiates a new effect parameters.
@@ -90,5 +92,13 @@ public class EffectParameters {
      */
     public int getMaxAge() {
         return this.maxAge;
+    }
+
+    public static EffectParameters read(JsonObject jsonObject) {
+        return new EffectParameters(jsonObject);
+    }
+
+    public static Expression readExpression(JsonElement jsonEl) {
+        return new Expression(jsonEl.getAsString());
     }
 }
