@@ -14,7 +14,7 @@
 					"maxAge": 600,
 					"color": "ffff8899",
 					"bigCircleRadius": 10.0,
-					"smallCircleRadius": "abs(cos(angle/2 + age * PI / 100)) + 0.5",
+					"smallCircleRadius": "ABS(COS(angle/2 + age * PI / 100)) + 0.5",
 					"amountOfRings": 32,
 					"amountOfSides": 32
 				}

@@ -1,8 +1,8 @@
 package org.kubithon.smgo.client.effect.torus;
 
 import org.kubithon.smgo.client.effect.EffectParameters;
+import org.kubithon.smgo.client.math.IExpression;
 import org.kubithon.smgo.client.utils.Color;
-import org.kubithon.smgo.client.utils.Expression;
 
 import com.google.gson.JsonObject;
 
@@ -15,7 +15,7 @@ public class TorusParameters extends EffectParameters {
     /**
      * The radius "r" of the torus. Represents the smallest circle.
      */
-    private Expression smallCircleRadius;
+    private IExpression smallCircleRadius;
 
     private int amountOfRings;
     private int amountOfSides;
@@ -38,7 +38,7 @@ public class TorusParameters extends EffectParameters {
         return this.bigCircleRadius;
     }
 
-    public Expression getSmallCircleRadius() {
+    public IExpression getSmallCircleRadius() {
         return this.smallCircleRadius;
     }
 

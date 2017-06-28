@@ -23,9 +23,9 @@ public class Beam extends Effect<BeamParameters> {
     public void tick(Show show) {
         super.tick(show);
 
-        this.endX = this.eval(this.parameters.getEndX());
-        this.endY = this.eval(this.parameters.getEndY());
-        this.endZ = this.eval(this.parameters.getEndZ());
+        this.endX = this.parameters.getEndX().getValue();
+        this.endY = this.parameters.getEndY().getValue();
+        this.endZ = this.parameters.getEndZ().getValue();
     }
 
     @Override

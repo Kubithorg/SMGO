@@ -1,11 +1,11 @@
 package org.kubithon.smgo.client.effect.tester;
 
 import org.kubithon.smgo.client.effect.EffectParameters;
-import org.kubithon.smgo.client.utils.Expression;
+import org.kubithon.smgo.client.math.IExpression;
 
 public class TesterParameters extends EffectParameters {
 
-    public TesterParameters(Expression x, Expression y, Expression z, int maxAge) {
+    public TesterParameters(IExpression x, IExpression y, IExpression z, int maxAge) {
         super(x, y, z, maxAge);
     }
 }

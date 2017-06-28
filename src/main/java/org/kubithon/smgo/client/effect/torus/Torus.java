@@ -2,10 +2,9 @@ package org.kubithon.smgo.client.effect.torus;
 
 import static net.minecraft.util.math.MathHelper.cos;
 import static net.minecraft.util.math.MathHelper.sin;
-import static org.kubithon.smgo.client.utils.Maths.TWO_PI;
 
 import org.kubithon.smgo.client.effect.Effect;
-import org.kubithon.smgo.client.utils.Expression;
+import org.kubithon.smgo.client.math.IExpression;
 import org.kubithon.smgo.client.utils.RenderUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -36,19 +35,22 @@ public class Torus extends Effect<TorusParameters> {
         GlStateManager.enableTexture2D();
     }
 
-    void putTorus(Expression smallCircleRadius, float R, int nsides, int rings, VertexBuffer buffer) {
+    void putTorus(IExpression smallCircleRadius, float R, int nsides, int rings, VertexBuffer buffer) {
         float r, nextR;
-        float ringDelta = TWO_PI / rings;
-        float sideDelta = TWO_PI / nsides;
+        float ringDelta = (float) (2 * Math.PI / rings);
+        float sideDelta = (float) (2 * Math.PI / nsides);
         float theta = 0.0f, cosTheta = 1.0f, sinTheta = 0.0f;
+        smallCircleRadius.setVariable("age", this.age);
         for (int i = rings - 1; i >= 0; i--) {
             float theta1 = theta + ringDelta;
             float cosTheta1 = cos(theta1);
             float sinTheta1 = sin(theta1);
             float phi = 0.0f;
 
-            r = this.eval(smallCircleRadius.with("angle", theta));
-            nextR = this.eval(smallCircleRadius.with("angle", theta1));
+            smallCircleRadius.setVariable("angle", theta);
+            r = smallCircleRadius.getValue();
+            smallCircleRadius.setVariable("angle", theta1);
+            nextR = smallCircleRadius.getValue();
 
             for (int j = nsides; j >= 0; j--) {
                 phi += sideDelta;
