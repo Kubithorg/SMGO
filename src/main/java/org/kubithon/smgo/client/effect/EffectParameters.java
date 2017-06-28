@@ -1,6 +1,7 @@
 package org.kubithon.smgo.client.effect;
 
-import org.kubithon.smgo.client.utils.Expression;
+import org.kubithon.smgo.client.math.ExpressionReader;
+import org.kubithon.smgo.client.math.IExpression;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,17 +10,17 @@ public class EffectParameters {
     /**
      * The expression of the function: age -> X position.
      */
-    private Expression x;
+    private IExpression x;
 
     /**
      * The expression of the function: age -> Y position.
      */
-    private Expression y;
+    private IExpression y;
 
     /**
      * The expression of the function: age -> Z position.
      */
-    private Expression z;
+    private IExpression z;
 
     /**
      * The max age of this effect (its lifetime before it gets removed from the
@@ -49,7 +50,7 @@ public class EffectParameters {
      * @param maxAge
      *            The max age of this effect
      */
-    public EffectParameters(Expression x, Expression y, Expression z, int maxAge) {
+    public EffectParameters(IExpression x, IExpression y, IExpression z, int maxAge) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -61,7 +62,7 @@ public class EffectParameters {
      *
      * @return The expression of the function: age -> X position
      */
-    public Expression getX() {
+    public IExpression getX() {
         return this.x;
     }
 
@@ -70,7 +71,7 @@ public class EffectParameters {
      *
      * @return The expression of the function: age -> Y position
      */
-    public Expression getY() {
+    public IExpression getY() {
         return this.y;
     }
 
@@ -79,7 +80,7 @@ public class EffectParameters {
      *
      * @return The expression of the function: age -> Z position
      */
-    public Expression getZ() {
+    public IExpression getZ() {
         return this.z;
     }
 
@@ -98,7 +99,7 @@ public class EffectParameters {
         return new EffectParameters(jsonObject);
     }
 
-    public static Expression readExpression(JsonElement jsonEl) {
-        return new Expression(jsonEl.getAsString());
+    public static IExpression readExpression(JsonElement jsonEl) {
+        return ExpressionReader.read(jsonEl.getAsString());
     }
 }

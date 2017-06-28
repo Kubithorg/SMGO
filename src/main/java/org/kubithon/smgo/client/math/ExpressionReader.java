@@ -111,7 +111,7 @@ public class ExpressionReader {
                     if (index > border[0] && index < border[1])
                         continue;
                 try {
-                    return new Operation(str, index, op);
+                    return new Operation(str, index, op).optimize();
                 } catch (Exception e) {}
             }
         }

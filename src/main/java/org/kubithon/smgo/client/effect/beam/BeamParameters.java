@@ -1,17 +1,17 @@
 package org.kubithon.smgo.client.effect.beam;
 
 import org.kubithon.smgo.client.effect.EffectParameters;
+import org.kubithon.smgo.client.math.IExpression;
 import org.kubithon.smgo.client.utils.Color;
-import org.kubithon.smgo.client.utils.Expression;
 
 import com.google.gson.JsonObject;
 
 public class BeamParameters extends EffectParameters {
     private Color color;
 
-    private Expression endX;
-    private Expression endY;
-    private Expression endZ;
+    private IExpression endX;
+    private IExpression endY;
+    private IExpression endZ;
 
     public Color getColor() {
         return this.color;
@@ -25,15 +25,15 @@ public class BeamParameters extends EffectParameters {
         this.endZ = readExpression(jsonObject.get("endZ"));
     }
 
-    public Expression getEndX() {
+    public IExpression getEndX() {
         return this.endX;
     }
 
-    public Expression getEndY() {
+    public IExpression getEndY() {
         return this.endY;
     }
 
-    public Expression getEndZ() {
+    public IExpression getEndZ() {
         return this.endZ;
     }
 

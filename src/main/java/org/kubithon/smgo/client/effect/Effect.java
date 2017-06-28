@@ -1,7 +1,7 @@
 package org.kubithon.smgo.client.effect;
 
 import org.kubithon.smgo.client.Show;
-import org.kubithon.smgo.client.utils.Expression;
+import org.kubithon.smgo.client.math.IExpression;
 
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -66,23 +66,13 @@ public abstract class Effect<P extends EffectParameters> {
         if (this.age++ == this.parameters.getMaxAge())
             this.setShouldBeRemoved(true);
 
-        this.x = this.eval(this.parameters.getX());
-        this.y = this.eval(this.parameters.getY());
-        this.z = this.eval(this.parameters.getZ());
-    }
+        this.passParams(this.parameters.getX());
+        this.passParams(this.parameters.getY());
+        this.passParams(this.parameters.getZ());
 
-    /**
-     * Passes this effect usual parameters to the given {@link Expression}, and
-     * evaluates it.
-     *
-     * @param expr
-     *            The expression to be evaluated in this {@link Effect} context
-     * @return The {@link Expression} value
-     * @see Effect#passParams(Expression)
-     * @see Expression#eval()
-     */
-    protected float eval(Expression expr) {
-        return this.passParams(expr).eval();
+        this.x = this.parameters.getX().getValue();
+        this.y = this.parameters.getY().getValue();
+        this.z = this.parameters.getZ().getValue();
     }
 
     /**
@@ -95,9 +85,10 @@ public abstract class Effect<P extends EffectParameters> {
      * @return The {@link Expression} with newly set parameters
      * @see Expression#with(String, float)
      */
-    protected Expression passParams(Expression expr) {
-        return expr.with("age", this.age).with("maxAge", this.getParameters().getMaxAge()).with("ageRatio",
-                this.age / (float) this.getParameters().getMaxAge());
+    protected void passParams(IExpression expr) {
+        expr.setVariable("age", this.age);
+        expr.setVariable("maxAge", this.getParameters().getMaxAge());
+        expr.setVariable("ageRatio", this.age / (float) this.getParameters().getMaxAge());
     }
 
     /**
