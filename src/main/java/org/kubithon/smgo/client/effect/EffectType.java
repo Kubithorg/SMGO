@@ -9,6 +9,8 @@ import org.kubithon.smgo.client.effect.beam.Beam;
 import org.kubithon.smgo.client.effect.beam.BeamParameters;
 import org.kubithon.smgo.client.effect.beambunch.BeamBunch;
 import org.kubithon.smgo.client.effect.beambunch.BeamBunchParameters;
+import org.kubithon.smgo.client.effect.surface.Surface;
+import org.kubithon.smgo.client.effect.surface.SurfaceParameters;
 import org.kubithon.smgo.client.effect.tester.Tester;
 import org.kubithon.smgo.client.effect.tester.TesterParameters;
 import org.kubithon.smgo.client.effect.torus.Torus;
@@ -37,6 +39,8 @@ public class EffectType<P extends EffectParameters> {
             BeamBunchParameters.class);
     public static final EffectType<TorusParameters>     TORUS      = new EffectType<>("Torus", Torus.class,
             TorusParameters.class);
+    public static final EffectType<SurfaceParameters>   SURFACE    = new EffectType<>("Surface", Surface.class,
+            SurfaceParameters.class);
 
     /**
      * The unique identifier for this effect type.
