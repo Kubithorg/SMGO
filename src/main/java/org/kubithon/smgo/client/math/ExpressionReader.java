@@ -57,6 +57,24 @@ public class ExpressionReader {
                 return Math.abs(leftExpr.getValue());
             }
         });
+        operators.add(new ALeftOperator("SQRT", -39) {
+            @Override
+            public float applyOperator(IExpression leftExpr) {
+                return (float) Math.sqrt(leftExpr.getValue());
+            }
+        });
+        operators.add(new ALeftOperator("ASN", -38) {
+            @Override
+            public float applyOperator(IExpression leftExpr) {
+                return (float) Math.asin(leftExpr.getValue());
+            }
+        });
+        operators.add(new ALeftOperator("ACS", -37) {
+            @Override
+            public float applyOperator(IExpression leftExpr) {
+                return (float) Math.acos(leftExpr.getValue());
+            }
+        });
 
         // Operators : Low Priority (43 -> 127)
         operators.add(new ALeftOperator("-", 43) {
@@ -65,7 +83,13 @@ public class ExpressionReader {
                 return -leftExpr.getValue();
             }
         });
-        operators.add(new AMiddleOperator("*", 44) {
+        operators.add(new AMiddleOperator("^", 44) {
+            @Override
+            public float applyOperator(IExpression leftExpr, IExpression rightExpr) {
+                return (float) Math.pow(leftExpr.getValue(), rightExpr.getValue());
+            }
+        });
+        operators.add(new AMiddleOperator("*", 46) {
             @Override
             public float applyOperator(IExpression leftExpr, IExpression rightExpr) {
                 return leftExpr.getValue() * rightExpr.getValue();
@@ -77,20 +101,19 @@ public class ExpressionReader {
                 return leftExpr.getValue() / rightExpr.getValue();
             }
         });
-        operators.add(new AMiddleOperator("%", 46) {
+        operators.add(new AMiddleOperator("%", 47) {
             @Override
             public float applyOperator(IExpression leftExpr, IExpression rightExpr) {
                 return leftExpr.getValue() % rightExpr.getValue();
             }
         });
-        // Priority Low
-        operators.add(new AMiddleOperator("+", 47) {
+        operators.add(new AMiddleOperator("+", 48) {
             @Override
             public float applyOperator(IExpression leftExpr, IExpression rightExpr) {
                 return leftExpr.getValue() + rightExpr.getValue();
             }
         });
-        operators.add(new AMiddleOperator("-", 48) {
+        operators.add(new AMiddleOperator("-", 49) {
             @Override
             public float applyOperator(IExpression leftExpr, IExpression rightExpr) {
                 return leftExpr.getValue() - rightExpr.getValue();
@@ -99,17 +122,23 @@ public class ExpressionReader {
     }
 
     public static IExpression read(String str) {
-        Integer inclusiveBlocks[][] = getInclusiveBlocks(str), index;
-
+        int index;
+        boolean flag;
         while ((index = str.indexOf(" ")) >= 0)
             str = str.substring(0, index) + str.substring(index + 1);
 
+        Integer inclusiveBlocks[][] = getInclusiveBlocks(str);
         for (AOperator op : operators) {
             index = -1;
             while ((index = str.indexOf(op.operator, index + 1)) >= 0) {
+                flag = false;
                 for (Integer[] border : inclusiveBlocks)
-                    if (index > border[0] && index < border[1])
+                    if (index > border[0] && index < border[1]) {
+                        flag = true;
                         continue;
+                    }
+                if (flag)
+                    continue;
                 try {
                     return new Operation(str, index, op).optimize();
                 } catch (Exception e) {}
