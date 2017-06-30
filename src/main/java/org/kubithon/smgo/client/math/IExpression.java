@@ -90,7 +90,7 @@ public interface IExpression {
 
         @Override
         public String toString() {
-            return String.valueOf(this.name);
+            return "'" + this.name + "'";
         }
     }
 

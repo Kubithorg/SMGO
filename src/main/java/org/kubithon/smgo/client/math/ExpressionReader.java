@@ -163,7 +163,7 @@ public class ExpressionReader {
                 index = str.lastIndexOf(workingStr) - op.operator.length();
                 while ((index2 = workingStr.indexOf(op.secondOperator)) >= (nextOpIndex = workingStr
                         .indexOf(op.operator)) && nextOpIndex >= 0 && index2 >= 0)
-                    workingStr = workingStr.substring(index2 + op.secondOperator.length());
+                    workingStr = workingStr.substring(index2 + op.secondOperator.length());// Attention
                 if (index2 < 0)
                     return null;
                 blocks.add(new Integer[] { index, str.lastIndexOf(workingStr) + index2 });

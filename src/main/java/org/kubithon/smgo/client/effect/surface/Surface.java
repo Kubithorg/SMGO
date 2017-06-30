@@ -22,6 +22,8 @@ public class Surface extends Effect<SurfaceParameters> {
         IExpression paramY = this.parameters.surfaceParamY;
         IExpression paramZ = this.parameters.surfaceParamZ;
 
+        paramX.setVariable("age", this.age);
+
         GlStateManager.disableTexture2D();
         RenderUtils.color(this.parameters.color);
         GlStateManager.glLineWidth(0.5f);
@@ -31,7 +33,7 @@ public class Surface extends Effect<SurfaceParameters> {
             paramX.setVariable("u", u);
             paramY.setVariable("u", u);
             paramZ.setVariable("u", u);
-            vertexbuffer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+            vertexbuffer.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION);
             for (float v = this.parameters.fromV; v < this.parameters.toV; v += (this.parameters.toV
                     - this.parameters.fromV) / this.parameters.partV) {
                 paramX.setVariable("v", v);
