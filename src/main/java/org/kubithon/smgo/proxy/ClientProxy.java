@@ -25,5 +25,9 @@ public class ClientProxy extends CommonProxy {
         GameRegistry.register(showInfos.setRegistryName(Smgo.MODID, "sphere"));
         showInfos = new JsonReader(new ResourceLocation(Smgo.MODID, "show/spherebeam.json")).readShowInfos();
         GameRegistry.register(showInfos.setRegistryName(Smgo.MODID, "spherebeam"));
+        showInfos = new JsonReader(new ResourceLocation(Smgo.MODID, "show/aureole.json")).readShowInfos();
+        GameRegistry.register(showInfos.setRegistryName(Smgo.MODID, "aureole"));
+        showInfos = new JsonReader(new ResourceLocation(Smgo.MODID, "show/quadstorm.json")).readShowInfos();
+        GameRegistry.register(showInfos.setRegistryName(Smgo.MODID, "quadstorm"));
     }
 }

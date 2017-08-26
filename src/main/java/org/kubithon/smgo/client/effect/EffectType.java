@@ -5,13 +5,19 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.kubithon.smgo.client.effect.aureole.Aureole;
+import org.kubithon.smgo.client.effect.aureole.AureoleParameters;
 import org.kubithon.smgo.client.effect.beam.Beam;
 import org.kubithon.smgo.client.effect.beam.BeamParameters;
 import org.kubithon.smgo.client.effect.beambunch.BeamBunch;
 import org.kubithon.smgo.client.effect.beambunch.BeamBunchParameters;
+import org.kubithon.smgo.client.effect.quadstorm.QuadStorm;
+import org.kubithon.smgo.client.effect.quadstorm.QuadStormParameters;
 import org.kubithon.smgo.client.effect.spherebeam.SphereBeam;
 import org.kubithon.smgo.client.effect.surface.Surface;
 import org.kubithon.smgo.client.effect.surface.SurfaceParameters;
+import org.kubithon.smgo.client.effect.sword.Sword;
+import org.kubithon.smgo.client.effect.sword.SwordParameters;
 import org.kubithon.smgo.client.effect.tester.Tester;
 import org.kubithon.smgo.client.effect.tester.TesterParameters;
 import org.kubithon.smgo.client.effect.torus.Torus;
@@ -44,6 +50,12 @@ public class EffectType<P extends EffectParameters> {
             SurfaceParameters.class);
     public static final EffectType<EffectParameters>    SPHEREBEAM = new EffectType<>("SphereBeam", SphereBeam.class,
             EffectParameters.class);
+    public static final EffectType<AureoleParameters>   AUREOLE    = new EffectType<>("Aureole", Aureole.class,
+            AureoleParameters.class);
+    public static final EffectType<SwordParameters>     SWORD      = new EffectType<>("Sword", Sword.class,
+            SwordParameters.class);
+    public static final EffectType<QuadStormParameters>     QUAD_STORM      = new EffectType<>("QuadStorm", QuadStorm.class,
+                    QuadStormParameters.class);
 
     /**
      * The unique identifier for this effect type.
@@ -141,6 +153,7 @@ public class EffectType<P extends EffectParameters> {
      *            The parameters to be passed to the {@link Effect} constructor
      * @return A newborn {@link Effect} of this type
      */
+    @SuppressWarnings("unchecked")
     public Effect<? extends P> buildEffect(EffectParameters parameters) {
         Objects.requireNonNull(parameters, "parameters cannot be null.");
 
@@ -175,7 +188,7 @@ public class EffectType<P extends EffectParameters> {
      * @return The type identified by the given {@code String}, or null if no
      *         type if registered for this identifier
      */
-    public static EffectType getTypeByIdentifier(String identifier) {
+    public static EffectType<?> getTypeByIdentifier(String identifier) {
         return typesRegistry.get(identifier);
     }
 }

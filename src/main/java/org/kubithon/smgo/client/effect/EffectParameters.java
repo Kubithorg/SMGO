@@ -6,6 +6,11 @@ import org.kubithon.smgo.client.math.IExpression;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+
+/**
+ * Every subclass should redefine a {@code static P read(JsonObject)} where
+ * {@code P} is the subclass type.
+ */
 public class EffectParameters {
     /**
      * The expression of the function: age -> X position.
@@ -41,14 +46,10 @@ public class EffectParameters {
     /**
      * Instantiates a new effect parameters.
      *
-     * @param x
-     *            The expression of the function: age -> X position
-     * @param y
-     *            The expression of the function: age -> Y position
-     * @param z
-     *            The expression of the function: age -> Z position
-     * @param maxAge
-     *            The max age of this effect
+     * @param x The expression of the function: age -> X position
+     * @param y The expression of the function: age -> Y position
+     * @param z The expression of the function: age -> Z position
+     * @param maxAge The max age of this effect
      */
     public EffectParameters(IExpression x, IExpression y, IExpression z, int maxAge) {
         this.x = x;

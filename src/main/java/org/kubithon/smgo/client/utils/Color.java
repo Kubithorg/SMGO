@@ -1502,6 +1502,10 @@ public class Color {
     public float getAlphaFloat() {
         return (this.alpha & MASK) / 255.0f;
     }
+    
+    public Color withAlpha(float alpha) {
+        return new Color(getRedFloat(), getGreenFloat(), getBlueFloat(), alpha);
+    }
 
     @Override
     public String toString() {
