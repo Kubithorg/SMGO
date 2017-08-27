@@ -153,24 +153,43 @@ public class ExpressionReader {
 
     public static Integer[][] getInclusiveBlocks(String str) {
         List<Integer[]> blocks = new ArrayList<>();
-        int index1, index2, index, nextOpIndex;
+        Integer[] current;
         String workingStr;
-
         for (AInclusiveOperator op : inclOp) {
             workingStr = str;
-            while ((index1 = workingStr.indexOf(op.operator)) >= 0) {
-                workingStr = workingStr.substring(index1 + op.operator.length());
-                index = str.lastIndexOf(workingStr) - op.operator.length();
-                while ((index2 = workingStr.indexOf(op.secondOperator)) >= (nextOpIndex = workingStr
-                        .indexOf(op.operator)) && nextOpIndex >= 0 && index2 >= 0)
-                    workingStr = workingStr.substring(index2 + op.secondOperator.length());// Attention
-                if (index2 < 0)
-                    return null;
-                blocks.add(new Integer[] { index, str.lastIndexOf(workingStr) + index2 });
-                workingStr = str.substring(str.lastIndexOf(workingStr) + index2 + op.secondOperator.length());
+            current = getFirstInclusiveBlock(workingStr, op);
+            while (current != null) {
+                workingStr = workingStr.substring(current[0] + op.operator.length());
+                blocks.add(current);
+                current = getFirstInclusiveBlock(workingStr, op);
             }
         }
         Integer tab[][] = new Integer[0][];
         return blocks.toArray(tab);
+    }
+
+    public static Integer[] getFirstInclusiveBlock(String str, AInclusiveOperator op) {
+        int count = 0, index, index1, index2 = 0;
+        index = str.indexOf(op.operator);
+        if (index < 0)
+            return null;
+        String workingStr = str.substring(index + op.operator.length());
+
+        while (count >= 0 && !workingStr.equals("")) {
+            index1 = workingStr.indexOf(op.operator);
+            index2 = workingStr.indexOf(op.secondOperator);
+            if (index1 < index2 && index1 >= 0) {
+                count += 1;
+                workingStr = workingStr.substring(index1 + op.operator.length());
+            } else if (index2 >= 0) {
+                count -= 1;
+                workingStr = workingStr.substring(index2 + op.secondOperator.length());
+            } else
+                workingStr = "";
+        }
+        if (count < 0)
+            return new Integer[] { index, str.lastIndexOf(workingStr) };
+        else
+            return null;
     }
 }
