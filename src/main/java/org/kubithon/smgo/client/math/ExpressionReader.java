@@ -157,18 +157,18 @@ public class ExpressionReader {
         String workingStr;
         for (AInclusiveOperator op : inclOp) {
             workingStr = str;
-            current = getFirstInclusiveBlock(workingStr, op);
+            current = getFirstInclusiveBlock(workingStr, op, 0);
             while (current != null) {
-                workingStr = workingStr.substring(current[0] + op.operator.length());
+                workingStr = str.substring(current[1]);
                 blocks.add(current);
-                current = getFirstInclusiveBlock(workingStr, op);
+                current = getFirstInclusiveBlock(workingStr, op, str.lastIndexOf(workingStr));
             }
         }
         Integer tab[][] = new Integer[0][];
         return blocks.toArray(tab);
     }
 
-    public static Integer[] getFirstInclusiveBlock(String str, AInclusiveOperator op) {
+    public static Integer[] getFirstInclusiveBlock(String str, AInclusiveOperator op, int dec) {
         int count = 0, index, index1, index2 = 0;
         index = str.indexOf(op.operator);
         if (index < 0)
@@ -188,7 +188,7 @@ public class ExpressionReader {
                 workingStr = "";
         }
         if (count < 0)
-            return new Integer[] { index, str.lastIndexOf(workingStr) };
+            return new Integer[] { index + dec, str.lastIndexOf(workingStr) + dec };
         else
             return null;
     }
