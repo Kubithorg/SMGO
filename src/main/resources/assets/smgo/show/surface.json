@@ -21,7 +21,7 @@
 					"partU" : 40,
 					"fromV" : -2,
 					"toV" : 0,
-					"partV" : 40
+					"partV" : 1000
 				}
 			},
 			{
@@ -41,7 +41,7 @@
 					"partU" : 40,
 					"fromV" : 0,
 					"toV" : 2,
-					"partV" : 40
+					"partV" : 1000
 				}
 			},
 			{
@@ -61,7 +61,7 @@
 					"partU" : 40,
 					"fromV" : -2,
 					"toV" : 0,
-					"partV" : 40
+					"partV" : 1000
 				}
 			},
 			{
@@ -81,7 +81,7 @@
 					"partU" : 40,
 					"fromV" : 0,
 					"toV" : 2,
-					"partV" : 40
+					"partV" : 1000
 				}
 			}
 		]

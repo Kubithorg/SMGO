@@ -3,7 +3,7 @@ package org.kubithon.smgo.client.effect.aureole;
 import static net.minecraft.util.math.MathHelper.cos;
 import static net.minecraft.util.math.MathHelper.sin;
 
-import org.kubithon.smgo.client.effect.Effect;
+import org.kubithon.smgo.client.effect.PreCompiledEffect;
 import org.kubithon.smgo.client.utils.RenderUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -12,14 +12,14 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
-public class Aureole extends Effect<AureoleParameters> {
+public class Aureole extends PreCompiledEffect<AureoleParameters> {
 
     public Aureole(AureoleParameters parameters) {
         super(parameters);
     }
 
     @Override
-    public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
+    public void setup(Tessellator tessellator, VertexBuffer vertexbuffer) {
         float slide = (float) (2 * Math.PI / (this.parameters.getAmountOfSlides() * 2));
         float r = this.parameters.getRadius();
         GlStateManager.rotate((float) (Math.PI * this.age / 20), 0, 1, 0);
@@ -40,5 +40,10 @@ public class Aureole extends Effect<AureoleParameters> {
 
         tessellator.draw();
         GlStateManager.enableTexture2D();
+    }
+
+    @Override
+    protected void preRender() {
+        GlStateManager.rotate(this.age * 50, 0, 0, 1);
     }
 }

@@ -3,7 +3,7 @@ package org.kubithon.smgo.client.effect.torus;
 import static net.minecraft.util.math.MathHelper.cos;
 import static net.minecraft.util.math.MathHelper.sin;
 
-import org.kubithon.smgo.client.effect.Effect;
+import org.kubithon.smgo.client.effect.PreCompiledEffect;
 import org.kubithon.smgo.client.math.IExpression;
 import org.kubithon.smgo.client.utils.RenderUtils;
 import org.lwjgl.opengl.GL11;
@@ -13,21 +13,19 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
-public class Torus extends Effect<TorusParameters> {
+public class Torus extends PreCompiledEffect<TorusParameters> {
+
     public Torus(TorusParameters parameters) {
         super(parameters);
     }
 
     @Override
-    public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
+    protected void setup(Tessellator tessellator, VertexBuffer vertexbuffer) {
         GlStateManager.disableTexture2D();
         RenderUtils.color(this.parameters.getColor());
         GlStateManager.glLineWidth(0.5f);
         vertexbuffer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
 
-        // putTorus(parameters.getSmallCircleRadius(),
-        // parameters.getBigCircleRadius(), parameters.getAmountOfSides(),
-        // parameters.getAmountOfRings(), vertexbuffer);
         this.putTorus(this.parameters.getSmallCircleRadius(), this.parameters.getBigCircleRadius(),
                 this.parameters.getAmountOfSides(), this.parameters.getAmountOfRings(), vertexbuffer);
 
@@ -65,5 +63,10 @@ public class Torus extends Effect<TorusParameters> {
             cosTheta = cosTheta1;
             sinTheta = sinTheta1;
         }
+    }
+
+    @Override
+    protected void preRender() {
+        GlStateManager.rotate(this.age * 5, 0, 1, 0);
     }
 }
