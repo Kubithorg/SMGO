@@ -3,7 +3,7 @@ package org.kubithon.smgo.client.math;
 import org.kubithon.smgo.client.math.IExpression.Constant;
 import org.kubithon.smgo.client.math.IExpression.Operation;
 
-public abstract class AOperator implements Comparable {
+public abstract class AOperator implements Comparable<AOperator> {
     public final String operator;
     public final byte   priority;
 
@@ -19,8 +19,8 @@ public abstract class AOperator implements Comparable {
     public abstract String toString(IExpression exprs[]);
 
     @Override
-    public int compareTo(Object o) {
-        return ((AOperator) o).priority - this.priority;
+    public int compareTo(AOperator o) {
+        return (o).priority - this.priority;
     }
 
     @Override
