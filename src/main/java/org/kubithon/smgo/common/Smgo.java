@@ -38,7 +38,7 @@ public class Smgo {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public static void createRegistry(RegistryEvent.NewRegistry event) {
-        RegistryBuilder builder = new RegistryBuilder<ShowInfos>();
+        RegistryBuilder<ShowInfos> builder = new RegistryBuilder<ShowInfos>();
         builder.setName(new ResourceLocation(MODID, "showinfos"));
         builder.setType(ShowInfos.class);
         builder.setIDRange(0, 4096);
