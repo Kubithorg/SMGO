@@ -58,7 +58,7 @@ public class QuadStorm extends Effect<QuadStormParameters> {
         RenderUtils.color(Color.WHITE);
         GlStateManager.glLineWidth(1.5f);
         {
-            renderable.draw();
+            renderable.render();
         }
         GlStateManager.enableTexture2D();
     }

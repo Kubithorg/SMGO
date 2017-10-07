@@ -7,7 +7,6 @@ import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatc
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.kubithon.smgo.client.effect.Effect;
 import org.kubithon.smgo.client.effect.EffectInfos;
@@ -18,7 +17,10 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class Show {
     private List<Effect<?>> effects;
     private ShowInfos       showInfos;
@@ -49,10 +51,12 @@ public class Show {
             for (Iterator<Effect<?>> iterator = this.effects.iterator(); iterator.hasNext();) {
                 Effect<?> effect = iterator.next();
 
-                if (effect.shouldBeRemoved())
+                if (effect.shouldBeRemoved()) {
+                    effect.delete();
                     iterator.remove();
-                else
+                } else {
                     effect.tick(this);
+                }
             }
 
             if (this.timeline().containsKey(this.time))
@@ -61,7 +65,7 @@ public class Show {
 
                     this.addEffect(effectInfos.buildEffect());
                 }
-            
+
             System.out.println("time = " + time);
             this.time++;
         }

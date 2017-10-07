@@ -32,9 +32,12 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class Renderable {
-    
+@SideOnly(Side.CLIENT)
+public class Renderable implements org.lwjgl.util.Renderable {
+
     // VBO
     private VertexBufferObject        vbo;
     private VertexBufferUploader      vertexBufferUploader;
@@ -60,9 +63,9 @@ public class Renderable {
             this.displayList = glGenLists(1);
         }
 
-        if (OpenGlHelper.useVbo())
+        if (OpenGlHelper.useVbo()) {
             this.vertexBufferUploader.draw(buffer);
-        else {
+        } else {
             glNewList(this.displayList, GL_COMPILE);
             glPushMatrix();
             this.directUploader.draw(buffer);
@@ -71,24 +74,30 @@ public class Renderable {
         }
     }
 
-    public void draw() {
+    @Override
+    public void render() {
         if (OpenGlHelper.useVbo()) {
             this.vbo.bindBuffer();
-            int stride = vertexformat.getNextOffset();
-            List<VertexFormatElement> list = vertexformat.getElements();
+            int stride = this.vertexformat.getNextOffset();
+            List<VertexFormatElement> list = this.vertexformat.getElements();
 
             for (int i = 0; i < list.size(); ++i) {
-                preDraw(list.get(i).getUsage(), vertexformat, i, stride);
+                preDraw(list.get(i).getUsage(), this.vertexformat, i, stride);
             }
 
-            GlStateManager.glDrawArrays(drawMode, 0, vertexCount);
+            GlStateManager.glDrawArrays(this.drawMode, 0, this.vertexCount);
 
             for (int i = 0; i < list.size(); ++i) {
-                postDraw(list.get(i).getUsage(), vertexformat, i, stride);
+                postDraw(list.get(i).getUsage(), this.vertexformat, i, stride);
             }
             this.vbo.unbindBuffer();
-        } else
+        } else {
             glCallList(this.displayList);
+        }
+    }
+
+    public void delete() {
+
     }
 
     public static void preDraw(EnumUsage attrType, VertexFormat format, int element, int stride) {
@@ -139,7 +148,7 @@ public class Renderable {
         case COLOR:
             glDisableClientState(GL_COLOR_ARRAY);
             // is this really needed? NON mdr
-//            GlStateManager.resetColor();
+            // GlStateManager.resetColor();
             break;
         case UV:
             OpenGlHelper.setClientActiveTexture(OpenGlHelper.defaultTexUnit + attr.getIndex());

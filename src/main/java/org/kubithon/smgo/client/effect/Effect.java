@@ -1,5 +1,7 @@
 package org.kubithon.smgo.client.effect;
 
+import java.beans.Expression;
+
 import org.kubithon.smgo.client.Show;
 import org.kubithon.smgo.client.math.IExpression;
 
@@ -14,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @param <P>
  *            The parameters type.
  */
+@SideOnly(Side.CLIENT)
 public abstract class Effect<P extends EffectParameters> {
     /**
      * Set to {@code true} whenever this effect should be removed from the
@@ -115,6 +118,10 @@ public abstract class Effect<P extends EffectParameters> {
     /**
      * Renders.
      */
-    @SideOnly(Side.CLIENT)
     public abstract void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks);
+
+    /**
+     * Used to free the graphical resources.
+     */
+    public void delete() {}
 }
