@@ -2,9 +2,11 @@ package org.kubithon.smgo.client.effect;
 
 import org.kubithon.smgo.client.math.ExpressionReader;
 import org.kubithon.smgo.client.math.IExpression;
+import org.kubithon.smgo.client.utils.Timing;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 
 /**
@@ -40,7 +42,18 @@ public class EffectParameters {
         this.x = readExpression(jsonObject.get("x"));
         this.y = readExpression(jsonObject.get("y"));
         this.z = readExpression(jsonObject.get("z"));
-        this.maxAge = jsonObject.get("maxAge").getAsInt();
+        JsonElement maxAgeElement = jsonObject.get("maxAge");
+        
+        if (maxAgeElement.isJsonPrimitive()) {
+            JsonPrimitive maxAgePrimitive = (JsonPrimitive) maxAgeElement;
+            
+            if (maxAgePrimitive.isNumber()) {
+                this.maxAge = maxAgePrimitive.getAsInt();
+            }
+            else {
+                this.maxAge = Timing.parseTime(maxAgePrimitive.getAsString());
+            }
+        }
     }
 
     /**

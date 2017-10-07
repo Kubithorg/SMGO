@@ -20,8 +20,8 @@ public class Beam extends Effect<BeamParameters> {
     }
 
     @Override
-    public void tick(Show show) {
-        super.tick(show);
+    public void tick(Show show, double tickDuration) {
+        super.tick(show, tickDuration);
 
         this.endX = this.parameters.getEndX().getValue();
         this.endY = this.parameters.getEndY().getValue();

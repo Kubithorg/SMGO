@@ -12,6 +12,7 @@ import org.kubithon.smgo.client.effect.Effect;
 import org.kubithon.smgo.client.effect.EffectInfos;
 import org.lwjgl.opengl.GL11;
 
+import gnu.trove.iterator.TIntIterator;
 import gnu.trove.map.TIntObjectMap;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -47,8 +48,6 @@ public class Show {
     private TIntObjectMap<List<EffectInfos>> timeline() {
         return this.showInfos.getTimeline();
     }
-    
-//    long last = 0l;
 
     public void tick(double tickDuration) {
         if (!this.isPaused) {
@@ -58,32 +57,39 @@ public class Show {
                 if (effect.shouldBeRemoved()) {
                     effect.delete();
                     iterator.remove();
-                } else
+                }
+                else {
                     effect.tick(this, tickDuration);
+                }
             }
 
             int newLast = -1;
-            for (int i : this.timeline().keys())
-                if (i > this.lastTimelineKey && this.lastTimelineKey + tickDuration <= i) {
+
+            for (int i : this.timeline().keys()) {
+                if (this.lastTimelineKey < i && i <= this.time) {
                     for (Iterator<EffectInfos> iterator = this.timeline().get(i).iterator(); iterator.hasNext();) {
                         EffectInfos effectInfos = iterator.next();
 
                         this.addEffect(effectInfos.buildEffect());
                     }
-                    if (i > newLast)
+                    if (i > newLast) {
                         newLast = i;
+                    }
                 }
+            }
 
-            if (newLast >= 0)
+            if (newLast >= 0) {
                 this.lastTimelineKey = newLast;
+            }
 
             this.time += tickDuration;
         }
     }
 
     public void addEffect(Effect<?> effect) {
-        if (effect != null)
+        if (effect != null) {
             this.effects.add(effect);
+        }
     }
 
     public void render(float partialTicks) {

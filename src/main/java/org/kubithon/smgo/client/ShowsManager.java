@@ -5,17 +5,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.kubithon.smgo.common.Smgo;
 import org.kubithon.smgo.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ISound;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -29,7 +22,11 @@ public class ShowsManager {
         this.shows.add(show);
 
         Minecraft.getMinecraft().player.playSound(ClientProxy.soundEvent, 1.0f, 1.0f);
-//        Minecraft.getMinecraft().getSoundHandler().playSound(new PositionedSoundRecord(new ResourceLocation("smgo:clicktrack", SoundCategory.MUSIC, 1.0f, 1.0f, false, 0, ISound.AttenuationType.LINEAR, (float)packetIn.getX(), (float)packetIn.getY(), (float)packetIn.getZ()));
+        // Minecraft.getMinecraft().getSoundHandler().playSound(new
+        // PositionedSoundRecord(new ResourceLocation("smgo:clicktrack",
+        // SoundCategory.MUSIC, 1.0f, 1.0f, false, 0,
+        // ISound.AttenuationType.LINEAR, (float)packetIn.getX(),
+        // (float)packetIn.getY(), (float)packetIn.getZ()));
         show.tick(0);
     }
 
@@ -37,8 +34,9 @@ public class ShowsManager {
     public void render(RenderWorldLastEvent event) {
         double time = System.currentTimeMillis();
         double tickDuration = (time - this.lastTime) / 50;
-        if (this.lastTime < 0)
+        if (this.lastTime < 0) {
             tickDuration = 0;
+        }
         synchronized (this.shows) {
             if (tickDuration > MIN_UPDATE_TIME || tickDuration == 0) {
                 for (Iterator<Show> iterator = this.shows.iterator(); iterator.hasNext();) {
@@ -46,8 +44,9 @@ public class ShowsManager {
 
                     show.tick(tickDuration);
 
-                    if (show.isDone())
+                    if (show.isDone()) {
                         iterator.remove();
+                    }
                 }
                 this.lastTime = time;
             }
