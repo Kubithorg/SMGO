@@ -27,8 +27,6 @@ public class Show {
     private int             time;
     private boolean         isPaused;
     private double          x, y, z;
-    public long startedAt;
-    public long timeMillis;
     
     public Show(ShowInfos infos, double x, double y, double z) {
         this.showInfos = infos;
@@ -48,7 +46,7 @@ public class Show {
         return this.showInfos.getTimeline();
     }
     
-    long last = 0l;
+//    long last = 0l;
 
     public void tick() {
         if (!this.isPaused) {
@@ -72,12 +70,12 @@ public class Show {
 
             this.time++;
             
-            if (this.time % 20 == 0 ) {
-                long now= System.currentTimeMillis();
-                
-                System.out.println("dt = " + (now - last));
-                last = now;
-            }
+//            if (this.time % 20 == 0 ) {
+//                long now= System.currentTimeMillis();
+//                
+//                System.out.println("dt = " + (now - last));
+//                last = now;
+//            }
         }
     }
 
