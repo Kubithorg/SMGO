@@ -20,7 +20,7 @@ public abstract class AOperator implements Comparable<AOperator> {
 
     @Override
     public int compareTo(AOperator o) {
-        return (o).priority - this.priority;
+        return o.priority - this.priority;
     }
 
     @Override
@@ -40,8 +40,9 @@ public abstract class AOperator implements Comparable<AOperator> {
 
         @Override
         public float applyOperator(IExpression expressions[]) {
-            if (expressions.length < 1)
+            if (expressions.length < 1) {
                 throw new ArithmeticException("Not enough argument for the operator : " + this.operator);
+            }
             return this.applyOperator(expressions[0]);
         }
 
@@ -68,15 +69,17 @@ public abstract class AOperator implements Comparable<AOperator> {
 
         @Override
         public float applyOperator(IExpression expressions[]) {
-            if (expressions.length < 2)
+            if (expressions.length < 2) {
                 throw new ArithmeticException("Not enough argument for the operator : " + this.operator);
+            }
             return this.applyOperator(expressions[0], expressions[1]);
         }
 
         @Override
         public void read(String str, int index, Operation op) throws Exception {
-            if (index < 1 || index >= str.length() - 1)
+            if (index < 1 || index >= str.length() - 1) {
                 throw new Exception();
+            }
             op.expressions = new IExpression[2];
             op.expressions[0] = ExpressionReader.read(str.substring(0, index));
             op.expressions[1] = ExpressionReader.read(str.substring(index + this.operator.length()));
@@ -99,8 +102,9 @@ public abstract class AOperator implements Comparable<AOperator> {
         @Override
         public void read(String str, int index, Operation op) {
             int secondIndex = str.lastIndexOf(this.secondOperator);
-            if (secondIndex < 0)
+            if (secondIndex < 0) {
                 throw new ArithmeticException("Missing '" + this.secondOperator + "' after a '" + this.operator + "'");
+            }
             op.expressions = new IExpression[1];
             op.expressions[0] = ExpressionReader.read(str.substring(index + this.operator.length(), secondIndex));
         }

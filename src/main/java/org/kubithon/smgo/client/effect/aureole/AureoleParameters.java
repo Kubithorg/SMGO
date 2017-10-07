@@ -5,7 +5,6 @@ import org.kubithon.smgo.client.utils.Color;
 
 import com.google.gson.JsonObject;
 
-
 public class AureoleParameters extends EffectParameters {
 
     /**
@@ -26,30 +25,30 @@ public class AureoleParameters extends EffectParameters {
 
     protected AureoleParameters(JsonObject jsonObject) {
         super(jsonObject);
-        
+
         if (jsonObject.has("radius")) {
             this.radius = jsonObject.get("radius").getAsFloat();
         }
-        
+
         if (jsonObject.has("color")) {
             this.color = new Color(Integer.parseUnsignedInt(jsonObject.get("color").getAsString(), 16));
         }
-        
+
         if (jsonObject.has("slides")) {
             this.amountOfSlides = jsonObject.get("slides").getAsInt();
         }
     }
-    
+
     public float getRadius() {
-        return radius;
+        return this.radius;
     }
-    
+
     public Color getColor() {
-        return color;
+        return this.color;
     }
-    
+
     public int getAmountOfSlides() {
-        return amountOfSlides;
+        return this.amountOfSlides;
     }
 
     public static AureoleParameters read(JsonObject jsonObject) {

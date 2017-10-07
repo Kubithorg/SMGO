@@ -69,8 +69,9 @@ public interface IExpression {
 
         @Override
         public void setVariable(String name, float value) {
-            if (name.equals(this.name))
+            if (name.equals(this.name)) {
                 this.value = value;
+            }
         }
 
         @Override
@@ -110,15 +111,18 @@ public interface IExpression {
 
         @Override
         public void setVariable(String name, float value) {
-            for (IExpression e : this.expressions)
+            for (IExpression e : this.expressions) {
                 e.setVariable(name, value);
+            }
         }
 
         @Override
         public boolean isConstant() {
-            for (IExpression e : this.expressions)
-                if (!e.isConstant())
+            for (IExpression e : this.expressions) {
+                if (!e.isConstant()) {
                     return false;
+                }
+            }
             return true;
         }
 
@@ -126,20 +130,25 @@ public interface IExpression {
         public Constant toConstant() {
             try {
                 return new Constant(String.valueOf(this.getValue()));
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 return null;
             }
         }
 
         @Override
         public IExpression optimize() {
-            if (this.isConstant())
+            if (this.isConstant()) {
                 return this.toConstant();
-            for (int i = 0; i < this.expressions.length; i++)
-                if (this.expressions[i].isConstant())
+            }
+            for (int i = 0; i < this.expressions.length; i++) {
+                if (this.expressions[i].isConstant()) {
                     this.expressions[i] = this.expressions[i].toConstant();
-                else
+                }
+                else {
                     this.expressions[i].optimize();
+                }
+            }
             return this;
         }
 

@@ -8,7 +8,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-
 /**
  * Every subclass should redefine a {@code static P read(JsonObject)} where
  * {@code P} is the subclass type.
@@ -43,10 +42,10 @@ public class EffectParameters {
         this.y = readExpression(jsonObject.get("y"));
         this.z = readExpression(jsonObject.get("z"));
         JsonElement maxAgeElement = jsonObject.get("maxAge");
-        
+
         if (maxAgeElement.isJsonPrimitive()) {
             JsonPrimitive maxAgePrimitive = (JsonPrimitive) maxAgeElement;
-            
+
             if (maxAgePrimitive.isNumber()) {
                 this.maxAge = maxAgePrimitive.getAsInt();
             }
@@ -59,10 +58,14 @@ public class EffectParameters {
     /**
      * Instantiates a new effect parameters.
      *
-     * @param x The expression of the function: age -> X position
-     * @param y The expression of the function: age -> Y position
-     * @param z The expression of the function: age -> Z position
-     * @param maxAge The max age of this effect
+     * @param x
+     *            The expression of the function: age -> X position
+     * @param y
+     *            The expression of the function: age -> Y position
+     * @param z
+     *            The expression of the function: age -> Z position
+     * @param maxAge
+     *            The max age of this effect
      */
     public EffectParameters(IExpression x, IExpression y, IExpression z, int maxAge) {
         this.x = x;

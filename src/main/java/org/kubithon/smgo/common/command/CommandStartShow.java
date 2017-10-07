@@ -21,9 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-
 public class CommandStartShow extends CommandBase {
-    private static final String NAME = "startshow";
+    private static final String NAME  = "startshow";
     private static final String USAGE = "/startshow x y z showName";
 
     @Override
@@ -48,8 +47,7 @@ public class CommandStartShow extends CommandBase {
             catch (NumberFormatException e) {
                 throw new WrongUsageException(USAGE + "\nx, y or z is not a number.");
             }
-            ShowInfos showInfos = GameRegistry.findRegistry(ShowInfos.class)
-                                              .getValue(new ResourceLocation(args[3]));
+            ShowInfos showInfos = GameRegistry.findRegistry(ShowInfos.class).getValue(new ResourceLocation(args[3]));
 
             if (showInfos == null) {
                 sender.sendMessage(new TextComponentString("Show '" + args[3] + "' not found."));
@@ -58,13 +56,15 @@ public class CommandStartShow extends CommandBase {
                 Smgo.showsManager.startShow(new Show(showInfos, x + 0.5, y + 0.5, z + 0.5));
             }
         }
-        else
+        else {
             throw new WrongUsageException(USAGE + "\nWrong number of arguments.");
+        }
     }
 
     @Override
-    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
-        List<String> list = Lists.<String> newArrayList();
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
+            @Nullable BlockPos pos) {
+        List<String> list = Lists.<String>newArrayList();
         switch (args.length) {
             case 1:
                 list.add(String.valueOf((int) sender.getPositionVector().xCoord));
@@ -76,10 +76,9 @@ public class CommandStartShow extends CommandBase {
                 list.add(String.valueOf((int) sender.getPositionVector().zCoord));
                 return list;
             case 4:
-                return getListOfStringsMatchingLastWord(args, GameRegistry.findRegistry(ShowInfos.class)
-                                                                          .getKeys());
+                return getListOfStringsMatchingLastWord(args, GameRegistry.findRegistry(ShowInfos.class).getKeys());
         }
-        return Collections.<String> emptyList();
+        return Collections.<String>emptyList();
     }
 
 }

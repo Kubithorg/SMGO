@@ -1502,9 +1502,9 @@ public class Color {
     public float getAlphaFloat() {
         return (this.alpha & MASK) / 255.0f;
     }
-    
+
     public Color withAlpha(float alpha) {
-        return new Color(getRedFloat(), getGreenFloat(), getBlueFloat(), alpha);
+        return new Color(this.getRedFloat(), this.getGreenFloat(), this.getBlueFloat(), alpha);
     }
 
     @Override
@@ -1535,19 +1535,23 @@ public class Color {
             new Color(0xff3f3f15), new Color(0xff3f3f3f) };
 
     public static Color valueOf(String str) {
-        if (str == null || str.length() == 0)
+        if (str == null || str.length() == 0) {
             return null;
+        }
         else if (str.length() == 1) {
             int index = "0123456789abcdefklmnor".indexOf(str.toLowerCase());
             return MINECRAFT_CODES[index];
-        } else
+        }
+        else {
             try {
                 int color = (int) Long.parseLong(str, 16);
                 return new Color(color);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
+        }
     }
 
     public static class JsonAdapter implements JsonSerializer<Color>, JsonDeserializer<Color> {
@@ -1562,8 +1566,10 @@ public class Color {
                 return new Color(jsonObject.get("red").getAsFloat(), jsonObject.get("green").getAsFloat(),
                         jsonObject.get("blue").getAsFloat(), jsonObject.get("alpha").getAsFloat());
 
-            } else if (json.isJsonPrimitive())
+            }
+            else if (json.isJsonPrimitive()) {
                 return valueOf(json.getAsString());
+            }
             return null;
         }
 

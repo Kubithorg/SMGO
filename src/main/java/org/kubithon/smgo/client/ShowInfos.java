@@ -41,8 +41,8 @@ public class ShowInfos extends Impl<ShowInfos> {
             JsonArray array = entry.getValue().getAsJsonArray();
             for (JsonElement el : array) {
                 infos = EffectInfos.read(el.getAsJsonObject());
-                if (lastTick < key + infos.getParameters().getMaxAge()) {
-                    lastTick = key + infos.getParameters().getMaxAge();
+                if (this.lastTick < key + infos.getParameters().getMaxAge()) {
+                    this.lastTick = key + infos.getParameters().getMaxAge();
                 }
                 list.add(infos);
             }

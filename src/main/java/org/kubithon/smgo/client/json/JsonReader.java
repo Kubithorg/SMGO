@@ -27,19 +27,25 @@ public class JsonReader {
             iResource = Minecraft.getMinecraft().getResourceManager().getResource(resourceIn);
             reader = new BufferedReader(new InputStreamReader(iResource.getInputStream(), Charsets.UTF_8));
             String s;
-            while ((s = reader.readLine()) != null)
+            while ((s = reader.readLine()) != null) {
                 strBuilder.append(s);
+            }
             Object object = jsonParser.parse(strBuilder.toString());
             this.root = (JsonObject) object;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             try {
-                if (reader != null)
+                if (reader != null) {
                     reader.close();
-                if (iResource != null)
+                }
+                if (iResource != null) {
                     iResource.close();
-            } catch (Exception e) {
+                }
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
         }

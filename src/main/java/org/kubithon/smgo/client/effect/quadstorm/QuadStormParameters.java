@@ -4,7 +4,6 @@ import org.kubithon.smgo.client.effect.EffectParameters;
 
 import com.google.gson.JsonObject;
 
-
 public class QuadStormParameters extends EffectParameters {
 
     /**
@@ -20,22 +19,22 @@ public class QuadStormParameters extends EffectParameters {
 
     protected QuadStormParameters(JsonObject jsonObject) {
         super(jsonObject);
-        
+
         if (jsonObject.has("radius")) {
-            radius = jsonObject.get("radius").getAsFloat();
+            this.radius = jsonObject.get("radius").getAsFloat();
         }
-        
+
         if (jsonObject.has("amount")) {
-            amount = jsonObject.get("amout").getAsInt();
+            this.amount = jsonObject.get("amout").getAsInt();
         }
     }
-    
+
     public float getRadius() {
-        return radius;
+        return this.radius;
     }
-    
+
     public int getAmount() {
-        return amount;
+        return this.amount;
     }
 
     public static QuadStormParameters read(JsonObject jsonObject) {

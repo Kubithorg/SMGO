@@ -12,7 +12,6 @@ import org.kubithon.smgo.client.effect.Effect;
 import org.kubithon.smgo.client.effect.EffectInfos;
 import org.lwjgl.opengl.GL11;
 
-import gnu.trove.iterator.TIntIterator;
 import gnu.trove.map.TIntObjectMap;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;

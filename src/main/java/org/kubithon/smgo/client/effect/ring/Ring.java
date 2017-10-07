@@ -13,12 +13,12 @@ public class Ring extends EffectWithRenderable<RingParameters> {
 
     @Override
     protected void buildRenderable(VertexBuffer vertexbuffer) {
-        
+
     }
 
     @Override
     public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
-        
+
     }
 
 }

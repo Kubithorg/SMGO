@@ -124,29 +124,34 @@ public class ExpressionReader {
     public static IExpression read(String str) {
         int index;
         boolean flag;
-        while ((index = str.indexOf(" ")) >= 0)
+        while ((index = str.indexOf(" ")) >= 0) {
             str = str.substring(0, index) + str.substring(index + 1);
+        }
 
         Integer inclusiveBlocks[][] = getInclusiveBlocks(str);
         for (AOperator op : operators) {
             index = -1;
             while ((index = str.indexOf(op.operator, index + 1)) >= 0) {
                 flag = false;
-                for (Integer[] border : inclusiveBlocks)
+                for (Integer[] border : inclusiveBlocks) {
                     if (index > border[0] && index < border[1]) {
                         flag = true;
                         continue;
                     }
-                if (flag)
+                }
+                if (flag) {
                     continue;
+                }
                 try {
                     return new Operation(str, index, op).optimize();
-                } catch (Exception e) {}
+                }
+                catch (Exception e) {}
             }
         }
         try {
             return new Constant(str);
-        } catch (Exception e) {}
+        }
+        catch (Exception e) {}
 
         return new Variable(str);
     }
@@ -171,8 +176,9 @@ public class ExpressionReader {
     public static Integer[] getFirstInclusiveBlock(String str, AInclusiveOperator op, int dec) {
         int count = 0, index, index1, index2 = 0;
         index = str.indexOf(op.operator);
-        if (index < 0)
+        if (index < 0) {
             return null;
+        }
         String workingStr = str.substring(index + op.operator.length());
 
         while (count >= 0 && !workingStr.equals("")) {
@@ -181,15 +187,20 @@ public class ExpressionReader {
             if (index1 < index2 && index1 >= 0) {
                 count += 1;
                 workingStr = workingStr.substring(index1 + op.operator.length());
-            } else if (index2 >= 0) {
+            }
+            else if (index2 >= 0) {
                 count -= 1;
                 workingStr = workingStr.substring(index2 + op.secondOperator.length());
-            } else
+            }
+            else {
                 workingStr = "";
+            }
         }
-        if (count < 0)
+        if (count < 0) {
             return new Integer[] { index + dec, str.lastIndexOf(workingStr) + dec };
-        else
+        }
+        else {
             return null;
+        }
     }
 }

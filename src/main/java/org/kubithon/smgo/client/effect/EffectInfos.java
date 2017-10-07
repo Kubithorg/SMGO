@@ -24,13 +24,15 @@ public final class EffectInfos {
 
         EffectType<? extends EffectParameters> effectType = EffectType.getTypeByIdentifier(this.type);
 
-        if (effectType == null)
+        if (effectType == null) {
             throw new IllegalArgumentException("Effect type '" + this.type + "' not found.");
+        }
 
         try {
             this.parameters = (EffectParameters) effectType.getParametersClass().getMethod("read", JsonObject.class)
                     .invoke(null, jsonObject.get("parameters").getAsJsonObject());
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -49,8 +51,9 @@ public final class EffectInfos {
     public Effect<?> buildEffect() {
         EffectType<?> effectType = EffectType.getTypeByIdentifier(this.type);
 
-        if (effectType == null)
+        if (effectType == null) {
             throw new IllegalArgumentException("Effect type '" + this.type + "' not found.");
+        }
 
         return effectType.buildEffect(this.parameters);
     }

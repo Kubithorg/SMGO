@@ -9,11 +9,11 @@ import org.joml.Vector3fc;
 
 public class Maths {
 
-    public static final float PI      = (float) Math.PI;
-    public static final float TWO_PI  = PI * 2.0f;
-    public static final float HALF_PI = PI / 2.0f;
-    public static final Vector3fc Y = new Vector3f(0.0f, 1.0f, 0.0f).toImmutable();
-    
+    public static final float     PI      = (float) Math.PI;
+    public static final float     TWO_PI  = PI * 2.0f;
+    public static final float     HALF_PI = PI / 2.0f;
+    public static final Vector3fc Y       = new Vector3f(0.0f, 1.0f, 0.0f).toImmutable();
+
     /**
      * @return the {@link Quaternionf} that represents the rotation which
      *         transforms {@code antecedent} to {@code image

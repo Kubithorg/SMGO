@@ -28,7 +28,7 @@ public class QuadStorm extends EffectWithRenderable<QuadStormParameters> {
         RenderUtils.color(Color.WHITE);
         GlStateManager.glLineWidth(1.5f);
         {
-            renderable.render();
+            this.renderable.render();
         }
         GlStateManager.enableTexture2D();
     }
@@ -40,9 +40,9 @@ public class QuadStorm extends EffectWithRenderable<QuadStormParameters> {
 
         // tempVars.quadra = quad vertices
         // tempVars.vect1 = origin
-        
-        for (int k = 0; k < parameters.getAmount(); k++) {
-            randomize(parameters.getRadius(), tempVars.vect1);
+
+        for (int k = 0; k < this.parameters.getAmount(); k++) {
+            randomize(this.parameters.getRadius(), tempVars.vect1);
             randomizeQuad(tempVars.quadra, tempVars.vect1);
 
             int j;
@@ -55,7 +55,7 @@ public class QuadStorm extends EffectWithRenderable<QuadStormParameters> {
             }
         }
         vertexbuffer.finishDrawing();
-        renderable.upload(vertexbuffer);
+        this.renderable.upload(vertexbuffer);
 
         tempVars.release();
     }

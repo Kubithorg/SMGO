@@ -66,8 +66,9 @@ public abstract class Effect<P extends EffectParameters> {
      * Updates this effect.
      */
     public void tick(Show show, double tickDuration) {
-        if ((this.age += tickDuration) >= this.parameters.getMaxAge())
+        if ((this.age += tickDuration) >= this.parameters.getMaxAge()) {
             this.setShouldBeRemoved(true);
+        }
 
         this.passParams(this.parameters.getX());
         this.passParams(this.parameters.getY());

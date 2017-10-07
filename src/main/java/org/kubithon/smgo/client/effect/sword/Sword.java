@@ -17,19 +17,19 @@ import net.minecraft.client.renderer.VertexBufferUploader;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public class Sword extends Effect<SwordParameters> {
-    
-    private static boolean init;
-    private static VertexBufferObject vbo;
-    
-	public Sword(SwordParameters parameters) {
-		super(parameters);
-	}
 
-	@Override
-	public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
-	    
-	    if (!init) {
-	        VertexBuffer buffer = new VertexBuffer(DefaultVertexFormats.POSITION.getIntegerSize() * 1024);
+    private static boolean            init;
+    private static VertexBufferObject vbo;
+
+    public Sword(SwordParameters parameters) {
+        super(parameters);
+    }
+
+    @Override
+    public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
+
+        if (!init) {
+            VertexBuffer buffer = new VertexBuffer(DefaultVertexFormats.POSITION.getIntegerSize() * 1024);
             vbo = new VertexBufferObject(DefaultVertexFormats.POSITION);
             VertexBufferUploader vertexBufferUploader = new VertexBufferUploader();
             vertexBufferUploader.setVertexBuffer(vbo);
@@ -37,15 +37,13 @@ public class Sword extends Effect<SwordParameters> {
             buffer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
 
             buffer.pos(partialTicks, partialTicks, partialTicks).endVertex();
-            
-            
+
             buffer.finishDrawing();
             vertexBufferUploader.draw(buffer);
-            
+
             init = true;
-	    }
-	    
-	    
+        }
+
         GlStateManager.disableTexture2D();
         RenderUtils.color(Color.WHITE);
         GlStateManager.glLineWidth(1.5f);
@@ -57,5 +55,5 @@ public class Sword extends Effect<SwordParameters> {
             vbo.unbindBuffer();
         }
         GlStateManager.enableTexture2D();
-	}
+    }
 }
