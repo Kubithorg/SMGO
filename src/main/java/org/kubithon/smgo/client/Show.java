@@ -27,7 +27,9 @@ public class Show {
     private int             time;
     private boolean         isPaused;
     private double          x, y, z;
-
+    public long startedAt;
+    public long timeMillis;
+    
     public Show(ShowInfos infos, double x, double y, double z) {
         this.showInfos = infos;
         this.effects = new ArrayList<>();
@@ -45,6 +47,8 @@ public class Show {
     private TIntObjectMap<List<EffectInfos>> timeline() {
         return this.showInfos.getTimeline();
     }
+    
+    long last = 0l;
 
     public void tick() {
         if (!this.isPaused) {
@@ -66,8 +70,14 @@ public class Show {
                     this.addEffect(effectInfos.buildEffect());
                 }
 
-            System.out.println("time = " + time);
             this.time++;
+            
+            if (this.time % 20 == 0 ) {
+                long now= System.currentTimeMillis();
+                
+                System.out.println("dt = " + (now - last));
+                last = now;
+            }
         }
     }
 
@@ -98,6 +108,6 @@ public class Show {
     }
 
     public boolean isDone() {
-        return false;
+        return this.time > this.showInfos.getLastTick();
     }
 }

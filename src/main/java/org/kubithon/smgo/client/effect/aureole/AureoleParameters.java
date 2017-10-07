@@ -11,7 +11,7 @@ public class AureoleParameters extends EffectParameters {
     /**
      * The radius of the aureole.
      */
-    private float radius = 5f;
+    private float radius = 1f;
 
     /**
      * The amount of different slides. The circle representing the aureole will

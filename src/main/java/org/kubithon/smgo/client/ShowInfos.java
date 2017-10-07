@@ -62,4 +62,8 @@ public class ShowInfos extends Impl<ShowInfos> {
     public static ShowInfos read(JsonObject jsonObject) {
         return new ShowInfos(jsonObject);
     }
+
+    public int getLastTick() {
+        return this.lastTick;
+    }
 }
