@@ -7,6 +7,7 @@ import static org.lwjgl.opengl.GL11.GL_TEXTURE_COORD_ARRAY;
 import static org.lwjgl.opengl.GL11.GL_VERTEX_ARRAY;
 import static org.lwjgl.opengl.GL11.glCallList;
 import static org.lwjgl.opengl.GL11.glColorPointer;
+import static org.lwjgl.opengl.GL11.glDeleteLists;
 import static org.lwjgl.opengl.GL11.glDisableClientState;
 import static org.lwjgl.opengl.GL11.glEnableClientState;
 import static org.lwjgl.opengl.GL11.glEndList;
@@ -23,7 +24,6 @@ import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.VertexBufferUploader;
@@ -44,20 +44,17 @@ public class Renderable implements org.lwjgl.util.Renderable {
     private WorldVertexBufferUploader directUploader;
     private VertexFormat              vertexformat;
     private int                       drawMode;
-    private int                       vertexCount;
 
     // Display list
     private int displayList;
 
     public void upload(VertexBuffer buffer) {
-
         if (OpenGlHelper.useVbo()) {
             this.vertexformat = buffer.getVertexFormat();
             this.vbo = new VertexBufferObject(this.vertexformat);
             this.vertexBufferUploader = new VertexBufferUploader();
             this.vertexBufferUploader.setVertexBuffer(this.vbo);
             this.drawMode = buffer.getDrawMode();
-            this.vertexCount = buffer.getVertexCount();
         } else {
             this.directUploader = new WorldVertexBufferUploader();
             this.displayList = glGenLists(1);
@@ -85,7 +82,7 @@ public class Renderable implements org.lwjgl.util.Renderable {
                 preDraw(list.get(i).getUsage(), this.vertexformat, i, stride);
             }
 
-            GlStateManager.glDrawArrays(this.drawMode, 0, this.vertexCount);
+            this.vbo.drawArrays(this.drawMode);
 
             for (int i = 0; i < list.size(); ++i) {
                 postDraw(list.get(i).getUsage(), this.vertexformat, i, stride);
@@ -97,7 +94,11 @@ public class Renderable implements org.lwjgl.util.Renderable {
     }
 
     public void delete() {
-
+        if (OpenGlHelper.useVbo()) {
+            this.vbo.deleteGlBuffers();
+        } else {
+            glDeleteLists(this.displayList, 1);
+        }
     }
 
     public static void preDraw(EnumUsage attrType, VertexFormat format, int element, int stride) {

@@ -90,7 +90,6 @@ public class Show {
 
         for (Iterator<Effect<?>> iterator = this.effects.iterator(); iterator.hasNext();) {
             Effect<?> effect = iterator.next();
-
             effect.render(tessellator, vertexbuffer, partialTicks);
         }
 

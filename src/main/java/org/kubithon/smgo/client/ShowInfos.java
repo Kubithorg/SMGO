@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.kubithon.smgo.client.effect.EffectInfos;
+import org.kubithon.smgo.client.utils.Timing;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -34,7 +35,7 @@ public class ShowInfos extends Impl<ShowInfos> {
         EffectInfos infos;
 
         for (Entry<String, JsonElement> entry : obj.entrySet()) {
-            key = Integer.valueOf(entry.getKey()).intValue();
+            key = Timing.parseTime(entry.getKey());
 
             this.timeline.put(key, list = new ArrayList<>());
             JsonArray array = entry.getValue().getAsJsonArray();
