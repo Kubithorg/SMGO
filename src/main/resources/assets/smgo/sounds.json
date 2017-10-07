@@ -1,0 +1,10 @@
+{
+  "clicktrack": {
+    "sounds": [
+      {
+        "name": "smgo:debug/clicktrack",
+        "stream": true
+      }
+    ]
+  }
+}

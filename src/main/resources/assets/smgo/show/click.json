@@ -8,7 +8,7 @@
                 "type": "Aureole",
                 "parameters": 
                 {
-                    "x": "-2",
+                    "x": "0",
                     "y": "1",
                     "z": "0",
                     "maxAge": 20
@@ -23,7 +23,7 @@
                 {
                     "x": "0",
                     "y": "1",
-                    "z": "-2",
+                    "z": "0",
                     "maxAge": 20
                 }
             }
@@ -34,7 +34,7 @@
                 "type": "Aureole",
                 "parameters": 
                 {
-                    "x": "-2",
+                    "x": "0",
                     "y": "1",
                     "z": "0",
                     "maxAge": 20
@@ -49,7 +49,7 @@
                 {
                     "x": "0",
                     "y": "1",
-                    "z": "-2",
+                    "z": "0",
                     "maxAge": 20
                 }
             }
@@ -60,7 +60,7 @@
                 "type": "Aureole",
                 "parameters": 
                 {
-                    "x": "-2",
+                    "x": "0",
                     "y": "1",
                     "z": "0",
                     "maxAge": 20
@@ -75,7 +75,7 @@
                 {
                     "x": "0",
                     "y": "1",
-                    "z": "-2",
+                    "z": "0",
                     "maxAge": 20
                 }
             }
@@ -86,7 +86,7 @@
                 "type": "Aureole",
                 "parameters": 
                 {
-                    "x": "-2",
+                    "x": "0",
                     "y": "1",
                     "z": "0",
                     "maxAge": 20
@@ -101,7 +101,111 @@
                 {
                     "x": "0",
                     "y": "1",
-                    "z": "-2",
+                    "z": "0",
+                    "maxAge": 20
+                }
+            }
+        ],
+        "16s": 
+        [
+            {
+                "type": "Aureole",
+                "parameters": 
+                {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0",
+                    "maxAge": 20
+                }
+            }
+        ],
+        "18s": 
+        [
+            {
+                "type": "Aureole",
+                "parameters": 
+                {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0",
+                    "maxAge": 20
+                }
+            }
+        ],
+        "20s": 
+        [
+            {
+                "type": "Aureole",
+                "parameters": 
+                {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0",
+                    "maxAge": 20
+                }
+            }
+        ],
+        "22s": 
+        [
+            {
+                "type": "Aureole",
+                "parameters": 
+                {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0",
+                    "maxAge": 20
+                }
+            }
+        ],
+        "24s": 
+        [
+            {
+                "type": "Aureole",
+                "parameters": 
+                {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0",
+                    "maxAge": 20
+                }
+            }
+        ],
+        "26s": 
+        [
+            {
+                "type": "Aureole",
+                "parameters": 
+                {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0",
+                    "maxAge": 20
+                }
+            }
+        ],
+        "28s": 
+        [
+            {
+                "type": "Aureole",
+                "parameters": 
+                {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0",
+                    "maxAge": 20
+                }
+            }
+        ],
+        "30s": 
+        [
+            {
+                "type": "Aureole",
+                "parameters": 
+                {
+                    "x": "0",
+                    "y": "1",
+                    "z": "0",
                     "maxAge": 20
                 }
             }

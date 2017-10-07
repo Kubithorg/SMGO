@@ -5,9 +5,11 @@ import org.kubithon.smgo.client.json.JsonReader;
 import org.kubithon.smgo.common.Smgo;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ClientProxy extends CommonProxy {
+    public static SoundEvent soundEvent;
 
     @Override
     public void registerShows() {
@@ -31,5 +33,9 @@ public class ClientProxy extends CommonProxy {
         GameRegistry.register(showInfos.setRegistryName(Smgo.MODID, "quadstorm"));
         showInfos = new JsonReader(new ResourceLocation(Smgo.MODID, "show/click.json")).readShowInfos();
         GameRegistry.register(showInfos.setRegistryName(Smgo.MODID, "click"));
+
+        ResourceLocation location = new ResourceLocation(Smgo.MODID, "clicktrack");
+        soundEvent = new SoundEvent(location);
+        SoundEvent.REGISTRY.register(2038, location, soundEvent);
     }
 }
