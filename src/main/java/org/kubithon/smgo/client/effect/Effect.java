@@ -47,7 +47,7 @@ public abstract class Effect<P extends EffectParameters> {
     /**
      * Amount of ticks this effect has been alive.
      */
-    protected int age;
+    protected float age;
 
     public Effect(P parameters) {
         this.parameters = parameters;
@@ -65,8 +65,8 @@ public abstract class Effect<P extends EffectParameters> {
     /**
      * Updates this effect.
      */
-    public void tick(Show show) {
-        if (this.age++ == this.parameters.getMaxAge())
+    public void tick(Show show, double tickDuration) {
+        if ((this.age += tickDuration) >= this.parameters.getMaxAge())
             this.setShouldBeRemoved(true);
 
         this.passParams(this.parameters.getX());
@@ -91,8 +91,8 @@ public abstract class Effect<P extends EffectParameters> {
     protected void passParams(IExpression expr) {
         expr.setVariable("age", this.age);
         expr.setVariable("maxAge", this.getParameters().getMaxAge());
-        expr.setVariable("ageRatio", this.age / (float) this.getParameters().getMaxAge());
-        expr.setVariable("t", this.age / (float) this.getParameters().getMaxAge());
+        expr.setVariable("ageRatio", this.age / this.getParameters().getMaxAge());
+        expr.setVariable("t", this.age / this.getParameters().getMaxAge());
     }
 
     /**

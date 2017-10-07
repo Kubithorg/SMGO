@@ -24,15 +24,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class Show {
     private List<Effect<?>> effects;
     private ShowInfos       showInfos;
-    private int             time;
+    private double          time;
     private boolean         isPaused;
     private double          x, y, z;
-    
+    private int             lastTimelineKey;
+
     public Show(ShowInfos infos, double x, double y, double z) {
         this.showInfos = infos;
         this.effects = new ArrayList<>();
         this.isPaused = false;
         this.time = 0;
+        this.lastTimelineKey = -1;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -48,7 +50,7 @@ public class Show {
     
 //    long last = 0l;
 
-    public void tick() {
+    public void tick(double tickDuration) {
         if (!this.isPaused) {
             for (Iterator<Effect<?>> iterator = this.effects.iterator(); iterator.hasNext();) {
                 Effect<?> effect = iterator.next();
@@ -56,26 +58,26 @@ public class Show {
                 if (effect.shouldBeRemoved()) {
                     effect.delete();
                     iterator.remove();
-                } else {
-                    effect.tick(this);
-                }
+                } else
+                    effect.tick(this, tickDuration);
             }
 
-            if (this.timeline().containsKey(this.time))
-                for (Iterator<EffectInfos> iterator = this.timeline().get(this.time).iterator(); iterator.hasNext();) {
-                    EffectInfos effectInfos = iterator.next();
+            int newLast = -1;
+            for (int i : this.timeline().keys())
+                if (i > this.lastTimelineKey && this.lastTimelineKey + tickDuration <= i) {
+                    for (Iterator<EffectInfos> iterator = this.timeline().get(i).iterator(); iterator.hasNext();) {
+                        EffectInfos effectInfos = iterator.next();
 
-                    this.addEffect(effectInfos.buildEffect());
+                        this.addEffect(effectInfos.buildEffect());
+                    }
+                    if (i > newLast)
+                        newLast = i;
                 }
 
-            this.time++;
-            
-//            if (this.time % 20 == 0 ) {
-//                long now= System.currentTimeMillis();
-//                
-//                System.out.println("dt = " + (now - last));
-//                last = now;
-//            }
+            if (newLast >= 0)
+                this.lastTimelineKey = newLast;
+
+            this.time += tickDuration;
         }
     }
 
