@@ -33,7 +33,7 @@ import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 import net.minecraftforge.fml.common.FMLLog;
 
-public class UploadedRenderable {
+public class Renderable {
     
     // VBO
     private VertexBufferObject        vbo;
@@ -138,8 +138,8 @@ public class UploadedRenderable {
             break;
         case COLOR:
             glDisableClientState(GL_COLOR_ARRAY);
-            // is this really needed?
-            GlStateManager.resetColor();
+            // is this really needed? NON mdr
+//            GlStateManager.resetColor();
             break;
         case UV:
             OpenGlHelper.setClientActiveTexture(OpenGlHelper.defaultTexUnit + attr.getIndex());

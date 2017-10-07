@@ -89,6 +89,7 @@ public abstract class Effect<P extends EffectParameters> {
         expr.setVariable("age", this.age);
         expr.setVariable("maxAge", this.getParameters().getMaxAge());
         expr.setVariable("ageRatio", this.age / (float) this.getParameters().getMaxAge());
+        expr.setVariable("t", this.age / (float) this.getParameters().getMaxAge());
     }
 
     /**

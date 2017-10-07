@@ -1,9 +1,7 @@
 package org.kubithon.smgo.client;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import org.kubithon.smgo.client.effect.EffectInfos;
@@ -12,41 +10,52 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
 import net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl;
 
 public class ShowInfos extends Impl<ShowInfos> {
     /**
-     * This show's name.
-     */
-    private String name;
-
-    /**
      * This show's timeline. A mapping time -> effects happening.
      */
-    private Map<Integer, List<EffectInfos>> timeline;
+    private TIntObjectMap<List<EffectInfos>> timeline;
+
+    /**
+     * This show's last tick (when no effect is longer displayed).
+     */
+    private transient int lastTick;
 
     protected ShowInfos(JsonObject jsonObject) {
-        this.name = jsonObject.get("name").getAsString();
-        this.timeline = new HashMap<>();
+        this.timeline = new TIntObjectHashMap<>();
 
         JsonObject obj = jsonObject.get("timeline").getAsJsonObject();
-        ArrayList list;
+        ArrayList<EffectInfos> list;
+        int key;
+        EffectInfos infos;
 
         for (Entry<String, JsonElement> entry : obj.entrySet()) {
-            this.timeline.put(Integer.valueOf(entry.getKey()), list = new ArrayList<>());
+            key = Integer.valueOf(entry.getKey()).intValue();
+
+            this.timeline.put(key, list = new ArrayList<>());
             JsonArray array = entry.getValue().getAsJsonArray();
-            for (JsonElement el : array)
-                list.add(EffectInfos.read(el.getAsJsonObject()));
+            for (JsonElement el : array) {
+                infos = EffectInfos.read(el.getAsJsonObject());
+                if (lastTick < key + infos.getParameters().getMaxAge()) {
+                    lastTick = key + infos.getParameters().getMaxAge();
+                }
+                list.add(infos);
+            }
         }
+
     }
 
-    public Map<Integer, List<EffectInfos>> getTimeline() {
+    public TIntObjectMap<List<EffectInfos>> getTimeline() {
         return this.timeline;
     }
 
     @Override
     public String toString() {
-        return "ShowInfos [name=" + this.name + ", timeline=" + this.timeline + "]";
+        return "ShowInfos [timeline=" + this.timeline + "]";
     }
 
     public static ShowInfos read(JsonObject jsonObject) {

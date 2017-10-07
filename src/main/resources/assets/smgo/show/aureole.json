@@ -13,7 +13,40 @@
                     "z": "0",
                     "maxAge": 600
                 }
-            }
+            }, 
+            {
+				"type": "SphereBeam",
+				"parameters": 
+				{
+					"x": "0",
+					"y": "1 + 5.0 * t",
+					"z": "0",
+					"maxAge": 600
+				}
+			}
+        ], 
+        "100": 
+        [
+            {
+                "type": "Aureole",
+                "parameters": 
+                {
+                    "x": "2",
+                    "y": "1",
+                    "z": "2",
+                    "maxAge": 600
+                }
+            }, 
+            {
+				"type": "SphereBeam",
+				"parameters": 
+				{
+					"x": "cos(t * PI * 2)",
+					"y": "1",
+					"z": "sin(t * PI * 2)",
+					"maxAge": 600
+				}
+			}
         ]
     }
 }

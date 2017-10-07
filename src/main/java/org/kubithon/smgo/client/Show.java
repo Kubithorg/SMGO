@@ -13,6 +13,7 @@ import org.kubithon.smgo.client.effect.Effect;
 import org.kubithon.smgo.client.effect.EffectInfos;
 import org.lwjgl.opengl.GL11;
 
+import gnu.trove.map.TIntObjectMap;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -39,7 +40,7 @@ public class Show {
         this.effects.clear();
     }
 
-    private Map<Integer, List<EffectInfos>> timeline() {
+    private TIntObjectMap<List<EffectInfos>> timeline() {
         return this.showInfos.getTimeline();
     }
 
@@ -60,7 +61,8 @@ public class Show {
 
                     this.addEffect(effectInfos.buildEffect());
                 }
-
+            
+            System.out.println("time = " + time);
             this.time++;
         }
     }
