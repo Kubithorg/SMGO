@@ -1,6 +1,7 @@
 package org.kubithon.smgo.common;
 
 import org.apache.logging.log4j.Logger;
+import org.kubithon.smgo.client.audio.SoundHandler;
 import org.kubithon.smgo.common.show.ShowsManager;
 import org.kubithon.smgo.proxy.CommonProxy;
 
@@ -38,6 +39,7 @@ public class Smgo {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
+        SoundHandler.initalize();
     }
 
     @EventHandler
