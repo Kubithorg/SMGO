@@ -14,6 +14,7 @@ public abstract class EffectWithRenderable<P extends EffectParameters> extends E
 
     public void checkInit(VertexBuffer vertexbuffer) {
         if (this.renderable == null) {
+            this.renderable = new Renderable();
             this.buildRenderable(vertexbuffer);
         }
     }
