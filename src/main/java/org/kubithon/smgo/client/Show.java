@@ -40,6 +40,11 @@ public class Show {
         this.z = z;
     }
 
+    public Show(ShowInfos infos, double x, double y, double z, double time) {
+        this(infos, x, y, z);
+        this.time = time;
+    }
+
     public void reset() {
         this.effects.clear();
     }
@@ -56,39 +61,33 @@ public class Show {
                 if (effect.shouldBeRemoved()) {
                     effect.delete();
                     iterator.remove();
-                }
-                else {
+                } else
                     effect.tick(this, tickDuration);
-                }
             }
 
             int newLast = -1;
 
-            for (int i : this.timeline().keys()) {
+            for (int i : this.timeline().keys())
                 if (this.lastTimelineKey < i && i <= this.time) {
                     for (Iterator<EffectInfos> iterator = this.timeline().get(i).iterator(); iterator.hasNext();) {
                         EffectInfos effectInfos = iterator.next();
 
                         this.addEffect(effectInfos.buildEffect());
                     }
-                    if (i > newLast) {
+                    if (i > newLast)
                         newLast = i;
-                    }
                 }
-            }
 
-            if (newLast >= 0) {
+            if (newLast >= 0)
                 this.lastTimelineKey = newLast;
-            }
 
             this.time += tickDuration;
         }
     }
 
     public void addEffect(Effect<?> effect) {
-        if (effect != null) {
+        if (effect != null)
             this.effects.add(effect);
-        }
     }
 
     public void render(float partialTicks) {
