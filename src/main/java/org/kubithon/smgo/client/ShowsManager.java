@@ -8,6 +8,7 @@ import java.util.List;
 import org.kubithon.smgo.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,6 +30,12 @@ public class ShowsManager {
         // (float)packetIn.getY(), (float)packetIn.getZ()));
         show.tick(0);
     }
+
+//    public void playMusic(SoundEvent location) {
+//        this.currentMusic = PositionedSoundRecord.getMusicRecord(requestedMusicType.getMusicLocation());
+//        this.mc.getSoundHandler().playSound(this.currentMusic);
+//        this.timeUntilNextMusic = Integer.MAX_VALUE;
+//    }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void render(RenderWorldLastEvent event) {
