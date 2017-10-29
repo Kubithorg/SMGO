@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.VertexBuffer;
 
 public abstract class PreCompiledEffect<P extends EffectParameters> extends Effect<P> {
 
-    private static int     displayList;
-    private static boolean compiled;
+    private int     displayList;
+    private boolean compiled;
 
     public PreCompiledEffect(P parameters) {
         super(parameters);
@@ -16,24 +16,24 @@ public abstract class PreCompiledEffect<P extends EffectParameters> extends Effe
 
     @Override
     public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
-        if (!PreCompiledEffect.compiled)
+        if (!this.compiled)
             this.compile(tessellator, vertexbuffer);
 
         GlStateManager.pushMatrix();
         this.preRender();
-        GlStateManager.callList(PreCompiledEffect.displayList);
+        GlStateManager.callList(this.displayList);
         this.postRender();
         GlStateManager.popMatrix();
     }
 
     protected void compile(Tessellator tessellator, VertexBuffer vertexbuffer) {
-        PreCompiledEffect.displayList = GLAllocation.generateDisplayLists(1);
-        GlStateManager.glNewList(PreCompiledEffect.displayList, 4864);
+        this.displayList = GLAllocation.generateDisplayLists(1);
+        GlStateManager.glNewList(this.displayList, 4864);
 
         this.setup(tessellator, vertexbuffer);
 
         GlStateManager.glEndList();
-        PreCompiledEffect.compiled = true;
+        this.compiled = true;
     }
 
     protected abstract void setup(Tessellator tessellator, VertexBuffer vertexbuffer);

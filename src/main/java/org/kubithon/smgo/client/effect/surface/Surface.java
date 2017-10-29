@@ -11,8 +11,6 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public class Surface extends PreCompiledEffect<SurfaceParameters> {
-    private int     displayList;
-    private boolean compiled;
 
     public Surface(SurfaceParameters parameters) {
         super(parameters);
