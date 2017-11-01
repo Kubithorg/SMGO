@@ -10,6 +10,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 /**
  * A color
  *
@@ -17,6 +20,7 @@ import com.google.gson.JsonSerializer;
  * @version 0.1.0
  * @since 0.0.1
  */
+@SideOnly(Side.CLIENT)
 public class Color {
     /**
      * The color mask (to signed and unsigned byte)
@@ -1535,23 +1539,19 @@ public class Color {
             new Color(0xff3f3f15), new Color(0xff3f3f3f) };
 
     public static Color valueOf(String str) {
-        if (str == null || str.length() == 0) {
+        if (str == null || str.length() == 0)
             return null;
-        }
         else if (str.length() == 1) {
             int index = "0123456789abcdefklmnor".indexOf(str.toLowerCase());
             return MINECRAFT_CODES[index];
-        }
-        else {
+        } else
             try {
                 int color = (int) Long.parseLong(str, 16);
                 return new Color(color);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
-        }
     }
 
     public static class JsonAdapter implements JsonSerializer<Color>, JsonDeserializer<Color> {
@@ -1566,10 +1566,8 @@ public class Color {
                 return new Color(jsonObject.get("red").getAsFloat(), jsonObject.get("green").getAsFloat(),
                         jsonObject.get("blue").getAsFloat(), jsonObject.get("alpha").getAsFloat());
 
-            }
-            else if (json.isJsonPrimitive()) {
+            } else if (json.isJsonPrimitive())
                 return valueOf(json.getAsString());
-            }
             return null;
         }
 

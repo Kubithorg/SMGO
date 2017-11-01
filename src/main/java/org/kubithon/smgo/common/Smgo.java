@@ -2,8 +2,6 @@ package org.kubithon.smgo.common;
 
 import org.apache.logging.log4j.Logger;
 import org.kubithon.smgo.client.ShowsManager;
-import org.kubithon.smgo.common.command.CommandReloadShows;
-import org.kubithon.smgo.common.command.CommandStartShow;
 import org.kubithon.smgo.proxy.CommonProxy;
 
 import net.minecraftforge.fml.common.Mod;
@@ -34,7 +32,6 @@ public class Smgo {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        logger = event.getModLog();
         proxy.preInit(event);
     }
 
@@ -44,9 +41,8 @@ public class Smgo {
     }
 
     @EventHandler
-    public void serverStart(FMLServerStartingEvent e) {
-        e.registerServerCommand(new CommandStartShow());
-        e.registerServerCommand(new CommandReloadShows());
+    public void serverStart(FMLServerStartingEvent event) {
+        proxy.startServer(event);
     }
 
 }

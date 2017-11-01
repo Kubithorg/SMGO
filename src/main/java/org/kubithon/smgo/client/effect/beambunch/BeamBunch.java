@@ -11,7 +11,10 @@ import org.kubithon.smgo.client.utils.RenderUtils;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class BeamBunch extends Effect<BeamBunchParameters> {
     public BeamBunch(BeamBunchParameters parameters) {
         super(parameters);

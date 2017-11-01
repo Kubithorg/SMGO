@@ -6,6 +6,10 @@ import org.kubithon.smgo.client.utils.Color;
 
 import com.google.gson.JsonObject;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class TorusParameters extends EffectParameters {
     /**
      * The radius "R" of the torus. Represents the biggest circle.

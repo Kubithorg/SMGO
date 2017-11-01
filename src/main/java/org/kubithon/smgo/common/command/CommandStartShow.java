@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 
 import org.kubithon.smgo.client.registry.ShowsRegistry;
 import org.kubithon.smgo.common.Smgo;
-import org.kubithon.smgo.common.network.StartShowMessage;
 
 import com.google.common.collect.Lists;
 
@@ -53,7 +52,7 @@ public class CommandStartShow extends CommandBase {
              * Smgo.showsManager.startShow(new Show(showInfos, x + 0.5, y + 0.5,
              * z + 0.5));
              */
-            Smgo.NETWORK.sendToAll(new StartShowMessage(new ResourceLocation(args[3]), x, y, z, 0));
+            Smgo.showsManager.startShow(new ResourceLocation(args[3]), x, y, z, 0);
         } else
             throw new WrongUsageException(USAGE + "\nWrong number of arguments.");
     }

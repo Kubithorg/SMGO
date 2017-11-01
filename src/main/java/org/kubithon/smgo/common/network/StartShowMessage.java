@@ -1,9 +1,7 @@
 package org.kubithon.smgo.common.network;
 
-import org.kubithon.smgo.client.Show;
-import org.kubithon.smgo.client.ShowInfos;
-import org.kubithon.smgo.client.registry.ShowsRegistry;
 import org.kubithon.smgo.common.Smgo;
+import org.kubithon.smgo.proxy.ClientProxy;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.ResourceLocation;
@@ -49,11 +47,8 @@ public class StartShowMessage implements IMessage {
 
         @Override
         public IMessage onMessage(StartShowMessage message, MessageContext ctx) {
-            ShowInfos showInfos = ShowsRegistry.get(message.res);
-            if (showInfos == null)
-                Smgo.logger.warn("Network Error : Show '" + message.res + "' not found.");
-            else
-                Smgo.showsManager.startShow(new Show(showInfos, message.x, message.y, message.z, message.startTime));
+            ((ClientProxy) Smgo.proxy).clientShowsManager.startShow(message.res, message.x, message.y, message.z,
+                    message.startTime);
             return null;
         }
     }

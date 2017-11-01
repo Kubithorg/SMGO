@@ -1,4 +1,5 @@
 package org.kubithon.smgo.client;
+//TODO Should be moved to org.kubithon.smgo.client.show
 
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerX;
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerY;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import org.kubithon.smgo.client.effect.Effect;
 import org.kubithon.smgo.client.effect.EffectInfos;
+import org.kubithon.smgo.client.show.ClientShowInfos;
 import org.lwjgl.opengl.GL11;
 
 import gnu.trove.map.TIntObjectMap;
@@ -23,13 +25,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class Show {
     private List<Effect<?>> effects;
-    private ShowInfos       showInfos;
+    private ClientShowInfos showInfos;
     private double          time;
     private boolean         isPaused;
     private double          x, y, z;
     private int             lastTimelineKey;
 
-    public Show(ShowInfos infos, double x, double y, double z) {
+    public Show(ClientShowInfos infos, double x, double y, double z) {
         this.showInfos = infos;
         this.effects = new ArrayList<>();
         this.isPaused = false;
@@ -40,7 +42,7 @@ public class Show {
         this.z = z;
     }
 
-    public Show(ShowInfos infos, double x, double y, double z, double time) {
+    public Show(ClientShowInfos infos, double x, double y, double z, double time) {
         this(infos, x, y, z);
         this.time = time;
     }
@@ -72,7 +74,7 @@ public class Show {
                     for (Iterator<EffectInfos> iterator = this.timeline().get(i).iterator(); iterator.hasNext();) {
                         EffectInfos effectInfos = iterator.next();
 
-                        this.addEffect(effectInfos.buildEffect());
+                        this.addEffect((float) (this.time - i), effectInfos.buildEffect());
                     }
                     if (i > newLast)
                         newLast = i;
@@ -85,9 +87,11 @@ public class Show {
         }
     }
 
-    public void addEffect(Effect<?> effect) {
-        if (effect != null)
+    public void addEffect(float startAge, Effect<?> effect) {
+        if (effect != null) {
+            effect.setAge(startAge);
             this.effects.add(effect);
+        }
     }
 
     public void render(float partialTicks) {

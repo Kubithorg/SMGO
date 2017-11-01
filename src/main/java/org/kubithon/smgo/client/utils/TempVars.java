@@ -42,6 +42,9 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 /**
  * Temporary variables assigned to each thread. Engine classes may access these
  * temp variables with TempVars.get(), all retrieved TempVars instances must be
@@ -49,6 +52,7 @@ import org.lwjgl.BufferUtils;
  * TempVar class ensuring this particular instance is never used elsewhere in
  * the mean time.
  */
+@SideOnly(Side.CLIENT)
 public class TempVars {
 
     /**
@@ -123,9 +127,8 @@ public class TempVars {
      * thrown.
      */
     public void release() {
-        if (!this.isUsed) {
+        if (!this.isUsed)
             throw new IllegalStateException("This instance of TempVars was already released!");
-        }
 
         this.isUsed = false;
 
@@ -135,9 +138,8 @@ public class TempVars {
         stack.index--;
 
         // Check if it is actually there
-        if (stack.tempVars[stack.index] != this) {
+        if (stack.tempVars[stack.index] != this)
             throw new IllegalStateException("An instance of TempVars has not been released in a called method!");
-        }
     }
 
     /**

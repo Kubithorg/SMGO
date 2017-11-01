@@ -4,7 +4,10 @@ import org.kubithon.smgo.client.effect.EffectWithRenderable;
 
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class Ring extends EffectWithRenderable<RingParameters> {
 
     public Ring(RingParameters parameters) {
