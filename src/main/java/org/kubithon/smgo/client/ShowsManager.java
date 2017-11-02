@@ -1,85 +1,72 @@
 package org.kubithon.smgo.client;
+//TODO Should be moved to org.kubithon.smgo.common.show
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.kubithon.smgo.proxy.ClientProxy;
+import org.kubithon.smgo.client.registry.ShowsRegistry;
+import org.kubithon.smgo.common.Smgo;
+import org.kubithon.smgo.common.network.StartShowMessage;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 public class ShowsManager {
-    private static final float MIN_UPDATE_TIME = 0.05F;
 
-    private List<Show> shows    = Collections.synchronizedList(new ArrayList<Show>());
-    private double     lastTime = -1;
+    private List<CurrentShowInfos> shows = Collections.synchronizedList(new ArrayList<>());
 
-    public void startShow(Show show) {
-        this.shows.add(show);
-
-        Minecraft.getMinecraft().player.playSound(ClientProxy.soundEvent, 1.0f, 1.0f);
-        // Minecraft.getMinecraft().getSoundHandler().playSound(new
-        // PositionedSoundRecord(new ResourceLocation("smgo:clicktrack",
-        // SoundCategory.MUSIC, 1.0f, 1.0f, false, 0,
-        // ISound.AttenuationType.LINEAR, (float)packetIn.getX(),
-        // (float)packetIn.getY(), (float)packetIn.getZ()));
-        show.tick(0);
+    public void startShow(ResourceLocation res, double x, double y, double z, double time) {
+        this.cleanList();
+        this.shows.add(new CurrentShowInfos(res, x, y, z, time));
+        Smgo.NETWORK.sendToAll(new StartShowMessage(res, (float) x, (float) y, (float) z, (float) time));
     }
 
-//    public void playMusic(SoundEvent location) {
-//        this.currentMusic = PositionedSoundRecord.getMusicRecord(requestedMusicType.getMusicLocation());
-//        this.mc.getSoundHandler().playSound(this.currentMusic);
-//        this.timeUntilNextMusic = Integer.MAX_VALUE;
-//    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void render(RenderWorldLastEvent event) {
-        double time = System.currentTimeMillis();
-        double tickDuration = (time - this.lastTime) / 50;
-        if (this.lastTime < 0) {
-            tickDuration = 0;
-        }
+    @SubscribeEvent // EntityPlayerMP
+    public void atPlayerConnection(PlayerEvent.PlayerLoggedInEvent event) {
+        this.cleanList();
         synchronized (this.shows) {
-            if (tickDuration > MIN_UPDATE_TIME || tickDuration == 0) {
-                for (Iterator<Show> iterator = this.shows.iterator(); iterator.hasNext();) {
-                    Show show = iterator.next();
-
-                    show.tick(tickDuration);
-
-                    if (show.isDone()) {
-                        iterator.remove();
-                    }
-                }
-                this.lastTime = time;
-            }
-
-            for (Iterator<Show> iterator = this.shows.iterator(); iterator.hasNext();) {
-                Show show = iterator.next();
-
-                show.render(event.getPartialTicks());
+            long curTime = System.currentTimeMillis();
+            double showTime = 0;
+            for (CurrentShowInfos show : this.shows) {
+                showTime = curTime - show.startTime + show.time;
+                if (showTime < show.showInfos.getLastTick() * 50)
+                    Smgo.NETWORK.sendTo(new StartShowMessage(show.res, show.x, show.y, show.z, (float) (showTime / 50)),
+                            (EntityPlayerMP) event.player);
             }
         }
-
     }
 
-    // @SubscribeEvent
-    // public void tick(WorldTickEvent event) {
-    // if (event.phase == Phase.START)
-    // return;
-    // synchronized (this.shows) {
-    // for (Iterator<Show> iterator = this.shows.iterator();
-    // iterator.hasNext();) {
-    // Show show = iterator.next();
-    // show.tick();
-    //
-    // if (show.isDone())
-    // iterator.remove();
-    // }
-    // }
-    // }
+    private void cleanList() {
+        synchronized (this.shows) {
+            CurrentShowInfos show = null;
+            long curTime = System.currentTimeMillis();
+            Iterator<CurrentShowInfos> iterator = this.shows.iterator();
+            while (iterator.hasNext()) {
+                show = iterator.next();
+                if (curTime - show.startTime + show.time > show.showInfos.getLastTick() * 50)
+                    iterator.remove();
+            }
+        }
+    }
+
+    private class CurrentShowInfos {
+        public ShowInfos        showInfos;
+        public ResourceLocation res;
+        public float            x, y, z, time;
+        public long             startTime;
+
+        public CurrentShowInfos(ResourceLocation res, double x, double y, double z, double time) {
+            this.showInfos = ShowsRegistry.get(res);
+            this.res = res;
+            this.x = (float) x;
+            this.y = (float) y;
+            this.z = (float) z;
+            this.time = (float) time * 50;
+            this.startTime = System.currentTimeMillis();
+        }
+    }
 }

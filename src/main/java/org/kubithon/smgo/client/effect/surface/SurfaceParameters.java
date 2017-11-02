@@ -6,6 +6,10 @@ import org.kubithon.smgo.client.utils.Color;
 
 import com.google.gson.JsonObject;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class SurfaceParameters extends EffectParameters {
     IExpression surfaceParamX, surfaceParamY, surfaceParamZ;
     float       fromU, toU, partU, fromV, toV, partV;

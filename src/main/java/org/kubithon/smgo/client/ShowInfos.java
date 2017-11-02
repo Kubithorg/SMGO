@@ -1,67 +1,42 @@
 package org.kubithon.smgo.client;
+//TODO Should be moved to org.kubithon.smgo.common.show
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map.Entry;
 
-import org.kubithon.smgo.client.effect.EffectInfos;
 import org.kubithon.smgo.client.utils.Timing;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
-
 public class ShowInfos {
-    /**
-     * This show's timeline. A mapping time -> effects happening.
-     */
-    private TIntObjectMap<List<EffectInfos>> timeline;
-
     /**
      * This show's last tick (when no effect is longer displayed).
      */
-    private transient int lastTick;
+    protected int lastTick;
 
     protected ShowInfos(JsonObject jsonObject) {
-        this.timeline = new TIntObjectHashMap<>();
-
         JsonObject obj = jsonObject.get("timeline").getAsJsonObject();
-        ArrayList<EffectInfos> list;
-        int key;
-        EffectInfos infos;
+        int key, maxAge;
 
         for (Entry<String, JsonElement> entry : obj.entrySet()) {
             key = Timing.parseTime(entry.getKey());
 
-            this.timeline.put(key, list = new ArrayList<>());
             JsonArray array = entry.getValue().getAsJsonArray();
             for (JsonElement el : array) {
-                infos = EffectInfos.read(el.getAsJsonObject());
-                if (this.lastTick < key + infos.getParameters().getMaxAge())
-                    this.lastTick = key + infos.getParameters().getMaxAge();
-                list.add(infos);
+                maxAge = el.getAsJsonObject().get("parameters").getAsJsonObject().get("maxAge").getAsInt();
+                if (this.lastTick < key + maxAge)
+                    this.lastTick = key + maxAge;
             }
         }
-
     }
 
-    public TIntObjectMap<List<EffectInfos>> getTimeline() {
-        return this.timeline;
-    }
-
-    @Override
-    public String toString() {
-        return "ShowInfos [timeline=" + this.timeline + "]";
+    public int getLastTick() {
+        return this.lastTick;
     }
 
     public static ShowInfos read(JsonObject jsonObject) {
         return new ShowInfos(jsonObject);
     }
 
-    public int getLastTick() {
-        return this.lastTick;
-    }
 }

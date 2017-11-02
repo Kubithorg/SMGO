@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import org.kubithon.smgo.client.Show;
-import org.kubithon.smgo.client.ShowInfos;
 import org.kubithon.smgo.client.registry.ShowsRegistry;
 import org.kubithon.smgo.common.Smgo;
 
@@ -19,7 +17,6 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 
 public class CommandStartShow extends CommandBase {
     private static final String NAME  = "startshow";
@@ -46,12 +43,16 @@ public class CommandStartShow extends CommandBase {
             } catch (NumberFormatException e) {
                 throw new WrongUsageException(USAGE + "\nx, y or z is not a number.");
             }
-            ShowInfos showInfos = ShowsRegistry.get(new ResourceLocation(args[3]));
-
-            if (showInfos == null)
-                sender.sendMessage(new TextComponentString("Show '" + args[3] + "' not found."));
-            else
-                Smgo.showsManager.startShow(new Show(showInfos, x + 0.5, y + 0.5, z + 0.5));
+            /*
+             * ShowInfos showInfos = ShowsRegistry.get(new
+             * ResourceLocation(args[3]));
+             *
+             * if (showInfos == null) sender.sendMessage(new
+             * TextComponentString("Show '" + args[3] + "' not found.")); else
+             * Smgo.showsManager.startShow(new Show(showInfos, x + 0.5, y + 0.5,
+             * z + 0.5));
+             */
+            Smgo.showsManager.startShow(new ResourceLocation(args[3]), x, y, z, 0);
         } else
             throw new WrongUsageException(USAGE + "\nWrong number of arguments.");
     }

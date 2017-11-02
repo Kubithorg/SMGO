@@ -5,6 +5,10 @@ import org.kubithon.smgo.client.utils.Color;
 
 import com.google.gson.JsonObject;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class AureoleParameters extends EffectParameters {
 
     /**
@@ -26,17 +30,14 @@ public class AureoleParameters extends EffectParameters {
     protected AureoleParameters(JsonObject jsonObject) {
         super(jsonObject);
 
-        if (jsonObject.has("radius")) {
+        if (jsonObject.has("radius"))
             this.radius = jsonObject.get("radius").getAsFloat();
-        }
 
-        if (jsonObject.has("color")) {
+        if (jsonObject.has("color"))
             this.color = new Color(Integer.parseUnsignedInt(jsonObject.get("color").getAsString(), 16));
-        }
 
-        if (jsonObject.has("slides")) {
+        if (jsonObject.has("slides"))
             this.amountOfSlides = jsonObject.get("slides").getAsInt();
-        }
     }
 
     public float getRadius() {

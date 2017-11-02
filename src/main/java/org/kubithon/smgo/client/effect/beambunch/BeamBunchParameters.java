@@ -5,6 +5,10 @@ import org.kubithon.smgo.client.utils.Color;
 
 import com.google.gson.JsonObject;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class BeamBunchParameters extends EffectParameters {
     /**
      * Amount of beams in this bunch.

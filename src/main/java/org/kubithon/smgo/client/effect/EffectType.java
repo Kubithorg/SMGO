@@ -23,6 +23,9 @@ import org.kubithon.smgo.client.effect.tester.TesterParameters;
 import org.kubithon.smgo.client.effect.torus.Torus;
 import org.kubithon.smgo.client.effect.torus.TorusParameters;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 /**
  * Represents a type of an {@link Effect}.
  *
@@ -31,6 +34,7 @@ import org.kubithon.smgo.client.effect.torus.TorusParameters;
  * @param <P>
  *            The parameters type for this effect.
  */
+@SideOnly(Side.CLIENT)
 public class EffectType<P extends EffectParameters> {
     /**
      * A unique mapping of identifier -> effect type.
@@ -89,14 +93,12 @@ public class EffectType<P extends EffectParameters> {
         Objects.requireNonNull(effectClass, "effectClass cannot be null.");
         Objects.requireNonNull(parametersClass, "parametersClass cannot be null.");
 
-        if (typesRegistry.containsKey(identifier)) {
+        if (typesRegistry.containsKey(identifier))
             throw new IllegalArgumentException("Identifier '" + identifier + "' is already used.");
-        }
 
-        if (!checkEffectClass(effectClass, parametersClass)) {
+        if (!checkEffectClass(effectClass, parametersClass))
             throw new IllegalArgumentException("Class '" + effectClass.getCanonicalName()
                     + "' is not valid for parameters class '" + parametersClass.getCanonicalName() + "'.");
-        }
 
         this.identifier = identifier;
         this.effectClass = effectClass;
@@ -118,12 +120,10 @@ public class EffectType<P extends EffectParameters> {
         try {
             effectClass.getConstructor(parametersClass);
             return true;
-        }
-        catch (NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
             e.printStackTrace();
             return false;
-        }
-        catch (SecurityException e) {
+        } catch (SecurityException e) {
             e.printStackTrace();
             return false;
         }
@@ -161,30 +161,23 @@ public class EffectType<P extends EffectParameters> {
     public Effect<? extends P> buildEffect(EffectParameters parameters) {
         Objects.requireNonNull(parameters, "parameters cannot be null.");
 
-        if (!this.parametersClass.isInstance(parameters)) {
+        if (!this.parametersClass.isInstance(parameters))
             throw new IllegalArgumentException("Invalid parameters type '" + parameters.getClass().getCanonicalName()
                     + "', expected instance of " + this.parametersClass.getCanonicalName() + ".");
-        }
 
         try {
             return this.effectClass.getConstructor(this.parametersClass).newInstance((P) parameters);
-        }
-        catch (InstantiationException e) {
+        } catch (InstantiationException e) {
             e.printStackTrace();
-        }
-        catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        }
-        catch (InvocationTargetException e) {
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
-        }
-        catch (NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
             e.printStackTrace();
-        }
-        catch (SecurityException e) {
+        } catch (SecurityException e) {
             e.printStackTrace();
         }
 

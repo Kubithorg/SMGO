@@ -8,10 +8,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 /**
  * Every subclass should redefine a {@code static P read(JsonObject)} where
  * {@code P} is the subclass type.
  */
+@SideOnly(Side.CLIENT)
 public class EffectParameters {
     /**
      * The expression of the function: age -> X position.
@@ -46,12 +50,10 @@ public class EffectParameters {
         if (maxAgeElement.isJsonPrimitive()) {
             JsonPrimitive maxAgePrimitive = (JsonPrimitive) maxAgeElement;
 
-            if (maxAgePrimitive.isNumber()) {
+            if (maxAgePrimitive.isNumber())
                 this.maxAge = maxAgePrimitive.getAsInt();
-            }
-            else {
+            else
                 this.maxAge = Timing.parseTime(maxAgePrimitive.getAsString());
-            }
         }
     }
 

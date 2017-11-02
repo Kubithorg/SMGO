@@ -1,4 +1,5 @@
 package org.kubithon.smgo.client.registry;
+//TODO Should be moved to org.kubithon.smgo.common.registry
 
 import java.util.HashMap;
 import java.util.Map;

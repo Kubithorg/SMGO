@@ -7,6 +7,10 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class Maths {
 
     public static final float     PI      = (float) Math.PI;
@@ -58,9 +62,8 @@ public class Maths {
         dest.y = sin(phi) * sin(theta);
         dest.z = cos(phi);
 
-        if (origin != null) {
+        if (origin != null)
             dest.add(origin.x, origin.y, origin.z);
-        }
     }
 
     /**
@@ -83,15 +86,12 @@ public class Maths {
     }
 
     public static void randomizeQuad(Vector3f[] vertexes, Vector3f origin) {
-        if (vertexes.length != 4) {
+        if (vertexes.length != 4)
             throw new IllegalArgumentException();
-        }
 
-        for (int i = 0; i < 4; i++) {
-            if (vertexes[i] == null) {
+        for (int i = 0; i < 4; i++)
+            if (vertexes[i] == null)
                 vertexes[i] = new Vector3f();
-            }
-        }
 
         randomizeInUnitSphere(vertexes[0]);
         randomizeOnUnitSphere(vertexes[0], vertexes[1]);
@@ -107,11 +107,9 @@ public class Maths {
         vertexes[3] = vertexes[2];
         vertexes[2] = temp;
 
-        if (origin != null) {
-            for (int i = 0; i < 4; i++) {
+        if (origin != null)
+            for (int i = 0; i < 4; i++)
                 vertexes[i].add(origin);
-            }
-        }
     }
 
     public static void randomize(float range, Vector3f dest) {

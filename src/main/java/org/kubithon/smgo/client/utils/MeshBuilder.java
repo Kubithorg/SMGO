@@ -4,7 +4,10 @@ import org.joml.MatrixStackf;
 import org.joml.Vector3f;
 
 import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class MeshBuilder {
     private VertexBuffer buffer;
 

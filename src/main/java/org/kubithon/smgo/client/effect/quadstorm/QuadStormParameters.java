@@ -4,6 +4,10 @@ import org.kubithon.smgo.client.effect.EffectParameters;
 
 import com.google.gson.JsonObject;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class QuadStormParameters extends EffectParameters {
 
     /**
@@ -20,13 +24,11 @@ public class QuadStormParameters extends EffectParameters {
     protected QuadStormParameters(JsonObject jsonObject) {
         super(jsonObject);
 
-        if (jsonObject.has("radius")) {
+        if (jsonObject.has("radius"))
             this.radius = jsonObject.get("radius").getAsFloat();
-        }
 
-        if (jsonObject.has("amount")) {
+        if (jsonObject.has("amount"))
             this.amount = jsonObject.get("amout").getAsInt();
-        }
     }
 
     public float getRadius() {
