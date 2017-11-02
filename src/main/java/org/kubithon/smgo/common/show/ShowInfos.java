@@ -1,9 +1,8 @@
-package org.kubithon.smgo.client;
-//TODO Should be moved to org.kubithon.smgo.common.show
+package org.kubithon.smgo.common.show;
 
 import java.util.Map.Entry;
 
-import org.kubithon.smgo.client.utils.Timing;
+import org.kubithon.smgo.common.utils.Timing;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

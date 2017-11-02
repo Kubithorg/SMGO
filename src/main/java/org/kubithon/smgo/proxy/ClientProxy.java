@@ -1,9 +1,9 @@
 package org.kubithon.smgo.proxy;
 
-import org.kubithon.smgo.client.ShowInfos;
 import org.kubithon.smgo.client.show.ClientShowInfos;
 import org.kubithon.smgo.client.show.ClientShowsManager;
 import org.kubithon.smgo.common.Smgo;
+import org.kubithon.smgo.common.show.ShowInfos;
 
 import com.google.gson.JsonObject;
 

@@ -2,7 +2,7 @@ package org.kubithon.smgo.client.effect;
 
 import org.kubithon.smgo.client.math.ExpressionReader;
 import org.kubithon.smgo.client.math.IExpression;
-import org.kubithon.smgo.client.utils.Timing;
+import org.kubithon.smgo.common.utils.Timing;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

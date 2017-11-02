@@ -1,8 +1,7 @@
-package org.kubithon.smgo.client.utils;
+package org.kubithon.smgo.common.utils;
 
 import static java.lang.Character.isDigit;
 
-//@SideOnly(Side.CLIENT) used in ShowInfos
 public class Timing {
     public static int parseTime(String str) {
         // In case of "235t" or just 235
