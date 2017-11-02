@@ -1,5 +1,4 @@
-package org.kubithon.smgo.client;
-//TODO Should be moved to org.kubithon.smgo.client.show
+package org.kubithon.smgo.client.show;
 
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerX;
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerY;
@@ -12,7 +11,6 @@ import java.util.List;
 
 import org.kubithon.smgo.client.effect.Effect;
 import org.kubithon.smgo.client.effect.EffectInfos;
-import org.kubithon.smgo.client.show.ClientShowInfos;
 import org.lwjgl.opengl.GL11;
 
 import gnu.trove.map.TIntObjectMap;

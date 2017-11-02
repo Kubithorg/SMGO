@@ -1,7 +1,7 @@
 package org.kubithon.smgo.common;
 
 import org.apache.logging.log4j.Logger;
-import org.kubithon.smgo.client.ShowsManager;
+import org.kubithon.smgo.common.show.ShowsManager;
 import org.kubithon.smgo.proxy.CommonProxy;
 
 import net.minecraftforge.fml.common.Mod;

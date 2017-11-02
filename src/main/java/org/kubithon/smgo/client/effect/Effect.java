@@ -2,8 +2,8 @@ package org.kubithon.smgo.client.effect;
 
 import java.beans.Expression;
 
-import org.kubithon.smgo.client.Show;
 import org.kubithon.smgo.client.math.IExpression;
+import org.kubithon.smgo.client.show.Show;
 
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;

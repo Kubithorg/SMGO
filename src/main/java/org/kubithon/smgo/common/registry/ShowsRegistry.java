@@ -1,13 +1,12 @@
-package org.kubithon.smgo.client.registry;
-//TODO Should be moved to org.kubithon.smgo.common.registry
+package org.kubithon.smgo.common.registry;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.kubithon.smgo.client.ShowInfos;
-import org.kubithon.smgo.client.json.JsonReader;
+import org.kubithon.smgo.common.show.ShowInfos;
+import org.kubithon.smgo.common.utils.JsonReader;
 
 import net.minecraft.util.ResourceLocation;
 

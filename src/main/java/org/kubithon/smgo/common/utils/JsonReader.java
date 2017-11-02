@@ -1,12 +1,11 @@
-package org.kubithon.smgo.client.json;
-//TODO Should be moved to org.kubithon.smgo.common.util
+package org.kubithon.smgo.common.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import org.apache.commons.io.Charsets;
-import org.kubithon.smgo.client.ShowInfos;
 import org.kubithon.smgo.common.Smgo;
+import org.kubithon.smgo.common.show.ShowInfos;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

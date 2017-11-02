@@ -1,14 +1,13 @@
-package org.kubithon.smgo.client;
-//TODO Should be moved to org.kubithon.smgo.common.show
+package org.kubithon.smgo.common.show;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.kubithon.smgo.client.registry.ShowsRegistry;
 import org.kubithon.smgo.common.Smgo;
 import org.kubithon.smgo.common.network.StartShowMessage;
+import org.kubithon.smgo.common.registry.ShowsRegistry;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;

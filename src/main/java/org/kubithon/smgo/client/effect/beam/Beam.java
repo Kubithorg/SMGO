@@ -1,7 +1,7 @@
 package org.kubithon.smgo.client.effect.beam;
 
-import org.kubithon.smgo.client.Show;
 import org.kubithon.smgo.client.effect.Effect;
+import org.kubithon.smgo.client.show.Show;
 import org.kubithon.smgo.client.utils.RenderUtils;
 import org.lwjgl.opengl.GL11;
 

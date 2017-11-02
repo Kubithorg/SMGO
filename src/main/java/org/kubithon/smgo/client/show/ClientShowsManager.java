@@ -5,8 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.kubithon.smgo.client.Show;
-import org.kubithon.smgo.client.registry.ShowsRegistry;
+import org.kubithon.smgo.common.registry.ShowsRegistry;
 import org.kubithon.smgo.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;

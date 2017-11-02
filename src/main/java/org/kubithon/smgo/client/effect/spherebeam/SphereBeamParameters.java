@@ -5,6 +5,10 @@ import org.kubithon.smgo.client.utils.Color;
 
 import com.google.gson.JsonObject;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class SphereBeamParameters extends EffectParameters {
     int   xBeam, yBeam;
     float smallRadius, bigRadius;

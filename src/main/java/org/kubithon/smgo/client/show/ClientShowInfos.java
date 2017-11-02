@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.kubithon.smgo.client.ShowInfos;
 import org.kubithon.smgo.client.effect.EffectInfos;
-import org.kubithon.smgo.client.utils.Timing;
+import org.kubithon.smgo.common.show.ShowInfos;
+import org.kubithon.smgo.common.utils.Timing;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

@@ -1,6 +1,6 @@
 package org.kubithon.smgo.common.command;
 
-import org.kubithon.smgo.client.registry.ShowsRegistry;
+import org.kubithon.smgo.common.registry.ShowsRegistry;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

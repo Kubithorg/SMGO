@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import org.kubithon.smgo.client.registry.ShowsRegistry;
 import org.kubithon.smgo.common.Smgo;
+import org.kubithon.smgo.common.registry.ShowsRegistry;
 
 import com.google.common.collect.Lists;
 
