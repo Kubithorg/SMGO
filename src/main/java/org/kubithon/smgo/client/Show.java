@@ -6,6 +6,7 @@ import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatc
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerZ;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Show {
 
     public Show(ClientShowInfos infos, double x, double y, double z) {
         this.showInfos = infos;
-        this.effects = new ArrayList<>();
+        this.effects = Collections.synchronizedList(new ArrayList<>());
         this.isPaused = false;
         this.time = 0;
         this.lastTimelineKey = -1;
@@ -57,14 +58,16 @@ public class Show {
 
     public void tick(double tickDuration) {
         if (!this.isPaused) {
-            for (Iterator<Effect<?>> iterator = this.effects.iterator(); iterator.hasNext();) {
-                Effect<?> effect = iterator.next();
+            synchronized (this.effects) {
+                for (Iterator<Effect<?>> iterator = this.effects.iterator(); iterator.hasNext();) {
+                    Effect<?> effect = iterator.next();
 
-                if (effect.shouldBeRemoved()) {
-                    effect.delete();
-                    iterator.remove();
-                } else
-                    effect.tick(this, tickDuration);
+                    if (effect.shouldBeRemoved()) {
+                        effect.delete();
+                        iterator.remove();
+                    } else
+                        effect.tick(this, tickDuration);
+                }
             }
 
             int newLast = -1;
