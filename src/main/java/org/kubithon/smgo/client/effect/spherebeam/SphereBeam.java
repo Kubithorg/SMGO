@@ -1,8 +1,6 @@
 package org.kubithon.smgo.client.effect.spherebeam;
 
-import org.kubithon.smgo.client.effect.Effect;
-import org.kubithon.smgo.client.effect.EffectParameters;
-import org.kubithon.smgo.client.utils.Color;
+import org.kubithon.smgo.client.effect.PreCompiledEffect;
 import org.kubithon.smgo.client.utils.RenderUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -14,27 +12,28 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class SphereBeam extends Effect<EffectParameters> {
+public class SphereBeam extends PreCompiledEffect<SphereBeamParameters> {
 
-    public SphereBeam(EffectParameters parameters) {
+    public SphereBeam(SphereBeamParameters parameters) {
         super(parameters);
     }
 
     @Override
-    public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
-        GlStateManager.rotate((float) (Math.PI * this.age / 20), 0, 1, 0);
-        float x, y, z, xb, yb, zb, r1 = 1, r2 = 15;
+    public void setup(Tessellator tessellator, VertexBuffer vertexbuffer) {
+        System.out.println(this.parameters.bigRadius + " / " + this.parameters.smallRadius + " / "
+                + this.parameters.xBeam + " / " + this.parameters.yBeam);
+        float x, y, z, xb, yb, zb, r1 = this.parameters.smallRadius, r2 = this.parameters.bigRadius;
         GlStateManager.disableTexture2D();
-        RenderUtils.color(Color.BLUEVIOLET);
+        RenderUtils.color(this.parameters.color);
         GlStateManager.glLineWidth(0.5f);
 
         vertexbuffer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
 
-        for (float u = 0; u < 2 * Math.PI; u += Math.PI / 12) {
+        for (float u = 0; u < 2 * Math.PI; u += 2 * Math.PI / this.parameters.yBeam) {
             xb = (float) Math.cos(u);
             yb = (float) Math.sin(u);
             zb = xb;
-            for (float v = 0; v < Math.PI; v += Math.PI / 12) {
+            for (float v = 0; v < Math.PI; v += 2 * Math.PI / this.parameters.xBeam) {
                 x = (float) (Math.sin(v) * xb);
                 y = yb;
                 z = (float) (Math.cos(v) * zb);
@@ -44,6 +43,11 @@ public class SphereBeam extends Effect<EffectParameters> {
         }
         tessellator.draw();
         GlStateManager.enableTexture2D();
+    }
+
+    @Override
+    protected void preRender() {
+        GlStateManager.rotate(this.age, 0, 1, 0);
     }
 
 }

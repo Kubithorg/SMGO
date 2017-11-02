@@ -3,10 +3,10 @@ package org.kubithon.smgo.client.effect.quadstorm;
 import static org.kubithon.smgo.client.math.Maths.randomize;
 import static org.kubithon.smgo.client.math.Maths.randomizeQuad;
 
-import org.kubithon.smgo.client.effect.EffectWithRenderable;
+import org.joml.Vector3f;
+import org.kubithon.smgo.client.effect.PreCompiledEffect;
 import org.kubithon.smgo.client.utils.Color;
 import org.kubithon.smgo.client.utils.RenderUtils;
-import org.kubithon.smgo.client.utils.TempVars;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,49 +17,43 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class QuadStorm extends EffectWithRenderable<QuadStormParameters> {
+public class QuadStorm extends PreCompiledEffect<QuadStormParameters> {
 
     public QuadStorm(QuadStormParameters parameters) {
         super(parameters);
     }
 
     @Override
-    public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
-        super.checkInit(vertexbuffer);
-        GlStateManager.rotate((float) (Math.PI * this.age / 20), 0, 1, 0);
+    protected void setup(Tessellator tessellator, VertexBuffer vertexbuffer) {
+        Vector3f origin = new Vector3f();
+        Vector3f[] quadVertices = { new Vector3f(), new Vector3f(), new Vector3f(), new Vector3f() };
+
         GlStateManager.disableTexture2D();
         RenderUtils.color(Color.WHITE);
         GlStateManager.glLineWidth(1.5f);
-        {
-            this.renderable.render();
+
+        vertexbuffer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
+
+        for (int k = 0; k < this.parameters.getAmount(); k++) {
+            randomize(this.parameters.getRadius(), origin);
+            randomizeQuad(quadVertices, origin);
+
+            int j;
+            for (int i = 0; i < quadVertices.length; i++) {
+                vertexbuffer.pos(quadVertices[i].x, quadVertices[i].y, quadVertices[i].z).endVertex();
+
+                j = (i + 1) % quadVertices.length;
+
+                vertexbuffer.pos(quadVertices[j].x, quadVertices[j].y, quadVertices[j].z).endVertex();
+            }
         }
+        tessellator.draw();
+
         GlStateManager.enableTexture2D();
     }
 
     @Override
-    protected void buildRenderable(VertexBuffer vertexbuffer) {
-        TempVars tempVars = TempVars.get();
-        vertexbuffer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
-
-        // tempVars.quadra = quad vertices
-        // tempVars.vect1 = origin
-
-        for (int k = 0; k < this.parameters.getAmount(); k++) {
-            randomize(this.parameters.getRadius(), tempVars.vect1);
-            randomizeQuad(tempVars.quadra, tempVars.vect1);
-
-            int j;
-            for (int i = 0; i < tempVars.quadra.length; i++) {
-                vertexbuffer.pos(tempVars.quadra[i].x, tempVars.quadra[i].y, tempVars.quadra[i].z).endVertex();
-
-                j = (i + 1) % tempVars.quadra.length;
-
-                vertexbuffer.pos(tempVars.quadra[j].x, tempVars.quadra[j].y, tempVars.quadra[j].z).endVertex();
-            }
-        }
-        vertexbuffer.finishDrawing();
-        this.renderable.upload(vertexbuffer);
-
-        tempVars.release();
+    protected void preRender() {
+        GlStateManager.rotate((float) (Math.PI * this.age / 5), 0, 1, 0);
     }
 }
