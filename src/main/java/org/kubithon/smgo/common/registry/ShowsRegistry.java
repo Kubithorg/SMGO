@@ -1,5 +1,6 @@
 package org.kubithon.smgo.common.registry;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,11 +14,11 @@ import net.minecraft.util.ResourceLocation;
 public class ShowsRegistry {
     private static Map<ResourceLocation, ShowRegInfos> registry = new HashMap<>();
 
-    public static void register(String modid, String res, String jsonLoc) {
-        register(new ResourceLocation(modid, res), new ResourceLocation(modid, jsonLoc));
+    public static void register(String modid, String res, File jsonLoc) {
+        register(new ResourceLocation(modid, res), jsonLoc);
     }
 
-    public static void register(ResourceLocation res, ResourceLocation jsonLoc) {
+    public static void register(ResourceLocation res, File jsonLoc) {
         registry.put(res, new ShowRegInfos(jsonLoc));
     }
 
@@ -36,10 +37,10 @@ public class ShowsRegistry {
     }
 
     private static class ShowRegInfos {
-        public ShowInfos        infos;
-        public ResourceLocation jsonLocation;
+        public ShowInfos infos;
+        public File      jsonLocation;
 
-        public ShowRegInfos(ResourceLocation jsonLoc) {
+        public ShowRegInfos(File jsonLoc) {
             this.jsonLocation = jsonLoc;
             this.load();
         }

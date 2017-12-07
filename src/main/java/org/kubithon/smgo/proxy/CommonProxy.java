@@ -1,5 +1,7 @@
 package org.kubithon.smgo.proxy;
 
+import java.io.File;
+
 import org.kubithon.smgo.common.Smgo;
 import org.kubithon.smgo.common.command.CommandReloadShows;
 import org.kubithon.smgo.common.command.CommandStartShow;
@@ -36,16 +38,10 @@ public class CommonProxy {
     }
 
     protected void registerShows() {
-        ShowsRegistry.register(Smgo.MODID, "beam", "show/beam.json");
-        ShowsRegistry.register(Smgo.MODID, "beambunch", "show/beambunch.json");
-        ShowsRegistry.register(Smgo.MODID, "torus", "show/torus.json");
-        ShowsRegistry.register(Smgo.MODID, "surface", "show/surface.json");
-        ShowsRegistry.register(Smgo.MODID, "torus2", "show/torus2.json");
-        ShowsRegistry.register(Smgo.MODID, "sphere", "show/sphere.json");
-        ShowsRegistry.register(Smgo.MODID, "spherebeam", "show/spherebeam.json");
-        ShowsRegistry.register(Smgo.MODID, "aureole", "show/aureole.json");
-        ShowsRegistry.register(Smgo.MODID, "quadstorm", "show/quadstorm.json");
-        ShowsRegistry.register(Smgo.MODID, "click", "show/click.json");
+        File showDir = new File("shows");
+        for (File file : showDir.listFiles())
+            if (file.isFile())
+                ShowsRegistry.register(Smgo.MODID, file.getName().substring(0, file.getName().lastIndexOf(".")), file);
     }
 
     public ShowInfos readShowInfos(JsonObject json) {
