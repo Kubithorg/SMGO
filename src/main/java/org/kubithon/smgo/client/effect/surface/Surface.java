@@ -30,26 +30,35 @@ public class Surface extends PreCompiledEffect<SurfaceParameters> {
         GlStateManager.glLineWidth(0.5f);
 
         for (float u = this.parameters.fromU; u <= this.parameters.toU; u += (this.parameters.toU
-                - this.parameters.fromU) / this.parameters.partU) {
-            paramX.setVariable("u", u);
-            paramY.setVariable("u", u);
-            paramZ.setVariable("u", u);
-            vertexbuffer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-            for (float v = this.parameters.fromV; v <= this.parameters.toV; v += (this.parameters.toV
-                    - this.parameters.fromV) / this.parameters.partV) {
-                paramX.setVariable("v", v);
-                paramY.setVariable("v", v);
-                paramZ.setVariable("v", v);
-                vertexbuffer.pos(paramX.getValue(), paramY.getValue(), paramZ.getValue()).endVertex();
-            }
-            tessellator.draw();
-        }
+                - this.parameters.fromU) / this.parameters.partU)
+            this.uSet(u, paramX, paramY, paramZ, tessellator, vertexbuffer);
+        this.uSet(this.parameters.toU, paramX, paramY, paramZ, tessellator, vertexbuffer);
         GlStateManager.enableTexture2D();
     }
 
     @Override
     protected void preRender() {
-        // GlStateManager.rotate(this.age, 0, 1, 0);
+        GlStateManager.rotate(this.age, 0, 1, 0);
+    }
+
+    private void uSet(float u, IExpression paramX, IExpression paramY, IExpression paramZ, Tessellator tessellator,
+            VertexBuffer vertexbuffer) {
+        paramX.setVariable("u", u);
+        paramY.setVariable("u", u);
+        paramZ.setVariable("u", u);
+        vertexbuffer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+        for (float v = this.parameters.fromV; v <= this.parameters.toV; v += (this.parameters.toV
+                - this.parameters.fromV) / this.parameters.partV)
+            this.vSet(v, paramX, paramY, paramZ, vertexbuffer);
+        this.vSet(this.parameters.toV, paramX, paramY, paramZ, vertexbuffer);
+        tessellator.draw();
+    }
+
+    private void vSet(float v, IExpression paramX, IExpression paramY, IExpression paramZ, VertexBuffer vertexbuffer) {
+        paramX.setVariable("v", v);
+        paramY.setVariable("v", v);
+        paramZ.setVariable("v", v);
+        vertexbuffer.pos(paramX.getValue(), paramY.getValue(), paramZ.getValue()).endVertex();
     }
 
 }
