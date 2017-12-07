@@ -6,9 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.kubithon.smgo.common.registry.ShowsRegistry;
-import org.kubithon.smgo.proxy.ClientProxy;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -27,14 +25,18 @@ public class ClientShowsManager {
     public void startShow(ResourceLocation res, double x, double y, double z, double time) {
         Show show = new Show((ClientShowInfos) ShowsRegistry.get(res), x, y, z, time);
         this.shows.add(show);
-
-        Minecraft.getMinecraft().player.playSound(ClientProxy.soundEvent, 1.0f, 1.0f);
-
         show.tick(0);
     }
 
     @SubscribeEvent
     public void atDeconnection(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
+        synchronized (this.shows) {
+            for (Iterator<Show> iterator = this.shows.iterator(); iterator.hasNext();) {
+                Show show = iterator.next();
+                show.delete();
+                iterator.remove();
+            }
+        }
         this.shows.clear();
     }
 

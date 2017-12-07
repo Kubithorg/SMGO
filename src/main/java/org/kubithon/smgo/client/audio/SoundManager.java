@@ -1,44 +1,84 @@
 package org.kubithon.smgo.client.audio;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
-public class SoundManager
-{
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
-    public int           current        = -1;
-    public List<Sound>   songs          = new ArrayList<Sound>();
-    public List<Integer> completedSongs = new ArrayList<Integer>();
-    private final Random rand;
+public class SoundManager {
 
-    public SoundManager(Sound sound) {
-        this.songs.add(sound);
-        this.rand = new Random();
+    private static final SoundManager INSTANCE = new SoundManager();
+    private Map<String, Clip>         clips    = new HashMap<>();
+
+    private SoundManager() {}
+
+    public static SoundManager getInstance() {
+        return INSTANCE;
     }
 
-    public Sound getCurrentSong() {
-        return this.current == -1 ? null : this.current < this.songs.size() ? this.songs.get(this.current) : null;
-    }
-
-    public void addSong(Sound sound) {
-        this.songs.add(sound);
-    }
-
-    public Sound nextSong() {
-        if (this.current != -1)
-            this.completedSongs.add(this.current);
-        if (this.completedSongs.size() > 0 && !(this.completedSongs.size() >= this.songs.size()))
-            while (this.completedSongs.contains(this.current))
-                this.current = this.rand.nextInt(this.songs.size());
-        else
-            this.current++;
-        if (this.current >= this.songs.size()) {
-            this.completedSongs.clear();
-            for (Sound s : this.songs)
-                s.volume = null;
-            this.current = 0;
+    private String loadSound(File file) {
+        Clip clip = null;
+        try {
+            clip = AudioSystem.getClip();
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
+            clip.open(inputStream);
+            String hash = String.valueOf(clip.hashCode());
+            this.clips.put(hash, clip);
+            return hash;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return this.getCurrentSong();
+        return null;
+    }
+
+    private void unload(String hash) {
+        Clip clip = this.clips.get(hash);
+        if (clip != null) {
+            clip.close();
+            this.clips.remove(hash);
+        }
+    }
+
+    public void setTime(String hash, int millis) {
+        Clip clip = this.clips.get(hash);
+        if (clip != null && !clip.isActive())
+            clip.setMicrosecondPosition(millis * 1000L);
+    }
+
+    public void pause(String hash) {
+        Clip clip = this.clips.get(hash);
+        if (clip != null && clip.isActive())
+            clip.stop();
+    }
+
+    public void play(String hash) {
+        Clip clip = this.clips.get(hash);
+        if (clip != null && !clip.isActive())
+            clip.start();
+    }
+
+    public String start(File file) {
+        String hash = this.loadSound(file);
+        this.play(hash);
+        return hash;
+    }
+
+    public String start(File file, int millis) {
+        String hash = this.loadSound(file);
+        this.setTime(hash, millis);
+        this.play(hash);
+        return hash;
+    }
+
+    public void stop(String hash) {
+        Clip clip = this.clips.get(hash);
+        if (clip != null) {
+            if (clip.isActive())
+                clip.stop();
+            this.unload(hash);
+        }
     }
 }

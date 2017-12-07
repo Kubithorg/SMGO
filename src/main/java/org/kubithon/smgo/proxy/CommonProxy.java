@@ -3,7 +3,6 @@ package org.kubithon.smgo.proxy;
 import org.kubithon.smgo.common.Smgo;
 import org.kubithon.smgo.common.command.CommandReloadShows;
 import org.kubithon.smgo.common.command.CommandStartShow;
-import org.kubithon.smgo.common.command.CommandStartSong;
 import org.kubithon.smgo.common.network.StartShowMessage;
 import org.kubithon.smgo.common.network.StartShowMessage.StartShowHandler;
 import org.kubithon.smgo.common.registry.ShowsRegistry;
@@ -34,7 +33,6 @@ public class CommonProxy {
     public void startServer(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandStartShow());
         event.registerServerCommand(new CommandReloadShows());
-        event.registerServerCommand(new CommandStartSong());
     }
 
     protected void registerShows() {
