@@ -13,6 +13,8 @@ import org.kubithon.smgo.client.effect.beambunch.BeamBunch;
 import org.kubithon.smgo.client.effect.beambunch.BeamBunchParameters;
 import org.kubithon.smgo.client.effect.quadstorm.QuadStorm;
 import org.kubithon.smgo.client.effect.quadstorm.QuadStormParameters;
+import org.kubithon.smgo.client.effect.sound.SoundEffect;
+import org.kubithon.smgo.client.effect.sound.SoundParameters;
 import org.kubithon.smgo.client.effect.spherebeam.SphereBeam;
 import org.kubithon.smgo.client.effect.spherebeam.SphereBeamParameters;
 import org.kubithon.smgo.client.effect.surface.Surface;
@@ -61,6 +63,8 @@ public class EffectType<P extends EffectParameters> {
             SwordParameters.class);
     public static final EffectType<QuadStormParameters>  QUAD_STORM = new EffectType<>("QuadStorm", QuadStorm.class,
             QuadStormParameters.class);
+    public static final EffectType<SoundParameters>      SOUND      = new EffectType<>("Sound", SoundEffect.class,
+            SoundParameters.class);
 
     /**
      * The unique identifier for this effect type.

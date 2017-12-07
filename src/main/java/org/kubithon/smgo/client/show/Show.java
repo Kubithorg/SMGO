@@ -119,4 +119,14 @@ public class Show {
     public boolean isDone() {
         return this.time > this.showInfos.getLastTick();
     }
+
+    public void delete() {
+        synchronized (this.effects) {
+            for (Iterator<Effect<?>> iterator = this.effects.iterator(); iterator.hasNext();) {
+                Effect<?> effect = iterator.next();
+                effect.delete();
+                iterator.remove();
+            }
+        }
+    }
 }
