@@ -19,10 +19,6 @@ import org.kubithon.smgo.client.effect.spherebeam.SphereBeam;
 import org.kubithon.smgo.client.effect.spherebeam.SphereBeamParameters;
 import org.kubithon.smgo.client.effect.surface.Surface;
 import org.kubithon.smgo.client.effect.surface.SurfaceParameters;
-import org.kubithon.smgo.client.effect.sword.Sword;
-import org.kubithon.smgo.client.effect.sword.SwordParameters;
-import org.kubithon.smgo.client.effect.tester.Tester;
-import org.kubithon.smgo.client.effect.tester.TesterParameters;
 import org.kubithon.smgo.client.effect.torus.Torus;
 import org.kubithon.smgo.client.effect.torus.TorusParameters;
 
@@ -45,8 +41,6 @@ public class EffectType<P extends EffectParameters> {
     private static final Map<String, EffectType<? extends EffectParameters>> typesRegistry = new ConcurrentHashMap<>();
 
     // Built-in types
-    public static final EffectType<TesterParameters>     TESTER     = new EffectType<>("Tester", Tester.class,
-            TesterParameters.class);
     public static final EffectType<BeamParameters>       BEAM       = new EffectType<>("Beam", Beam.class,
             BeamParameters.class);
     public static final EffectType<BeamBunchParameters>  BEAM_BUNCH = new EffectType<>("BeamBunch", BeamBunch.class,
@@ -59,8 +53,6 @@ public class EffectType<P extends EffectParameters> {
             SphereBeamParameters.class);
     public static final EffectType<AureoleParameters>    AUREOLE    = new EffectType<>("Aureole", Aureole.class,
             AureoleParameters.class);
-    public static final EffectType<SwordParameters>      SWORD      = new EffectType<>("Sword", Sword.class,
-            SwordParameters.class);
     public static final EffectType<QuadStormParameters>  QUAD_STORM = new EffectType<>("QuadStorm", QuadStorm.class,
             QuadStormParameters.class);
     public static final EffectType<SoundParameters>      SOUND      = new EffectType<>("Sound", SoundEffect.class,

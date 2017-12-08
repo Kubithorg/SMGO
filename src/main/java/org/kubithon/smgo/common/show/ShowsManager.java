@@ -24,7 +24,7 @@ public class ShowsManager {
         Smgo.NETWORK.sendToAll(new StartShowMessage(res, (float) x, (float) y, (float) z, (float) time));
     }
 
-    @SubscribeEvent // EntityPlayerMP
+    @SubscribeEvent
     public void atPlayerConnection(PlayerEvent.PlayerLoggedInEvent event) {
         this.cleanList();
         synchronized (this.shows) {
