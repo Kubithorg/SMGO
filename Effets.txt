@@ -1,0 +1,72 @@
+Effect (Abstract)
+  x:String(ExpressionMath):Coordonée x de l'effet par rapport à l'origine du show:Requis
+  y:String(ExpressionMath):Coordonée y de l'effet par rapport à l'origine du show:Requis
+  z:String(ExpressionMath):Coordonée z de l'effet par rapport à l'origine du show:Requis
+  maxAge:int(ticks) ou String("XXhXXmXXs"):Durée de l'effet:Requis
+  
+PreCompiled (Abstract) extends Effect
+  rotSpeedX:float:Vitesse de rotation selon l'axe X:Optionnel
+  rotSpeedY:float:Vitesse de rotation selon l'axe Y:Optionnel
+  rotSpeedZ:float:Vitesse de rotation selon l'axe Z:Optionnel
+  
+Aureole extends PreCompiled:Un soleil (+-)
+  radius:float:Rayon:Défault(1)
+  color:String("aarrvvbb"):Couleur:Défault(GOLD)
+  slides:int:Le nombre de quadran:Défault(6)
+  
+Beam extends Effect:Rayon partant de (x,y,z) à (endX, endY, endZ)
+  color:String("aarrvvbb"):Couleur:Défault(CADETBLUE)
+  endX:String(ExpressionMath):Coordonée x de la fin du rayon par rapport à l'origine du show:Requis
+  endY:String(ExpressionMath):Coordonée y de la fin du rayon par rapport à l'origine du show:Requis
+  endZ:String(ExpressionMath):Coordonée z de la fin du rayon par rapport à l'origine du show:Requis
+  lineWidth:float:Largeur du rayon:Défault(1)
+  
+BeamBunch extends Effect:Plusieur rayons de même origine formant un arc de cercle
+  amount:int:Le nombre de rayons:Défault(36)
+  angle:float(rad):L'angle qui intercepte l'arc de cercle:Défault(27.31647)
+  speed:float:Vitesse de rotation:Défault(1)
+  color:String("aarrvvbb"):Couleur:Défault(BLUEVIOLET)
+  beamsLength:float:Longueur des rayons:Défault(2.5)
+  lineWidth:float:Largeur des rayons:Défault(0.2)
+  
+QuadStorm extends PreCompiled:Des quadrilatères aléatoire tournant
+  radius:float:Rayon dans lequel les quad. seront aléatoirement généré:Défault(5)
+  amount:int:Le nombre de quad. généré:Défault(10)
+  
+Sound extends Effect:Joue un son sur toute la map
+  fileName:String:Nom du fichier .wav(avec l'extention) à joué:Requis
+  startAt:int:Point de départ du sound en millis:Défault(0 Commence au début de la musique)
+  stopAfter:int:Temps de jeu du son:Défault(maxAge ou durée de la musique, le plus court des 2)
+
+Spherebeam extends PreCompiled:Rayons concentrique (effet boule disco)
+  xBeam:int:Nombre de rayons verticalement(180°):Défault(8)
+  yBeam:int:Nombre de rayons horizontalement(360°):Défault(8)
+  smallRadius:float:Rayon de départ des rayons:Défault(1)
+  bigRadius:float:Rayon de fin des rayons:Défault(10)
+  color:String("aarrvvbb"):Couleur:Défault(MIDNIGHTBLUE)
+  
+Surface extends PreCompiled:Un effet générique de surface, décrite par leurs équations mathématiques
+  surfaceParamX:String(ExpressionMath):Equation de la composante X de la surface selon u et v:Requis
+  surfaceParamY:String(ExpressionMath):Equation de la composante Y de la surface selon u et v:Requis
+  surfaceParamZ:String(ExpressionMath):Equation de la composante Z de la surface selon u et v:Requis
+  fromU:float:Point de départ de u:Requis
+  toU:float:Point final de u:Requis
+  partU:float:Taille des étapes de u:Requis
+  fromV:float:Point de départ de v:Requis
+  toV:float:Point final de v:Requis
+  partV:float:Taille des étapes de v:Requis
+  color:String("aarrvvbb"):Couleur:Défault(BROWN)
+  loop:boolean:True, si le dernier point doit être relier au premier:Défault(false)
+  
+Torus extends PreCompiled:Un tore
+  bigCircleRadius:float:Rayon principal du tore:Défault(10)
+  smallCircleRadius:String(ExpressionMath):Rayon secondaire du tore("angle" est une variable supplémentaire):Défault("1")
+  amountOfRings:int:Le nombre d'anneaux(verticaux):Défault(150)
+  amountOfSides:int:Le nombre de cercles(horizontaux):Défault(32)
+  color:String("aarrvvbb"):Couleur:Défault(HOTPINK)
+  
+  
+  
+ExpressionMath: 3 variables sont disponible("age", "maxAge" et "ageRatio")
+  
+  
