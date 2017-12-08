@@ -1,6 +1,6 @@
 package org.kubithon.smgo.client.effect.spherebeam;
 
-import org.kubithon.smgo.client.effect.EffectParameters;
+import org.kubithon.smgo.client.effect.PreCompiledParameters;
 import org.kubithon.smgo.client.utils.Color;
 import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class SphereBeamParameters extends EffectParameters {
+public class SphereBeamParameters extends PreCompiledParameters {
     int   xBeam       = 8, yBeam = 8;
     float smallRadius = 1, bigRadius = 10;
     Color color       = Color.MIDNIGHTBLUE;

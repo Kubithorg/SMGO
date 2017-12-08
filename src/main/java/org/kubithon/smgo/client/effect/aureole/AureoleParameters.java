@@ -1,6 +1,6 @@
 package org.kubithon.smgo.client.effect.aureole;
 
-import org.kubithon.smgo.client.effect.EffectParameters;
+import org.kubithon.smgo.client.effect.PreCompiledParameters;
 import org.kubithon.smgo.client.utils.Color;
 import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class AureoleParameters extends EffectParameters {
+public class AureoleParameters extends PreCompiledParameters {
 
     /**
      * The radius of the aureole.

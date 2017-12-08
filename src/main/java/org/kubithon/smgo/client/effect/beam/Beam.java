@@ -14,9 +14,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class Beam extends Effect<BeamParameters> {
-    private float endX;
-    private float endY;
-    private float endZ;
+
+    protected float endX;
+    protected float endY;
+    protected float endZ;
 
     public Beam(BeamParameters parameters) {
         super(parameters);
@@ -26,6 +27,10 @@ public class Beam extends Effect<BeamParameters> {
     public void tick(Show show, double tickDuration) {
         super.tick(show, tickDuration);
 
+        this.passParams(this.parameters.getEndX());
+        this.passParams(this.parameters.getEndY());
+        this.passParams(this.parameters.getEndZ());
+
         this.endX = this.parameters.getEndX().getValue();
         this.endY = this.parameters.getEndY().getValue();
         this.endZ = this.parameters.getEndZ().getValue();
@@ -34,6 +39,7 @@ public class Beam extends Effect<BeamParameters> {
     @Override
     public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
         GlStateManager.disableTexture2D();
+        GlStateManager.glLineWidth(this.parameters.lineWidth);
         RenderUtils.color(this.parameters.getColor());
         vertexbuffer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
         vertexbuffer.pos(this.x, this.y, this.z).endVertex();
