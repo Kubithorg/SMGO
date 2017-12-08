@@ -14,10 +14,10 @@ import org.kubithon.smgo.client.effect.EffectInfos;
 import org.lwjgl.opengl.GL11;
 
 import gnu.trove.map.TIntObjectMap;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -97,7 +97,7 @@ public class Show {
 
     public void render(float partialTicks) {
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        BufferBuilder vertexbuffer = tessellator.getBuffer();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(this.x - staticPlayerX, this.y - staticPlayerY, this.z - staticPlayerZ);

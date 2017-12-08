@@ -9,9 +9,9 @@ import org.kubithon.smgo.client.utils.Color;
 import org.kubithon.smgo.client.utils.RenderUtils;
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,7 +24,7 @@ public class QuadStorm extends PreCompiledEffect<QuadStormParameters> {
     }
 
     @Override
-    protected void setup(Tessellator tessellator, VertexBuffer vertexbuffer) {
+    protected void setup(Tessellator tessellator, BufferBuilder vertexbuffer) {
         Vector3f origin = new Vector3f();
         Vector3f[] quadVertices = { new Vector3f(), new Vector3f(), new Vector3f(), new Vector3f() };
 

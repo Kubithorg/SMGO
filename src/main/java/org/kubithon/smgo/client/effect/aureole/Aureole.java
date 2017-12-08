@@ -7,9 +7,9 @@ import org.kubithon.smgo.client.effect.PreCompiledEffect;
 import org.kubithon.smgo.client.utils.RenderUtils;
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,7 +22,7 @@ public class Aureole extends PreCompiledEffect<AureoleParameters> {
     }
 
     @Override
-    public void setup(Tessellator tessellator, VertexBuffer vertexbuffer) {
+    public void setup(Tessellator tessellator, BufferBuilder vertexbuffer) {
         float slide = (float) (2 * Math.PI / (this.parameters.getAmountOfSlides() * 2));
         float r = this.parameters.getRadius();
         GlStateManager.rotate((float) (Math.PI * this.age / 20), 0, 1, 0);

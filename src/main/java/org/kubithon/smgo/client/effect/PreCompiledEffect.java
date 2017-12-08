@@ -1,9 +1,9 @@
 package org.kubithon.smgo.client.effect;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -18,7 +18,7 @@ public abstract class PreCompiledEffect<P extends PreCompiledParameters> extends
     }
 
     @Override
-    public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
+    public void render(Tessellator tessellator, BufferBuilder vertexbuffer, float partialTicks) {
         if (!this.compiled)
             this.compile(tessellator, vertexbuffer);
 
@@ -29,7 +29,7 @@ public abstract class PreCompiledEffect<P extends PreCompiledParameters> extends
         GlStateManager.popMatrix();
     }
 
-    protected void compile(Tessellator tessellator, VertexBuffer vertexbuffer) {
+    protected void compile(Tessellator tessellator, BufferBuilder vertexbuffer) {
         this.displayList = GLAllocation.generateDisplayLists(1);
         GlStateManager.glNewList(this.displayList, 4864);
 
@@ -39,7 +39,7 @@ public abstract class PreCompiledEffect<P extends PreCompiledParameters> extends
         this.compiled = true;
     }
 
-    protected abstract void setup(Tessellator tessellator, VertexBuffer vertexbuffer);
+    protected abstract void setup(Tessellator tessellator, BufferBuilder vertexbuffer);
 
     protected void preRender() {
         if (this.parameters.rotSpeedX != 0)

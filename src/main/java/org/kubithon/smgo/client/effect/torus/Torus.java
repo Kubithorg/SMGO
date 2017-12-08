@@ -8,9 +8,9 @@ import org.kubithon.smgo.client.math.IExpression;
 import org.kubithon.smgo.client.utils.RenderUtils;
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,7 +23,7 @@ public class Torus extends PreCompiledEffect<TorusParameters> {
     }
 
     @Override
-    protected void setup(Tessellator tessellator, VertexBuffer vertexbuffer) {
+    protected void setup(Tessellator tessellator, BufferBuilder vertexbuffer) {
         GlStateManager.disableTexture2D();
         RenderUtils.color(this.parameters.getColor());
         GlStateManager.glLineWidth(0.5f);
@@ -36,7 +36,7 @@ public class Torus extends PreCompiledEffect<TorusParameters> {
         GlStateManager.enableTexture2D();
     }
 
-    void putTorus(IExpression smallCircleRadius, float R, int nsides, int rings, VertexBuffer buffer) {
+    void putTorus(IExpression smallCircleRadius, float R, int nsides, int rings, BufferBuilder buffer) {
         float r, nextR;
         float ringDelta = (float) (2 * Math.PI / rings);
         float sideDelta = (float) (2 * Math.PI / nsides);

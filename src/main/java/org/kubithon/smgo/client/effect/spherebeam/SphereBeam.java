@@ -4,9 +4,9 @@ import org.kubithon.smgo.client.effect.PreCompiledEffect;
 import org.kubithon.smgo.client.utils.RenderUtils;
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,7 +19,7 @@ public class SphereBeam extends PreCompiledEffect<SphereBeamParameters> {
     }
 
     @Override
-    public void setup(Tessellator tessellator, VertexBuffer vertexbuffer) {
+    public void setup(Tessellator tessellator, BufferBuilder vertexbuffer) {
         float x, y, z, xb, yb, zb, r1 = this.parameters.smallRadius, r2 = this.parameters.bigRadius;
         GlStateManager.disableTexture2D();
         RenderUtils.color(this.parameters.color);

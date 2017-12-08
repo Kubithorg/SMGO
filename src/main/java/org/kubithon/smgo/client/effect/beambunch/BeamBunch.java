@@ -8,9 +8,9 @@ import static org.lwjgl.opengl.GL11.GL_LINES;
 import org.kubithon.smgo.client.effect.Effect;
 import org.kubithon.smgo.client.utils.RenderUtils;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,7 +21,7 @@ public class BeamBunch extends Effect<BeamBunchParameters> {
     }
 
     @Override
-    public void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks) {
+    public void render(Tessellator tessellator, BufferBuilder vertexbuffer, float partialTicks) {
         GlStateManager.pushAttrib();
         GlStateManager.disableTexture2D();
         GlStateManager.glLineWidth(this.parameters.getLineWidth());

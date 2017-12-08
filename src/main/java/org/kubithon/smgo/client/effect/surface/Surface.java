@@ -5,9 +5,9 @@ import org.kubithon.smgo.client.math.IExpression;
 import org.kubithon.smgo.client.utils.RenderUtils;
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,7 +20,7 @@ public class Surface extends PreCompiledEffect<SurfaceParameters> {
     }
 
     @Override
-    protected void setup(Tessellator tessellator, VertexBuffer vertexbuffer) {
+    protected void setup(Tessellator tessellator, BufferBuilder vertexbuffer) {
         IExpression paramX = this.parameters.surfaceParamX;
         IExpression paramY = this.parameters.surfaceParamY;
         IExpression paramZ = this.parameters.surfaceParamZ;
@@ -37,7 +37,7 @@ public class Surface extends PreCompiledEffect<SurfaceParameters> {
     }
 
     private void uSet(float u, IExpression paramX, IExpression paramY, IExpression paramZ, Tessellator tessellator,
-            VertexBuffer vertexbuffer) {
+            BufferBuilder vertexbuffer) {
         paramX.setVariable("u", u);
         paramY.setVariable("u", u);
         paramZ.setVariable("u", u);
@@ -50,7 +50,7 @@ public class Surface extends PreCompiledEffect<SurfaceParameters> {
         tessellator.draw();
     }
 
-    private void vSet(float v, IExpression paramX, IExpression paramY, IExpression paramZ, VertexBuffer vertexbuffer) {
+    private void vSet(float v, IExpression paramX, IExpression paramY, IExpression paramZ, BufferBuilder vertexbuffer) {
         paramX.setVariable("v", v);
         paramY.setVariable("v", v);
         paramZ.setVariable("v", v);

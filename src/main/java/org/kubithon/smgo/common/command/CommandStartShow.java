@@ -54,13 +54,13 @@ public class CommandStartShow extends CommandBase {
         List<String> list = Lists.<String>newArrayList();
         switch (args.length) {
         case 1:
-            list.add(String.valueOf((int) sender.getPositionVector().xCoord));
+            list.add(String.valueOf((int) sender.getPositionVector().x));
             return list;
         case 2:
-            list.add(String.valueOf((int) sender.getPositionVector().yCoord));
+            list.add(String.valueOf((int) sender.getPositionVector().y));
             return list;
         case 3:
-            list.add(String.valueOf((int) sender.getPositionVector().zCoord));
+            list.add(String.valueOf((int) sender.getPositionVector().z));
             return list;
         case 4:
             return getListOfStringsMatchingLastWord(args, ShowsRegistry.getKeys());

@@ -5,8 +5,8 @@ import java.beans.Expression;
 import org.kubithon.smgo.client.math.IExpression;
 import org.kubithon.smgo.client.show.Show;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -117,7 +117,7 @@ public abstract class Effect<P extends EffectParameters> {
     /**
      * Renders.
      */
-    public abstract void render(Tessellator tessellator, VertexBuffer vertexbuffer, float partialTicks);
+    public abstract void render(Tessellator tessellator, BufferBuilder vertexbuffer, float partialTicks);
 
     /**
      * Used to free the graphical resources.
