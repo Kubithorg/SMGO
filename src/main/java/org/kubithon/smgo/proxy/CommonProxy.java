@@ -5,10 +5,12 @@ import java.io.File;
 import org.kubithon.smgo.common.Smgo;
 import org.kubithon.smgo.common.command.CommandReloadShows;
 import org.kubithon.smgo.common.command.CommandStartShow;
+import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 import org.kubithon.smgo.common.network.StartShowMessage;
 import org.kubithon.smgo.common.network.StartShowMessage.StartShowHandler;
 import org.kubithon.smgo.common.registry.ShowsRegistry;
 import org.kubithon.smgo.common.show.ShowInfos;
+import org.kubithon.smgo.common.utils.SmgoConfig;
 
 import com.google.gson.JsonObject;
 
@@ -38,13 +40,13 @@ public class CommonProxy {
     }
 
     protected void registerShows() {
-        File showDir = new File("shows");
+        File showDir = SmgoConfig.getFileFromString(SmgoConfig.showsPath);
         for (File file : showDir.listFiles())
             if (file.isFile())
                 ShowsRegistry.register(Smgo.MODID, file.getName().substring(0, file.getName().lastIndexOf(".")), file);
     }
 
-    public ShowInfos readShowInfos(JsonObject json) {
+    public ShowInfos readShowInfos(JsonObject json) throws ShowLoadingException {
         return ShowInfos.read(json);
     }
 }

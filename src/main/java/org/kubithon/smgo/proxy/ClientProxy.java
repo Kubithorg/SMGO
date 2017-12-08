@@ -2,6 +2,7 @@ package org.kubithon.smgo.proxy;
 
 import org.kubithon.smgo.client.show.ClientShowInfos;
 import org.kubithon.smgo.client.show.ClientShowsManager;
+import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 import org.kubithon.smgo.common.show.ShowInfos;
 
 import com.google.gson.JsonObject;
@@ -26,7 +27,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public ShowInfos readShowInfos(JsonObject json) {
+    public ShowInfos readShowInfos(JsonObject json) throws ShowLoadingException {
         return ClientShowInfos.read(json);
     }
 }

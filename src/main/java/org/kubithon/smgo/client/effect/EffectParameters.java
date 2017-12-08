@@ -2,6 +2,7 @@ package org.kubithon.smgo.client.effect;
 
 import org.kubithon.smgo.client.math.ExpressionReader;
 import org.kubithon.smgo.client.math.IExpression;
+import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 import org.kubithon.smgo.common.utils.Timing;
 
 import com.google.gson.JsonElement;
@@ -40,11 +41,21 @@ public class EffectParameters {
 
     /**
      * Instantiates a new effect parameters.
+     *
+     * @throws ShowLoadingException
      */
-    protected EffectParameters(JsonObject jsonObject) {
+    protected EffectParameters(JsonObject jsonObject) throws ShowLoadingException {
+        if (!jsonObject.has("x"))
+            throw new ShowLoadingException("Missing element \"x\" in the parameters of some effect.");
         this.x = readExpression(jsonObject.get("x"));
+        if (!jsonObject.has("y"))
+            throw new ShowLoadingException("Missing element \"y\" in the parameters of some effect.");
         this.y = readExpression(jsonObject.get("y"));
+        if (!jsonObject.has("z"))
+            throw new ShowLoadingException("Missing element \"z\" in the parameters of some effect.");
         this.z = readExpression(jsonObject.get("z"));
+        if (!jsonObject.has("maxAge"))
+            throw new ShowLoadingException("Missing element \"maxAge\" in the parameters of some effect.");
         JsonElement maxAgeElement = jsonObject.get("maxAge");
 
         if (maxAgeElement.isJsonPrimitive()) {
@@ -114,7 +125,7 @@ public class EffectParameters {
         return this.maxAge;
     }
 
-    public static EffectParameters read(JsonObject jsonObject) {
+    public static EffectParameters read(JsonObject jsonObject) throws ShowLoadingException {
         return new EffectParameters(jsonObject);
     }
 
