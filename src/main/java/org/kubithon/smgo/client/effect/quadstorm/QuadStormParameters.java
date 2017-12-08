@@ -1,6 +1,7 @@
 package org.kubithon.smgo.client.effect.quadstorm;
 
 import org.kubithon.smgo.client.effect.EffectParameters;
+import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 
 import com.google.gson.JsonObject;
 
@@ -21,7 +22,7 @@ public class QuadStormParameters extends EffectParameters {
      */
     private int amount = 10;
 
-    protected QuadStormParameters(JsonObject jsonObject) {
+    protected QuadStormParameters(JsonObject jsonObject) throws ShowLoadingException {
         super(jsonObject);
 
         if (jsonObject.has("radius"))
@@ -39,7 +40,7 @@ public class QuadStormParameters extends EffectParameters {
         return this.amount;
     }
 
-    public static QuadStormParameters read(JsonObject jsonObject) {
+    public static QuadStormParameters read(JsonObject jsonObject) throws ShowLoadingException {
         return new QuadStormParameters(jsonObject);
     }
 }

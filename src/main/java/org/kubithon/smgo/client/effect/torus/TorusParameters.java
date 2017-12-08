@@ -3,6 +3,7 @@ package org.kubithon.smgo.client.effect.torus;
 import org.kubithon.smgo.client.effect.EffectParameters;
 import org.kubithon.smgo.client.math.IExpression;
 import org.kubithon.smgo.client.utils.Color;
+import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 
 import com.google.gson.JsonObject;
 
@@ -14,28 +15,33 @@ public class TorusParameters extends EffectParameters {
     /**
      * The radius "R" of the torus. Represents the biggest circle.
      */
-    private float bigCircleRadius;
+    private float bigCircleRadius = 10;
 
     /**
      * The radius "r" of the torus. Represents the smallest circle.
      */
-    private IExpression smallCircleRadius;
+    private IExpression smallCircleRadius = new IExpression.Constant(1.0F);
 
-    private int amountOfRings;
-    private int amountOfSides;
+    private int amountOfRings = 150;
+    private int amountOfSides = 32;
 
     /**
      * The color of the torus.
      */
-    private Color color;
+    private Color color = Color.HOTPINK;
 
-    protected TorusParameters(JsonObject jsonObject) {
+    protected TorusParameters(JsonObject jsonObject) throws ShowLoadingException {
         super(jsonObject);
-        this.bigCircleRadius = jsonObject.get("bigCircleRadius").getAsFloat();
-        this.smallCircleRadius = readExpression(jsonObject.get("smallCircleRadius"));
-        this.amountOfRings = jsonObject.get("amountOfRings").getAsInt();
-        this.amountOfSides = jsonObject.get("amountOfSides").getAsInt();
-        this.color = new Color(Integer.parseUnsignedInt(jsonObject.get("color").getAsString(), 16));
+        if (jsonObject.has("bigCircleRadius"))
+            this.bigCircleRadius = jsonObject.get("bigCircleRadius").getAsFloat();
+        if (jsonObject.has("smallCircleRadius"))
+            this.smallCircleRadius = readExpression(jsonObject.get("smallCircleRadius"));
+        if (jsonObject.has("amountOfRings"))
+            this.amountOfRings = jsonObject.get("amountOfRings").getAsInt();
+        if (jsonObject.has("amountOfSides"))
+            this.amountOfSides = jsonObject.get("amountOfSides").getAsInt();
+        if (jsonObject.has("color"))
+            this.color = new Color(Integer.parseUnsignedInt(jsonObject.get("color").getAsString(), 16));
     }
 
     public float getBigCircleRadius() {
@@ -58,7 +64,7 @@ public class TorusParameters extends EffectParameters {
         return this.amountOfSides;
     }
 
-    public static TorusParameters read(JsonObject jsonObject) {
+    public static TorusParameters read(JsonObject jsonObject) throws ShowLoadingException {
         return new TorusParameters(jsonObject);
     }
 }

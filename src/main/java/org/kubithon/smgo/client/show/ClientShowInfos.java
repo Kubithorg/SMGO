@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.kubithon.smgo.client.effect.EffectInfos;
+import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 import org.kubithon.smgo.common.show.ShowInfos;
 import org.kubithon.smgo.common.utils.Timing;
 
@@ -25,7 +26,7 @@ public class ClientShowInfos extends ShowInfos {
      */
     private TIntObjectMap<List<EffectInfos>> timeline;
 
-    protected ClientShowInfos(JsonObject jsonObject) {
+    protected ClientShowInfos(JsonObject jsonObject) throws ShowLoadingException {
         super(jsonObject);
 
         this.timeline = new TIntObjectHashMap<>();
@@ -35,18 +36,26 @@ public class ClientShowInfos extends ShowInfos {
         int key;
         EffectInfos infos;
 
-        for (Entry<String, JsonElement> entry : obj.entrySet()) {
-            key = Timing.parseTime(entry.getKey());
+        for (Entry<String, JsonElement> entry : obj.entrySet())
+            try {
+                key = Timing.parseTime(entry.getKey());
 
-            this.timeline.put(key, list = new ArrayList<>());
-            JsonArray array = entry.getValue().getAsJsonArray();
-            for (JsonElement el : array) {
-                infos = EffectInfos.read(el.getAsJsonObject());
-                if (this.lastTick < key + infos.getParameters().getMaxAge())
-                    this.lastTick = key + infos.getParameters().getMaxAge();
-                list.add(infos);
+                this.timeline.put(key, list = new ArrayList<>());
+                JsonArray array = entry.getValue().getAsJsonArray();
+                for (JsonElement el : array)
+                    try {
+                        infos = EffectInfos.read(el.getAsJsonObject());
+                        if (this.lastTick < key + infos.getParameters().getMaxAge())
+                            this.lastTick = key + infos.getParameters().getMaxAge();
+                        list.add(infos);
+                    } catch (ShowLoadingException e) {
+                        e.addMessage("Error in the effect : " + el.toString());
+                        throw e;
+                    }
+            } catch (ShowLoadingException e) {
+                e.addMessage("Error in the keyframe \"" + entry.getKey() + "\"");
+                throw e;
             }
-        }
     }
 
     public TIntObjectMap<List<EffectInfos>> getTimeline() {
@@ -58,7 +67,7 @@ public class ClientShowInfos extends ShowInfos {
         return "ShowInfos [timeline=" + this.timeline + "]";
     }
 
-    public static ClientShowInfos read(JsonObject jsonObject) {
+    public static ClientShowInfos read(JsonObject jsonObject) throws ShowLoadingException {
         return new ClientShowInfos(jsonObject);
     }
 

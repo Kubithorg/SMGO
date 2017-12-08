@@ -43,15 +43,6 @@ public class CommandStartShow extends CommandBase {
             } catch (NumberFormatException e) {
                 throw new WrongUsageException(USAGE + "\nx, y or z is not a number.");
             }
-            /*
-             * ShowInfos showInfos = ShowsRegistry.get(new
-             * ResourceLocation(args[3]));
-             *
-             * if (showInfos == null) sender.sendMessage(new
-             * TextComponentString("Show '" + args[3] + "' not found.")); else
-             * Smgo.showsManager.startShow(new Show(showInfos, x + 0.5, y + 0.5,
-             * z + 0.5));
-             */
             Smgo.showsManager.startShow(new ResourceLocation(args[3]), x, y, z, 0);
         } else
             throw new WrongUsageException(USAGE + "\nWrong number of arguments.");

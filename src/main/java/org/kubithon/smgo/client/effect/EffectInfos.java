@@ -1,5 +1,9 @@
 package org.kubithon.smgo.client.effect;
 
+import org.kubithon.smgo.common.Smgo;
+import org.kubithon.smgo.common.exceptions.ShowLoadingException;
+import org.kubithon.smgo.common.utils.SmgoConfig;
+
 import com.google.gson.JsonObject;
 
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,19 +27,24 @@ public final class EffectInfos {
      */
     private EffectParameters parameters;
 
-    protected EffectInfos(JsonObject jsonObject) {
+    protected EffectInfos(JsonObject jsonObject) throws ShowLoadingException {
         this.type = jsonObject.get("type").getAsString();
 
         EffectType<? extends EffectParameters> effectType = EffectType.getTypeByIdentifier(this.type);
 
         if (effectType == null)
-            throw new IllegalArgumentException("Effect type '" + this.type + "' not found.");
+            throw new ShowLoadingException("Effect type '" + this.type + "' not found.");
 
         try {
             this.parameters = (EffectParameters) effectType.getParametersClass().getMethod("read", JsonObject.class)
                     .invoke(null, jsonObject.get("parameters").getAsJsonObject());
         } catch (Exception e) {
-            e.printStackTrace();
+            if (SmgoConfig.debug)
+                e.printStackTrace();
+            if (e.getCause() instanceof ShowLoadingException)
+                throw (ShowLoadingException) e.getCause();
+            else
+                Smgo.logger.error("Error while reading the parameters of an effect.");
         }
     }
 
@@ -59,7 +68,7 @@ public final class EffectInfos {
         return effectType.buildEffect(this.parameters);
     }
 
-    public static EffectInfos read(JsonObject jsonObject) {
+    public static EffectInfos read(JsonObject jsonObject) throws ShowLoadingException {
         return new EffectInfos(jsonObject);
     }
 

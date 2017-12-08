@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import org.apache.commons.io.Charsets;
 import org.kubithon.smgo.common.Smgo;
+import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 import org.kubithon.smgo.common.show.ShowInfos;
 
 import com.google.gson.JsonObject;
@@ -17,7 +18,7 @@ public class JsonReader {
     /** The JsonObject that is the root of the file */
     private JsonObject root;
 
-    public JsonReader(File file) {
+    public JsonReader(File file) throws ShowLoadingException {
         JsonParser jsonParser = new JsonParser();
         BufferedReader reader = null;
         StringBuilder strBuilder = new StringBuilder();
@@ -35,12 +36,14 @@ public class JsonReader {
                 if (reader != null)
                     reader.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                if (SmgoConfig.debug)
+                    e.printStackTrace();
+                throw new ShowLoadingException("Malformed Json.");
             }
         }
     }
 
-    public ShowInfos readShowInfos() {
+    public ShowInfos readShowInfos() throws ShowLoadingException {
         return Smgo.proxy.readShowInfos(this.root);
     }
 }

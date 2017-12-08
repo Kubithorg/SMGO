@@ -1,9 +1,8 @@
 package org.kubithon.smgo.client.effect.sound;
 
-import java.io.File;
-
 import org.kubithon.smgo.client.audio.SoundManager;
 import org.kubithon.smgo.client.effect.Effect;
+import org.kubithon.smgo.common.utils.SmgoConfig;
 
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -24,7 +23,7 @@ public class SoundEffect extends Effect<SoundParameters> {
         if (!this.playing) {
             this.playing = true;
             this.hash = SoundManager.getInstance().start(
-                    new File("shows" + File.separator + "musics" + File.separator + this.parameters.fileName),
+                    SmgoConfig.getFileFromString(SmgoConfig.musicsPath + "/" + this.parameters.fileName),
                     (int) ((this.parameters.startAt + this.age) * 50));
             return;
         }

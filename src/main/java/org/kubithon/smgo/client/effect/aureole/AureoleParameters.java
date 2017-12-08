@@ -2,6 +2,7 @@ package org.kubithon.smgo.client.effect.aureole;
 
 import org.kubithon.smgo.client.effect.EffectParameters;
 import org.kubithon.smgo.client.utils.Color;
+import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 
 import com.google.gson.JsonObject;
 
@@ -27,7 +28,7 @@ public class AureoleParameters extends EffectParameters {
      */
     private Color color = Color.GOLD.withAlpha(0.8f);
 
-    protected AureoleParameters(JsonObject jsonObject) {
+    protected AureoleParameters(JsonObject jsonObject) throws ShowLoadingException {
         super(jsonObject);
 
         if (jsonObject.has("radius"))
@@ -52,7 +53,7 @@ public class AureoleParameters extends EffectParameters {
         return this.amountOfSlides;
     }
 
-    public static AureoleParameters read(JsonObject jsonObject) {
+    public static AureoleParameters read(JsonObject jsonObject) throws ShowLoadingException {
         return new AureoleParameters(jsonObject);
     }
 }

@@ -2,12 +2,16 @@ package org.kubithon.smgo.common.registry;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.kubithon.smgo.common.Smgo;
+import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 import org.kubithon.smgo.common.show.ShowInfos;
 import org.kubithon.smgo.common.utils.JsonReader;
+import org.kubithon.smgo.common.utils.SmgoConfig;
 
 import net.minecraft.util.ResourceLocation;
 
@@ -19,12 +23,31 @@ public class ShowsRegistry {
     }
 
     public static void register(ResourceLocation res, File jsonLoc) {
-        registry.put(res, new ShowRegInfos(jsonLoc));
+        try {
+            registry.put(res, new ShowRegInfos(jsonLoc));
+        } catch (ShowLoadingException e) {
+            e.addMessage("Error while loading \"" + jsonLoc.getPath() + "\"");
+            e.logMessages();
+            if (SmgoConfig.debug)
+                e.printStackTrace();
+        }
     }
 
     public static void reload() {
-        for (Entry<ResourceLocation, ShowRegInfos> entry : registry.entrySet())
-            entry.getValue().load();
+        Iterator<Entry<ResourceLocation, ShowRegInfos>> it = registry.entrySet().iterator();
+        Entry<ResourceLocation, ShowRegInfos> entry;
+        while (it.hasNext()) {
+            entry = it.next();
+            try {
+                entry.getValue().load();
+            } catch (ShowLoadingException e) {
+                Smgo.logger.error("Error while loading \"" + entry.getValue().jsonLocation.getPath() + "\"");
+                Smgo.logger.error(e.getMessage());
+                if (SmgoConfig.debug)
+                    e.printStackTrace();
+                it.remove();
+            }
+        }
     }
 
     public static ShowInfos get(ResourceLocation res) {
@@ -40,12 +63,12 @@ public class ShowsRegistry {
         public ShowInfos infos;
         public File      jsonLocation;
 
-        public ShowRegInfos(File jsonLoc) {
+        public ShowRegInfos(File jsonLoc) throws ShowLoadingException {
             this.jsonLocation = jsonLoc;
             this.load();
         }
 
-        public void load() {
+        public void load() throws ShowLoadingException {
             this.infos = new JsonReader(this.jsonLocation).readShowInfos();
         }
     }
