@@ -1,6 +1,6 @@
 package org.kubithon.smgo.client.effect.torus;
 
-import org.kubithon.smgo.client.effect.EffectParameters;
+import org.kubithon.smgo.client.effect.PreCompiledParameters;
 import org.kubithon.smgo.client.math.IExpression;
 import org.kubithon.smgo.client.utils.Color;
 import org.kubithon.smgo.common.exceptions.ShowLoadingException;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class TorusParameters extends EffectParameters {
+public class TorusParameters extends PreCompiledParameters {
     /**
      * The radius "R" of the torus. Represents the biggest circle.
      */

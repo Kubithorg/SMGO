@@ -1,6 +1,6 @@
 package org.kubithon.smgo.client.effect.quadstorm;
 
-import org.kubithon.smgo.client.effect.EffectParameters;
+import org.kubithon.smgo.client.effect.PreCompiledParameters;
 import org.kubithon.smgo.common.exceptions.ShowLoadingException;
 
 import com.google.gson.JsonObject;
@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class QuadStormParameters extends EffectParameters {
+public class QuadStormParameters extends PreCompiledParameters {
 
     /**
      * The maximum distance from this effect's origin the squad will be

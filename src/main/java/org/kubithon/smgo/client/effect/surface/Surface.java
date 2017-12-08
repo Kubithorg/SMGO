@@ -36,17 +36,13 @@ public class Surface extends PreCompiledEffect<SurfaceParameters> {
         GlStateManager.enableTexture2D();
     }
 
-    @Override
-    protected void preRender() {
-        GlStateManager.rotate(this.age, 0, 1, 0);
-    }
-
     private void uSet(float u, IExpression paramX, IExpression paramY, IExpression paramZ, Tessellator tessellator,
             VertexBuffer vertexbuffer) {
         paramX.setVariable("u", u);
         paramY.setVariable("u", u);
         paramZ.setVariable("u", u);
-        vertexbuffer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+        vertexbuffer.begin(this.parameters.loop ? GL11.GL_LINE_LOOP : GL11.GL_LINE_STRIP,
+                DefaultVertexFormats.POSITION);
         for (float v = this.parameters.fromV; v <= this.parameters.toV; v += (this.parameters.toV
                 - this.parameters.fromV) / this.parameters.partV)
             this.vSet(v, paramX, paramY, paramZ, vertexbuffer);

@@ -20,8 +20,6 @@ public class SphereBeam extends PreCompiledEffect<SphereBeamParameters> {
 
     @Override
     public void setup(Tessellator tessellator, VertexBuffer vertexbuffer) {
-        System.out.println(this.parameters.bigRadius + " / " + this.parameters.smallRadius + " / "
-                + this.parameters.xBeam + " / " + this.parameters.yBeam);
         float x, y, z, xb, yb, zb, r1 = this.parameters.smallRadius, r2 = this.parameters.bigRadius;
         GlStateManager.disableTexture2D();
         RenderUtils.color(this.parameters.color);
@@ -43,11 +41,6 @@ public class SphereBeam extends PreCompiledEffect<SphereBeamParameters> {
         }
         tessellator.draw();
         GlStateManager.enableTexture2D();
-    }
-
-    @Override
-    protected void preRender() {
-        GlStateManager.rotate(this.age, 0, 1, 0);
     }
 
 }

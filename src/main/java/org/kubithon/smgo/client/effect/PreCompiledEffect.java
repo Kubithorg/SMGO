@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public abstract class PreCompiledEffect<P extends EffectParameters> extends Effect<P> {
+public abstract class PreCompiledEffect<P extends PreCompiledParameters> extends Effect<P> {
 
     private int     displayList;
     private boolean compiled;
@@ -41,7 +41,14 @@ public abstract class PreCompiledEffect<P extends EffectParameters> extends Effe
 
     protected abstract void setup(Tessellator tessellator, VertexBuffer vertexbuffer);
 
-    protected void preRender() {}
+    protected void preRender() {
+        if (this.parameters.rotSpeedX != 0)
+            GlStateManager.rotate(this.age * this.parameters.rotSpeedX, 1, 0, 0);
+        if (this.parameters.rotSpeedY != 0)
+            GlStateManager.rotate(this.age * this.parameters.rotSpeedY, 0, 1, 0);
+        if (this.parameters.rotSpeedZ != 0)
+            GlStateManager.rotate(this.age * this.parameters.rotSpeedZ, 0, 0, 1);
+    }
 
     protected void postRender() {}
 

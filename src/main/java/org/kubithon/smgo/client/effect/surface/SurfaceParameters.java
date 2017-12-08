@@ -1,6 +1,6 @@
 package org.kubithon.smgo.client.effect.surface;
 
-import org.kubithon.smgo.client.effect.EffectParameters;
+import org.kubithon.smgo.client.effect.PreCompiledParameters;
 import org.kubithon.smgo.client.math.IExpression;
 import org.kubithon.smgo.client.utils.Color;
 import org.kubithon.smgo.common.exceptions.ShowLoadingException;
@@ -11,10 +11,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class SurfaceParameters extends EffectParameters {
+public class SurfaceParameters extends PreCompiledParameters {
     IExpression surfaceParamX, surfaceParamY, surfaceParamZ;
     float       fromU, toU, partU, fromV, toV, partV;
     Color       color = Color.BROWN;
+    boolean     loop;
 
     protected SurfaceParameters(JsonObject jsonObject) throws ShowLoadingException {
         super(jsonObject);
@@ -41,6 +42,8 @@ public class SurfaceParameters extends EffectParameters {
         this.partV = jsonObject.get("partV").getAsFloat();
         if (jsonObject.has("color"))
             this.color = new Color(Integer.parseUnsignedInt(jsonObject.get("color").getAsString(), 16));
+        if (jsonObject.has("loop"))
+            this.loop = jsonObject.get("loop").getAsBoolean();
     }
 
     public static SurfaceParameters read(JsonObject jsonObject) throws ShowLoadingException {

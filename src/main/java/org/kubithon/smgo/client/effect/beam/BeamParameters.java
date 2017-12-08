@@ -18,6 +18,8 @@ public class BeamParameters extends EffectParameters {
     private IExpression endY;
     private IExpression endZ;
 
+    public float lineWidth = 1;
+
     public Color getColor() {
         return this.color;
     }
@@ -35,6 +37,8 @@ public class BeamParameters extends EffectParameters {
         if (!jsonObject.has("endZ"))
             throw new ShowLoadingException("Missing element \"endZ\" in the parameters of some effect.");
         this.endZ = readExpression(jsonObject.get("endZ"));
+        if (jsonObject.has("lineWidth"))
+            this.lineWidth = jsonObject.get("lineWidth").getAsFloat();
     }
 
     public IExpression getEndX() {
