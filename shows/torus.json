@@ -1,0 +1,24 @@
+{
+	"name": "show de test",
+	"timeline": 
+	{
+		"0": 
+		[
+			{
+				"type": "Torus",
+				"parameters": 
+				{
+					"x": "0",
+					"y": "1",
+					"z": "0",
+					"maxAge": 6000,
+					"color": "ffff8899",
+					"bigCircleRadius": 10.0,
+					"smallCircleRadius": "ABS(COS(angle/2)) + 0.5",
+					"amountOfRings": 150,
+					"amountOfSides": 32
+				}
+			}
+		]
+	}
+}

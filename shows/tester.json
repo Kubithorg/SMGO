@@ -1,0 +1,90 @@
+{
+  "timeline": {
+    "0": [
+      {
+        "type": "Beam",
+        "parameters": {
+          "x": "0",
+          "y": "1",
+          "z": "0",
+          "maxAge": 600,
+          "color": "bb228899",
+          "endX" : "COS(age/3)",
+          "endY" : "SIN(age/1.5)/2+1",
+          "endZ" : "16",
+          "lineWidth" : 5
+        }
+      },
+      {
+        "type": "Beam",
+        "parameters": {
+          "x": "0",
+          "y": "2",
+          "z": "0",
+          "maxAge": 600,
+          "color": "bb228822",
+          "endX" : "COS((age+PI)/3)",
+          "endY" : "SIN((age+PI)/1.5)/2+2",
+          "endZ" : "16",
+          "lineWidth" : 5
+        }
+      },
+      {
+        "type": "Beam",
+        "parameters": {
+          "x": "1",
+          "y": "1",
+          "z": "0",
+          "maxAge": 600,
+          "color": "bb994422",
+          "endX" : "COS((age+PI/2)/3)+1",
+          "endY" : "SIN((age+PI/2)/1.5)/2+1",
+          "endZ" : "16",
+          "lineWidth" : 5
+        }
+      },
+      {
+        "type": "Beam",
+        "parameters": {
+          "x": "-1",
+          "y": "1",
+          "z": "0",
+          "maxAge": 600,
+          "color": "bb558822",
+          "endX" : "COS((age+3*PI/2)/3)-1",
+          "endY" : "SIN((age+3*PI/2)/1.5)/2+1",
+          "endZ" : "16",
+          "lineWidth" : 5
+        }
+      },
+      {
+        "type": "Sound",
+        "parameters": {
+          "x": "0",
+          "y": "0",
+          "z": "0",
+          "fileName": "Never.wav",
+          "maxAge": 6000
+        }
+      }
+    ],
+   "10s": [
+    {
+      "type": "SphereBeam",
+        "parameters": {
+          "x": "0",
+					"y": "16",
+					"z": "0",
+					"maxAge": 6000,
+          "xBeam": 12,
+          "yBeam": 24,
+          "smallRadius": 2,
+          "bigRadius": 15,
+          "color": "ff1010ff",
+          "rotSpeedY": 1,
+          "rotSpeedX": 0.5
+      }
+    }
+   ]
+  }
+}

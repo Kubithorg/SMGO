@@ -1,0 +1,25 @@
+{
+	"name": "show de test",
+	"timeline": 
+	{
+		"0": 
+		[
+			{
+				"type": "BeamBunch",
+				"parameters": 
+				{
+					"x": "0",
+					"y": "1",
+					"z": "0",
+					"maxAge": 600,
+					"color": "ffff8899",
+					"amount" : 36,
+					"angle" : 27.31647,
+					"speed" : 1,
+					"beamsLength" : 2.5,
+					"lineWidth" : 0.2
+				}
+			}
+		]
+	}
+}

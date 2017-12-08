@@ -1,0 +1,30 @@
+{
+	"name": "show de test",
+	"timeline": 
+	{
+		"0": 
+		[
+			{
+				"type": "Surface",
+				"parameters": 
+				{
+					"x": "0",
+					"y": "1",
+					"z": "0",
+					"maxAge": 600,
+					"color": "ffff0099",
+					"surfaceParamX" : "(10-2*SINv)*SINu",
+					"surfaceParamY" : "2*COSv",
+					"surfaceParamZ" : "(10-2*SINv)*COSu",
+					"fromU" : 0,
+					"toU" : 6.2832,
+					"partU" : 40,
+					"fromV" : 0,
+					"toV" : 6.2832,
+					"partV" : 40,
+          "loop": true
+				}
+			}
+		]
+	}
+}

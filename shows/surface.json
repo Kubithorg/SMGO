@@ -1,0 +1,93 @@
+{
+	"name": "show de test",
+	"timeline": 
+	{
+		"0": 
+		[
+			{
+				"type": "Surface",
+				"parameters": 
+				{
+					"x": "0",
+					"y": "1",
+					"z": "0",
+					"maxAge": 600,
+					"color": "ffff0000",
+					"surfaceParamX" : "5*v*COS(PI/2*u/2.5)",
+					"surfaceParamY" : "5*SQRT(1-(v + 1)^2)*COS(PI/2*u/2.5)",
+					"surfaceParamZ" : "u",
+					"fromU" : -2.5,
+					"toU" : 2.5,
+					"partU" : 40,
+					"fromV" : -2,
+					"toV" : 0,
+					"partV" : 1000,
+          "rotSpeedY": 1
+				}
+			},
+			{
+				"type": "Surface",
+				"parameters": 
+				{
+					"x": "0",
+					"y": "1",
+					"z": "0",
+					"maxAge": 600,
+					"color": "ffff0000",
+					"surfaceParamX" : "5*v*COS(PI/2*u/2.5)",
+					"surfaceParamY" : "5*SQRT(1-(v - 1)^2)*COS(PI/2*u/2.5)",
+					"surfaceParamZ" : "u",
+					"fromU" : -2.5,
+					"toU" : 2.5,
+					"partU" : 40,
+					"fromV" : 0,
+					"toV" : 2,
+					"partV" : 1000,
+          "rotSpeedY": 1
+				}
+			},
+			{
+				"type": "Surface",
+				"parameters": 
+				{
+					"x": "0",
+					"y": "1",
+					"z": "0",
+					"maxAge": 600,
+					"color": "ffff0000",
+					"surfaceParamX" : "5*v*COS(PI/2*u/2.5)",
+					"surfaceParamY" : "5*(-2*ASN(v/2)-PI)*COS(PI/2*u/2.5)",
+					"surfaceParamZ" : "u",
+					"fromU" : -2.5,
+					"toU" : 2.5,
+					"partU" : 40,
+					"fromV" : -2,
+					"toV" : 0,
+					"partV" : 1000,
+          "rotSpeedY": 1
+				}
+			},
+			{
+				"type": "Surface",
+				"parameters": 
+				{
+					"x": "0",
+					"y": "1",
+					"z": "0",
+					"maxAge": 600,
+					"color": "ffff0000",
+					"surfaceParamX" : "5*v*COS(PI/2*u/2.5)",
+					"surfaceParamY" : "5*(2*ASN(v/2)-PI)*COS(PI/2*u/2.5)",
+					"surfaceParamZ" : "u",
+					"fromU" : -2.5,
+					"toU" : 2.5,
+					"partU" : 40,
+					"fromV" : 0,
+					"toV" : 2,
+					"partV" : 1000,
+          "rotSpeedY": 1
+				}
+			}
+		]
+	}
+}
