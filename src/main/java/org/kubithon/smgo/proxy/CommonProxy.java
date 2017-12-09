@@ -41,6 +41,8 @@ public class CommonProxy {
 
     protected void registerShows() {
         File showDir = SmgoConfig.getFileFromString(SmgoConfig.showsPath);
+        if (!showDir.exists())
+            showDir.mkdir();
         for (File file : showDir.listFiles())
             if (file.isFile())
                 ShowsRegistry.register(Smgo.MODID, file.getName().substring(0, file.getName().lastIndexOf(".")), file);
